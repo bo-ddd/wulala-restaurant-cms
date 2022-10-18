@@ -10,19 +10,40 @@
             <h2>login</h2>
             <div class="aa"><span>账号：</span><el-input v-model="input" placeholder="请输入手机号/邮箱"></el-input></div>
             <div class="aa"><span>密码：</span><el-input placeholder="请输入密码" v-model="inputs" show-password></el-input></div>
-            <el-button type="primary" round>主要按钮</el-button>
+            <el-button type="primary" round @click="login()">主要按钮</el-button>
            </div>
           
         </div>
 	</div>
 </template>
 <script>
+import {loginApi} from '@/api/api.js';
  export default {
     data() {
       return {
         input: '',
-        inputs: ''
+        inputs: '',
+        
       }
+    },
+    created(){
+       
+    },
+    methods:{
+  
+       login : function(){
+        loginApi({
+            username:'xiaoming',
+            password:'999999'
+        }).then(res => {
+            console.log('------res------');
+            console.log(res);
+            if (res.status == 200) {
+                this.$router.push({path:'/home'})
+            }
+        })
+        
+      },
     }
   }
 </script>
