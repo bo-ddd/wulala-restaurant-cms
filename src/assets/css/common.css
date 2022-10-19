@@ -1,13 +1,16 @@
 .body,h4,h3,h2{
     margin: 0 auto;
 }
-.wrap{
+/* .wrap{
     width: 1280px;
     margin: 0 auto;
-}
+} */
 .mg-20{
     margin: 20px ;
 }
 .ml-50{
   margin-left: 50px;
+}
+.mg-rl_20{
+    margin: 0 20px;
 }

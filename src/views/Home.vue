@@ -1,5 +1,6 @@
 <template>
-  <div class="home">
+  <el-container>
+  <el-header>
     <div class="wrap box-top">
       <div class="title">乌拉拉餐饮管理</div>
       <div class="box-user ">
@@ -22,14 +23,17 @@
       </div>
 
     </div>
-    <el-row class="wrap">
-      <el-col :span="4">
-
-        <!-- <div> -->
-        <el-row class="tac">
+  </el-header>
+  <el-container>
+    <el-aside width="200px">
+      <el-row class="tac">
           <el-col :span="12">
-            <el-menu router default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-              <el-submenu index="1">
+            <el-menu router default-active="home" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+              <el-menu-item index="home">
+        <i class="el-icon-menu"></i>
+        <span slot="title">首页</span>
+      </el-menu-item>
+              <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-location"></i>
                   <span>数据中心</span>
@@ -39,17 +43,8 @@
                   <el-menu-item index="shuju">实时数据</el-menu-item>
                   <el-menu-item index="1-2">菜品数据</el-menu-item>
                 </el-menu-item-group>
-                <el-menu-item-group>
-                  <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                  <template slot="title">选项4</template>
-                  <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
               </el-submenu>
-
-
-              <el-submenu index="2">
+              <el-submenu index="3">
                 <template slot="title">
                   <i class="el-icon-location"></i>
                   <span>菜品管理</span>
@@ -65,17 +60,12 @@
             </el-menu>
           </el-col>
         </el-row>
-        <!-- </div> -->
-      </el-col>
-
-
-      <el-col :span="20">
-
-        <router-view />
-      </el-col>
-
-    </el-row>
-  </div>
+    </el-aside>
+    <el-main>
+      <router-view />
+    </el-main>
+  </el-container>
+</el-container>
 </template>
 
 <script>
@@ -106,17 +96,14 @@ h3 {
   width: 100%;
 }
 
-::v-deep .el-col {
+::v-deep .el-main {
   background-color: #ccc;
+  border-radius: 10px;
 }
 
-.el-row {
-  /* margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    } */
+::v-deep .el-header{
+  line-height: 60px;
 }
-
 .el-col {
   border-radius: 4px;
 }
@@ -144,13 +131,13 @@ h3 {
 }
 
 .box-user {
-  /* background: red; */
   width: 80%;
-  /* display: inline-block; */
   display: flex;
   justify-content: space-between;
 }
-
+::v-deep .el-main{
+  min-height: 500px;
+}
 .title {
   display: inline-block;
   margin-right: 46px;

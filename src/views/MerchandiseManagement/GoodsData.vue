@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4 class="mg-20">菜品管理</h4>
+        <h4 class="mg-rl_20">菜品管理</h4>
         <div class="box-contont">
             <div class="box-inquire">
                 <div class="box-inquire_inp">
@@ -39,14 +39,24 @@
             </div>
             <div class="box-btn">
                 <el-row>
-                   
+
                     <el-button size="mini" type="primary">新增菜品</el-button>
                     <el-button size="mini">批量上架</el-button>
                     <el-button size="mini">批量下架</el-button>
-                    <el-button size="mini">批量删除
-                    </el-button>
+                    <el-button size="mini">批量删除</el-button>
                 </el-row>
             </div>
+            <el-table :data="tableData" stripe style="width: 100%">
+                <el-table-column prop="date" label="日期" width="180">
+                </el-table-column>
+                <el-table-column prop="name" label="姓名" width="180">
+                </el-table-column>
+                <el-table-column prop="address" label="地址">
+                </el-table-column>
+            </el-table>
+        </div>
+        <div>
+            <el-pagination :page-size="2" background layout="prev, pager, next" :total="1000"></el-pagination>
         </div>
     </div>
 </template>
@@ -58,6 +68,7 @@ export default {
             input2: '',
             input3: '',
             select: '',
+            value: '',
             options: [{
                 value: '选项1',
                 label: '已上架'
@@ -68,7 +79,40 @@ export default {
                 value: '选项3',
                 label: '已下架'
             }],
-            value: ''
+            tableData: [{
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }, {
+                date: '2016-05-02',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄'
+            }
+            ]
         }
     }
 
@@ -78,8 +122,8 @@ export default {
 .box-contont {
     margin: 10px;
     background-color: white;
-    // width: 98%;
-    height: 800px;
+    border-radius: 10px;
+    height: 690px;
     padding: 15px;
 }
 
@@ -109,5 +153,4 @@ export default {
     font-weight: 600;
     margin-right: 5px;
 }
-
 </style>
