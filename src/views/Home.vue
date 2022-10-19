@@ -52,7 +52,7 @@
                 <el-menu-item-group>
 
                   <el-menu-item index="goodsdata">菜品数据</el-menu-item>
-                  <el-menu-item index="1-2">菜品分类</el-menu-item>
+                  <el-menu-item index="classify">菜品分类</el-menu-item>
                 </el-menu-item-group>
 
               </el-submenu>
@@ -103,6 +103,7 @@ h3 {
 
 ::v-deep .el-header{
   line-height: 60px;
+  padding: 0px;
 }
 .el-col {
   border-radius: 4px;

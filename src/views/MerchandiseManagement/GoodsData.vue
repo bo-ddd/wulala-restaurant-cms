@@ -13,9 +13,9 @@
                         </el-select>
                     </div>
                     <div>
-                        <span>菜品状态:</span>
-                        <el-select v-model="value" size="mini" placeholder="请选择">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label"
+                        <span>菜品类型:</span>
+                        <el-select v-model="valueType" size="mini" placeholder="请选择">
+                            <el-option v-for="item in footType" :key="item.value" :label="item.label"
                                 :value="item.value">
                             </el-option>
                         </el-select>
@@ -32,15 +32,15 @@
                 </div>
                 <div class="box-inquire_btn">
                     <el-row>
-                        <el-button size="mini">默认按钮</el-button>
-                        <el-button size="mini" type="primary">主要按钮</el-button>
+                        <el-button size="mini">查询</el-button>
+                        <el-button size="mini" type="primary">重置</el-button>
                     </el-row>
                 </div>
             </div>
             <div class="box-btn">
                 <el-row>
 
-                    <el-button size="mini" type="primary">新增菜品</el-button>
+                    <el-button size="mini" type="primary" @click="toFoodAdd()">新增菜品</el-button>
                     <el-button size="mini">批量上架</el-button>
                     <el-button size="mini">批量下架</el-button>
                     <el-button size="mini">批量删除</el-button>
@@ -69,15 +69,23 @@ export default {
             input3: '',
             select: '',
             value: '',
+            valueType: '',
             options: [{
-                value: '选项1',
+                value: '1',
                 label: '已上架'
             }, {
-                value: '选项2',
+                value: '2',
                 label: '未上架'
             }, {
-                value: '选项3',
+                value: '3',
                 label: '已下架'
+            }],
+            footType: [{
+                value: '1',
+                label: '菜品'
+            }, {
+                value: '2',
+                label: '粥/汤'
             }],
             tableData: [{
                 date: '2016-05-02',
@@ -114,9 +122,16 @@ export default {
             }
             ]
         }
-    }
-
+    },
+    methods:{
+       toFoodAdd : function(){
+        this.$router.push({path:'/foodadd'})
+       }
+  
+   
+ },
 }
+
 </script>
 <style lang="scss" scoped>
 .box-contont {
