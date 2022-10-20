@@ -26,3 +26,11 @@ export const loginApi = function (payload = {}){
 export const signUp = function ( options = {} ){
   return instance.post('/user/register' , options)
 }
+
+/**
+ * @description 注册接口
+ */
+
+export const registerApi = function (payload ={}){
+  return instance.post('/user/register', payload)
+}
