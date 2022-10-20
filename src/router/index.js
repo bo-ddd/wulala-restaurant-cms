@@ -24,6 +24,16 @@ const routes = [
         path: '/goodsdata',
         name: 'goodsdata',
         component:() => import("@/views/MerchandiseManagement/GoodsData.vue")
+      },
+      {
+        path: '/foodadd',
+        name: 'foodadd',
+        component:() =>import("@/views/MerchandiseManagement/FoodAdd.vue")
+      },
+      {
+        path: '/classify',
+        name: 'classify',
+        component:() =>import("@/views/MerchandiseManagement/ClassIfy.vue")
       }
     ]
   }

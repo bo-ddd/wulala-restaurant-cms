@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import './assets/css/common.css'
 import ElementUI from 'element-ui';
+import 'default-passive-events'
 import 'element-ui/lib/theme-chalk/index.css';
 
 
