@@ -1,4 +1,4 @@
-.body,h4,h3,h2{
+body,h4,h3,h2,h1{
     margin: 0 auto;
 }
 /* .wrap{
@@ -13,4 +13,27 @@
 }
 .mg-rl_20{
     margin: 0 20px;
+}
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.shadow{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+}
+
+.mt-20{
+    margin-top: 20px;
+}
+.mg-10{
+    margin: 10px;
 }
