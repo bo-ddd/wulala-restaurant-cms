@@ -4,7 +4,7 @@
     <div class="wrap box-top">
       <div class="title">乌拉拉餐饮管理</div>
       <div class="box-user ">
-        <span>实时数据/数据管理</span>
+        <div>实时数据/数据管理</div>
         <div class="box-userinfo">
           <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
           <img class="icon-avater" src="@/assets/images/avater.png" alt="">
@@ -102,7 +102,7 @@ h3 {
 }
 
 ::v-deep .el-header{
-  line-height: 60px;
+  /* line-height: 60px; */
   padding: 0px;
 }
 .el-col {
@@ -132,23 +132,25 @@ h3 {
 }
 
 .box-user {
-  width: 80%;
+  width: 85%;
   display: flex;
   justify-content: space-between;
+  align-items: center
 }
 ::v-deep .el-main{
   min-height: 500px;
 }
 .title {
   display: inline-block;
-  margin-right: 46px;
   font-size: 24px;
   font-weight: 600;
+  min-width: 170px;
 }
 
 .box-top {
+  margin-top: 20px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-evenly
 }
 
 .content {
@@ -166,6 +168,7 @@ h3 {
 }
 
 .box-userinfo {
+  min-width: 120px;
   display: flex;
   align-items: center;
 }
