@@ -16,7 +16,9 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>个人主页</el-dropdown-item>
                 <el-dropdown-item>账户设置</el-dropdown-item>
-                <el-dropdown-item>退出</el-dropdown-item>
+                <el-dropdown-item>
+                  <span @click="loginout">退出</span>
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </div>
@@ -95,6 +97,9 @@
 // @ is an alias to /src
 
 export default {
+  data(){
+    return{}
+  },
   name: 'HomeView',
   components: {
   },
@@ -104,6 +109,12 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    loginout(){
+      sessionStorage.setItem('token','');
+      this.$router.push({
+        name:'loginview'
+      })
     }
   }
 }
