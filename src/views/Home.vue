@@ -97,6 +97,7 @@
 export default {
   name: 'HomeView',
   components: {
+    
   },
   methods: {
     handleOpen(key, keyPath) {

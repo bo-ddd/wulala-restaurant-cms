@@ -15,12 +15,12 @@ export default {
     },
 
     methods: {
+       
         upload: function () {
             let token = sessionStorage.getItem('token')
             if(!token){
-               alert('未登录，无上传菜品权限')
+               alert('请先登录')
             }else{
-
                 let addfood = this.form
                 console.log(addfood);
                 foodAdd(
