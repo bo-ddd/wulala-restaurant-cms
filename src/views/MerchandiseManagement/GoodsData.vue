@@ -161,9 +161,16 @@ export default {
         },
         handleDelete(index, row) {
             deleteFood({
-                id: row.foodId
+                foodId: row.foodId
             }).then(res => {
                 console.log('删除菜品', res.data);
+                foodList({
+
+                }).then(res => {
+                    //  this.tableData.push(res.data.data.list)
+                    this.tableData = res.data.data.list
+                    console.log(this.tableData);
+                })
             })
             console.log(row.price);
         }

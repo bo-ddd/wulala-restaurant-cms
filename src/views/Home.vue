@@ -1,10 +1,34 @@
 <template>
   <el-container>
-  <el-header>
+    <el-header>
+      <div class="wrap box-top">
+        <div class="title">乌拉拉餐饮管理</div>
+        <div class="box-user ">
+          <span>实时数据/数据管理</span>
+          <div class="box-userinfo">
+            <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
+            <img class="icon-avater" src="@/assets/images/avater.png" alt="">
+            <span class="username">峰将军飞拳</span>
+            <el-dropdown>
+              <span class="el-dropdown-link">
+                <i class="el-icon-arrow-down el-icon--right"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>个人主页</el-dropdown-item>
+                <el-dropdown-item>账户设置</el-dropdown-item>
+                <el-dropdown-item>退出</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </div>
+        </div>
+      </div>
+    </el-header>
+
+    <!-- <el-header>
     <div class="wrap box-top">
       <div class="title">乌拉拉餐饮管理</div>
       <div class="box-user ">
-        <span>实时数据/数据管理</span>
+        <div>实时数据/数据管理</div>
         <div class="box-userinfo">
           <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
           <img class="icon-avater" src="@/assets/images/avater.png" alt="">
@@ -20,19 +44,18 @@
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-      </div>
 
-    </div>
-  </el-header>
-  <el-container>
-    <el-aside width="200px">
-      <el-row class="tac">
+      </div>
+    </el-header>-->
+    <el-container>
+      <el-aside width="200px">
+        <el-row class="tac">
           <el-col :span="12">
             <el-menu router default-active="home" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
               <el-menu-item index="home">
-        <i class="el-icon-menu"></i>
-        <span slot="title">首页</span>
-      </el-menu-item>
+                <i class="el-icon-menu"></i>
+                <span slot="title">首页</span>
+              </el-menu-item>
               <el-submenu index="2">
                 <template slot="title">
                   <i class="el-icon-location"></i>
@@ -60,12 +83,12 @@
             </el-menu>
           </el-col>
         </el-row>
-    </el-aside>
-    <el-main>
-      <router-view />
-    </el-main>
+      </el-aside>
+      <el-main>
+        <router-view />
+      </el-main>
+    </el-container>
   </el-container>
-</el-container>
 </template>
 
 <script>
@@ -89,22 +112,26 @@ export default {
 h3 {
   text-align: center;
 }
+
 .el-icon-arrow-down {
-    font-size: 12px;
-  }
+  font-size: 12px;
+}
+
 ::v-deep .el-col-12 {
   width: 100%;
 }
 
 ::v-deep .el-main {
-  background-color: #ccc;
+  background-color: #0e80f3;
   border-radius: 10px;
 }
 
-::v-deep .el-header{
-  line-height: 60px;
+
+::v-deep .el-header {
+  /* line-height: 60px; */
   padding: 0px;
 }
+
 .el-col {
   border-radius: 4px;
 }
@@ -132,23 +159,27 @@ h3 {
 }
 
 .box-user {
-  width: 80%;
+  width: 85%;
   display: flex;
   justify-content: space-between;
+  align-items: center
 }
-::v-deep .el-main{
+
+::v-deep .el-main {
   min-height: 500px;
 }
+
 .title {
   display: inline-block;
-  margin-right: 46px;
   font-size: 24px;
   font-weight: 600;
+  min-width: 170px;
 }
 
 .box-top {
+  margin-top: 20px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-evenly
 }
 
 .content {
@@ -166,6 +197,7 @@ h3 {
 }
 
 .box-userinfo {
+  min-width: 120px;
   display: flex;
   align-items: center;
 }
