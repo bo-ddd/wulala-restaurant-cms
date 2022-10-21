@@ -38,9 +38,10 @@ export const foodList = function (foodList = {}) {
 }
 
 export const deleteFood = function (options = {}) {
-  return instance.post('permission/delete', options)
+  return instance.post('food/delete', options)
 }
 
 export const foodAdd = function (options = {}) {
   return instance.post('/food/add', options)
 }
+
