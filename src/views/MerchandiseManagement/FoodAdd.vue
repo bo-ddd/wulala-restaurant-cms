@@ -15,14 +15,20 @@ export default {
     },
 
     methods: {
+       
         upload: function () {
-            let addfood = this.form
-            console.log(addfood);
-            foodAdd(
-                addfood
-            ).then(res => {
-                console.log(res);
-            })
+            let token = sessionStorage.getItem('token')
+            if(!token){
+               alert('请先登录')
+            }else{
+                let addfood = this.form
+                console.log(addfood);
+                foodAdd(
+                    addfood
+                ).then(res => {
+                    console.log(res);
+                })
+            }
 
         },
 
