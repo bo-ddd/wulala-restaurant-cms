@@ -95,7 +95,7 @@
 
 <script>
 // @ is an alias to /src
-
+import { userInfoApi } from '@/api/api'
 export default {
   data(){
     return{}
@@ -116,7 +116,19 @@ export default {
       this.$router.push({
         name:'loginview'
       })
+    },
+    async render(){
+      let res = await userInfoApi({
+
+      })
+      console.log(res);
     }
+  },
+  created(){
+    // this.render();
+    userInfoApi({
+      
+    })
   }
 }
 </script>
