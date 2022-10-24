@@ -37,3 +37,10 @@ body,h4,h3,h2,h1{
 .mg-10{
     margin: 10px;
 }
+p{
+    margin: 0;
+    padding: 0;
+}
+.pl-5{
+    padding-left: 5px;
+}
