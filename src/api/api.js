@@ -46,6 +46,12 @@ export const loginApi = function (payload = {}) {
   //就是网页的预览
   return instance.post('/user/login', payload)
 }
+/**
+* @description 获取权限列表
+*/
+export const permissionListApi = function(payload = {}){
+  return instance.post('/permission/list',payload)
+}
 
 /**
  * @description 注册接口
