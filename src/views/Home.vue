@@ -125,10 +125,7 @@ export default {
     }
   },
   created(){
-    // this.render();
-    userInfoApi({
-      
-    })
+    this.render();
   }
 }
 </script>
