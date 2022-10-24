@@ -192,9 +192,7 @@ h3 {
   align-items: center
 }
 
-::v-deep .el-main {
-  min-height: 500px;
-}
+
 
 .title {
   display: inline-block;

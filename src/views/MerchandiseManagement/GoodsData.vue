@@ -70,13 +70,13 @@
 
                 <el-table-column label="描述">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.description}}</el-tag>
+                        <el-tag size="medium">{{ scope.row.description }}</el-tag>
                     </template>
                 </el-table-column>
 
                 <el-table-column label="价格">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{scope.row.price + '元'}}</el-tag>
+                        <el-tag size="medium">{{ scope.row.price + '元' }}</el-tag>
                     </template>
                 </el-table-column>
                 <el-table-column label="操作">
@@ -91,8 +91,12 @@
 
 
         </div>
-        <div>
-            <el-pagination :page-size="2" background layout="prev, pager, next" :total="1000"></el-pagination>
+        <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                :page-sizes="[10, 20, 30, 40]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
+                :total=total>
+            </el-pagination>
+
         </div>
     </div>
 </template>
@@ -101,6 +105,11 @@ import { foodList, deleteFood } from '@/api/api'
 export default {
     data() {
         return {
+            currentchange :1,
+            sizechange :10,
+            pagesize: 0,
+            total: 0,
+            currentPage4: 4,
             input1: '',
             input2: '',
             input3: '',
@@ -148,6 +157,40 @@ export default {
         }
     },
     methods: {
+        handleSizeChange(val) {
+            // console.log(`每页 ${val} 条`);
+            this.sizechange = val
+            foodList({
+            pageNum: this.currentchange,
+            pageSize: this.sizechange,
+        }).then(res => {
+            //  this.tableData.push(res.data.data.list)
+            this.tableData = res.data.data.list
+            console.log(res.data.data);
+            this.total = res.data.data.total
+            this.pagesize = res.data.data.pageSize
+            console.log(this.total);
+        })
+
+        },
+        handleCurrentChange(val) {
+            this.currentchange = val
+            foodList({
+            pageNum: this.currentchange,
+            pageSize: this.sizechange,
+        }).then(res => {
+            //  this.tableData.push(res.data.data.list)
+            this.tableData = res.data.data.list
+            console.log(res.data.data);
+            this.total = res.data.data.total
+            this.pagesize = res.data.data.pageSize
+            console.log(this.total);
+        })
+            // console.log(`当前页: ${val}`);
+        },
+
+
+
         toFoodAdd: function () {
             this.$router.push({ path: '/foodadd' })
         },
@@ -177,11 +220,15 @@ export default {
     },
     mounted() {
         foodList({
-
+            pageNum: this.currentchange,
+            pageSize: this.sizechange,
         }).then(res => {
             //  this.tableData.push(res.data.data.list)
             this.tableData = res.data.data.list
-            console.log(res);
+            console.log(res.data.data);
+            this.total = res.data.data.total
+            this.pagesize = res.data.data.pageSize
+            console.log(this.total);
         })
     },
 }
@@ -192,7 +239,7 @@ export default {
     margin: 10px;
     background-color: white;
     border-radius: 10px;
-    height: 700px;
+    height: 100%;
     padding: 15px;
 }
 
@@ -218,11 +265,19 @@ export default {
     font-weight: 600;
     margin-right: 5px;
 }
-.title{
+
+.title {
     color: white;
 }
+
 .banner-food_png {
     width: 50px;
     height: 50px;
+}
+
+.block{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
 }
 </style>
