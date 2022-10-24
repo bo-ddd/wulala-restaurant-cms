@@ -192,7 +192,7 @@ export default {
     margin: 10px;
     background-color: white;
     border-radius: 10px;
-    height: 690px;
+    height: 700px;
     padding: 15px;
 }
 
