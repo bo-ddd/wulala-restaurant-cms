@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h4 class="mg-rl_20">菜品管理</h4>
+        <h4 class="mg-rl_20 title">菜品管理</h4>
         <div class="box-contont">
             <div class="box-inquire">
                 <div class="box-inquire_inp">
@@ -218,7 +218,9 @@ export default {
     font-weight: 600;
     margin-right: 5px;
 }
-
+.title{
+    color: white;
+}
 .banner-food_png {
     width: 50px;
     height: 50px;

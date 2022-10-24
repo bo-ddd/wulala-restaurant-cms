@@ -34,6 +34,16 @@ const routes = [
         path: '/classify',
         name: 'classify',
         component:() =>import("@/views/MerchandiseManagement/ClassIfy.vue")
+      },
+      {
+        path: '/rolemg',
+        name: 'rolemg',
+        component:() =>import("@/views/Permissions/RoleManagement.vue")
+      },
+      {
+        path: '/usermg',
+        name: 'usermg',
+        component:() =>import("@/views/Permissions/UserManagement.vue")
       }
     ]
   }

@@ -64,7 +64,6 @@
                   <span>数据中心</span>
                 </template>
                 <el-menu-item-group>
-
                   <el-menu-item index="shuju">实时数据</el-menu-item>
                   <el-menu-item index="1-2">菜品数据</el-menu-item>
                 </el-menu-item-group>
@@ -75,13 +74,20 @@
                   <span>菜品管理</span>
                 </template>
                 <el-menu-item-group>
-
                   <el-menu-item index="goodsdata">菜品数据</el-menu-item>
                   <el-menu-item index="classify">菜品分类</el-menu-item>
                 </el-menu-item-group>
-
               </el-submenu>
-
+              <el-submenu index="4">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>权限管理</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="rolemg">角色管理</el-menu-item>
+                  <el-menu-item index="usermg">用户管理</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-row>
