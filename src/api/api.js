@@ -52,7 +52,12 @@ export const loginApi = function (payload = {}) {
 export const permissionListApi = function(payload = {}){
   return instance.post('/permission/list',payload)
 }
-
+/**
+* @description 添加权限列表
+*/
+export const permissionAddApi = function(payload = {}){
+  return instance.post('/permission/add',payload);
+}
 /**
  * @description 注册接口
  */
