@@ -181,7 +181,7 @@ export default {
         }).then(res => {
             //  this.tableData.push(res.data.data.list)
             this.tableData = res.data.data.list
-            console.log(this.tableData);
+            console.log(res);
         })
     },
 }
