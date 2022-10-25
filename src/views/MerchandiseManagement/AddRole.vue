@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import {permissionAddApi} from '@/api/api';
+import {roleCreate} from '@/api/api';
 export default{
     data(){
         return{
@@ -26,10 +26,10 @@ export default{
     },
     methods:{
         foundRole : function (){
-            permissionAddApi({
-                permissionName:this.input
+            roleCreate({
+                roleName:this.input
             }).then(res => {
-                if (res.data.status == 10301) {
+                if (res.data.status == 10300) {
                     this.$message({
                         message: res.data.msg,
                         type: 'warning'
@@ -41,6 +41,7 @@ export default{
                     });
                     this.$router.push({ path: '/rolemg' })
                 }
+                // console.log(res);
             }).catch(err => {
                 console.log(err);
             })
