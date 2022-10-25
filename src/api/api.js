@@ -94,7 +94,7 @@ export const foodAdd = function (options = {}) {
 /**
  * @description 获取用户列表接口
  */
- export const userlist = function (options = {}) {
+ export const userList = function (options = {}) {
   return instance.post('/user/list', options,getPostConfig())
 }
 /**
@@ -104,4 +104,17 @@ export const foodAdd = function (options = {}) {
 export const userInfoApi = function (payload ={}){
   return instance.post('/user/info',payload,getPostConfig())
 }
+/**
+ * @description 给用户添加角色
+ */
 
+ export const addRoleApi = function (addrole ={}){
+  return instance.post('/user/addRole',addrole,getPostConfig())
+}
+/**
+ * @description 查询用户权限
+ */
+
+ export const getPermission = function (getPermission ={}){
+  return instance.post('/user/permission/list',getPermission,getPostConfig())
+}
