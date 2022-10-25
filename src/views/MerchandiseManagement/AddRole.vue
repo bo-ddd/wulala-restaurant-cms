@@ -83,12 +83,13 @@ export default{
            res.data.data.forEach(element => {
             // console.log(element);
             res.data.data.forEach(el => {
+                el.children = []
                    if (element.pid == el.id) {
-                    el.children = []
                     el.children.push({permissionName:element.permissionName})
                     console.log(el);
                     console.log(1);
                    }
+                   console.log(el);
             })
            });
         }).catch(err => {
