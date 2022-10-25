@@ -55,7 +55,16 @@ const routes = [
         name: 'addrole',
         component:() =>import("@/views/MerchandiseManagement/AddRole.vue")
       },
-     
+      {
+        path:'/addattribute',
+        name:'addattribute',
+        component:() =>import("@/views/attribute/AddAttribute.vue")
+      },
+      {
+        path:'/attributelist',
+        name:'addattributelist',
+        component:() =>import("@/views/attribute/AttributeList.vue")
+      },
     ]
   }
 

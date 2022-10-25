@@ -114,7 +114,33 @@ export const userInfoApi = function (payload ={}){
 /**
  * @description 查询用户权限
  */
-
  export const getPermission = function (getPermission ={}){
   return instance.post('/user/permission/list',getPermission,getPostConfig())
 }
+
+/**
+ * @description 获取类目列表
+ */
+
+export const categoryListApi = function (payload ={}) {
+  return instance.post('/category/list',payload)
+}
+
+/**
+ * @description 增加商品属性规格
+ */
+
+export const attributeCreateApi = function (payload ={}) {
+  return instance.post('/product/attribute/create',payload)
+}
+
+/**
+ * @description 获取商品属性列表
+ */
+
+export const attributeListApi = function (payload ={}) {
+  return instance.post('/attribute/list',payload)
+}
+
+
+
