@@ -30,9 +30,11 @@
                     <div class="power-list_nav">
                         <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
                     </div>
-                    <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                        <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
-                    </el-checkbox-group>
+                    <div class="power-list_content">
+                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
+                            <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+                        </el-checkbox-group>
+                    </div>
                 </div>
             </div>
         </div>
@@ -155,6 +157,11 @@ export default{
     border: 1px solid #eee;
 }
 .power-list_nav{
-    
+    background-color:#f6fafd;
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+}
+.power-list_content{
+    padding: 20px 20px 20px 50px;
 }
 </style>
