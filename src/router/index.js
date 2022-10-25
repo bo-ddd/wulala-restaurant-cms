@@ -44,6 +44,11 @@ const routes = [
         path: '/usermg',
         name: 'usermg',
         component:() =>import("@/views/Permissions/UserManagement.vue")
+      },
+      {
+        path: '/addrole',
+        name: 'addrole',
+        component:() =>import("@/views/MerchandiseManagement/AddRole.vue")
       }
     ]
   }

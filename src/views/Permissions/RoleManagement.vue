@@ -2,91 +2,107 @@
     <div>
         <h4 class="mg-rl_20 title">角色管理</h4>
         <div class="box-contont">
-            <el-tabs :tab-position="tabPosition" value="1" style="height: 700px;">
+            <el-tabs :tab-position="tabPosition" value="1" style="height: 700px;" >
                 <el-tab-pane disabled="" class="tab">
                     <template #label>
-                        <el-button class="btn" type="primary" plain>+添加新角色</el-button>
+                        <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                     </template>
                 </el-tab-pane>
-                <el-tab-pane label="超级管理员">
+                <!-- <el-tab-pane label="超级管理员">
                     <div class="subject">
                         超级管理员
                     </div>
                 </el-tab-pane>
                 <el-tab-pane label="管理员">
                     <div class="subject">管理员</div>
-                </el-tab-pane>
-                <el-tab-pane label="特一级厨师">
-                    <div class="subject">
-                        <p class="subjext-title">特一级厨师<span class="pl-5">该角色没有管理权限</span></p>
-                    <el-tabs :tab-position="tabPositions" style="" class="mt-20">
-                        <el-tab-pane label="角色成员">
-                            <div class="nav">
-                                <span>全部成员，共{{2}}人</span>
-                                <el-button type="primary">+添加成员</el-button>
-                            </div>
-                            <el-table
-                                :data="tableData"
-                                style="width: 100%">
-                                <el-table-column
-                                    prop="date"
-                                    label="日期"
-                                    width="180">
-                                </el-table-column>
-                                <el-table-column
-                                    prop="name"
-                                    label="姓名"
-                                    width="180">
-                                </el-table-column>
-                                <el-table-column
-                                    prop="address"
-                                    label="地址">
-                                </el-table-column>
-                            </el-table>
-                        </el-tab-pane>
-                        <el-tab-pane label="功能权限">
-                            功能权限
-                        </el-tab-pane>
-                        <el-tab-pane label="数据范围">
-                            数据范围
-                        </el-tab-pane>
-                    </el-tabs>
-                </div>
-                </el-tab-pane>
+                </el-tab-pane> -->
+               
+
+                    <el-tab-pane :label="item.permissionName" v-for="(item,i) in permissionName" :key="i">
+                        <div class="subject">
+                            <p class="subjext-title">特一级厨师<span class="pl-5">该角色没有管理权限</span></p>
+                            <el-tabs :tab-position="tabPositions" style="" class="mt-20">
+                                <el-tab-pane label="角色成员">
+                                    <div class="nav">
+                                        <span>全部成员，共{{2}}人</span>
+                                        <el-button type="primary">+添加成员</el-button>
+                                    </div>
+                                    <el-table :data="tableData" style="width: 100%">
+                                        <el-table-column prop="name" label="姓名" width="150">
+                                        </el-table-column>
+                                        <el-table-column prop="avatarphone" label="手机号" width="150">
+                                        </el-table-column>
+                                        <el-table-column prop="date" label="部门" width="150">
+                                        </el-table-column>
+                                        <el-table-column prop="address" label="职位">
+                                        </el-table-column>
+                                        <el-table-column fixed="right" label="操作">
+                                            <div class="delete">
+                                                <p><img src="@/assets/images/icon-mines.png" alt="">-移除</p>
+                                            </div>
+                                        </el-table-column>
+                                    </el-table>
+                                </el-tab-pane>
+                                <el-tab-pane label="功能权限">
+                                    功能权限
+                                </el-tab-pane>
+                                <el-tab-pane label="数据范围">
+                                    数据范围
+                                </el-tab-pane>
+                            </el-tabs>
+                        </div>
+                    </el-tab-pane>
+
             </el-tabs>
         </div>
     </div>
 </template>
 
 <script>
-import {permissionListApi} from '@/api/api';
-export default{
-    data(){
-        return{
+import { permissionListApi } from '@/api/api';
+export default {
+    data() {
+        return {
             tabPosition: 'left',
-            tabPositions:'top',
+            tabPositions: 'top',
             tableData: [{
                 date: '2016-05-02',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    date: '2016-05-04',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    date: '2016-05-01',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    date: '2016-05-03',
-                    name: '王小虎',
-                    address: '上海市普陀区金沙江路 1516 弄'
-            }]
+                address: '上海市普陀区金沙江路 1518 弄',
+                avatarphone: '1231562369'
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1517 弄',
+                avatarphone: '1231562369'
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1519 弄',
+                avatarphone: '1231562369'
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+                address: '上海市普陀区金沙江路 1516 弄',
+                avatarphone: '1231562369'
+            }],
+            permissionName: '',
         }
     },
-    created(){
-        permissionListApi({}).then(res => console.log(res));
-    }
+    created() {
+        permissionListApi({}).then(res => {
+            this.permissionName = res.data.data;
+            console.log('------res-------');
+            console.log(res.data.data);
+            console.log('--------this permissionName----');
+            console.log(this.permissionName.length);
+        });
+    },
+    methods: {
+        toAddRole: function () {
+            this.$router.push({ path: '/addrole' })
+        },
+    },
 }
 </script>
 
@@ -98,26 +114,47 @@ export default{
     min-height: 700px;
     padding: 15px;
 }
-.title{
+
+.title {
     color: white;
 }
-::v-deep .el-tabs--left .el-tabs__item.is-left{
+
+::v-deep .el-tabs--left .el-tabs__item.is-left {
     text-align: left;
 }
-.subject{
+
+.subject {
     padding: 10px;
 }
-.subjext-title span{
+
+.subjext-title span {
     color: #ccc;
     font-size: 12px;
 }
-.nav{
+
+.nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.nav span{
+
+.nav span {
     color: #bbb;
     font-size: 14px;
+}
+
+.delete p {
+    display: flex;
+    align-items: center;
+    color: #ccc;
+}
+
+.delete :hover {
+    cursor: pointer;
+}
+
+.delete img {
+    width: 18px;
+    font-size: 12px;
 }
 </style>
