@@ -91,7 +91,12 @@ export const deleteFood = function (options = {}) {
 export const foodAdd = function (options = {}) {
   return instance.post('/food/add', options)
 }
-
+/**
+ * @description 获取用户列表接口
+ */
+ export const userlist = function (options = {}) {
+  return instance.post('/user/list', options,getPostConfig())
+}
 /**
  * @description 查询用户信息接口
  */

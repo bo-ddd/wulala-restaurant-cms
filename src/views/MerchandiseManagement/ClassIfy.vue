@@ -1,17 +1,8 @@
 <template>
     <div>
-        <h4>菜品分类</h4>
-        <div class="box-classify mg-10">
-            <div class="box">
-                <div v-for="(el,i) in classify" :key="i" @click="activeInedx(i)">
-                    <div :class="abc == i ?  'text-classify' : ''">
-                        <span>{{el.className}}</span>
-                    </div>
-                    <div>
-                        <img src="icon-wll_logo.png" alt="">
-                    </div>
-                </div>
-            </div>
+        <h4 class="title">菜品分类</h4>
+        <div class="box-contont">
+            
         </div>
 
     </div>
@@ -71,5 +62,15 @@ export default {
     padding: 5px 10px;
     color: #fff;
     border-radius: 10px;
+}
+.title{
+    color: white;
+}
+.box-contont {
+    margin: 10px;
+    background-color: white;
+    border-radius: 10px;
+    height: 100%;
+    padding: 15px;
 }
 </style>

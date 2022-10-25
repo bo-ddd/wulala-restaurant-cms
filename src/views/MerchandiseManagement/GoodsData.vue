@@ -59,7 +59,7 @@
                 <el-table-column label="菜名" width="180">
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="top">
-                            <p>姓名: {{ scope.row.foodName }}</p>
+                            <p>菜名: {{ scope.row.foodName }}</p>
                             <p>价格: {{ scope.row.price }}</p>
                             <div slot="reference" class="name-wrapper">
                                 <el-tag size="medium">{{ scope.row.foodName }}</el-tag>
@@ -133,27 +133,7 @@ export default {
                 value: '2',
                 label: '粥/汤'
             }],
-            tableData: [
-
-                // {
-                //     date: '2016-05-02',
-                //     name: '王小虎',
-                //     address: '上海市普陀区金沙江路 1518 弄'
-                // }, {
-                //     date: '2016-05-04',
-                //     name: '王小虎',
-                //     address: '上海市普陀区金沙江路 1517 弄'
-                // }, {
-                //     date: '2016-05-01',
-                //     name: '王小虎',
-                //     address: '上海市普陀区金沙江路 1519 弄'
-                // }, {
-                //     date: '2016-05-03',
-                //     name: '王小虎',
-                //     address: '上海市普陀区金沙江路 1516 弄'
-                // }
-
-            ]
+            tableData: []
         }
     },
     methods: {
