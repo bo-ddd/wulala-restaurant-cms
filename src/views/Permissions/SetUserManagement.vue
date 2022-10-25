@@ -34,7 +34,7 @@ export default {
             getPermission({
                 userId: this.userId,
             }).then(res =>{
-                console.log(res);
+                console.log(res);   
             })
         }
     }
