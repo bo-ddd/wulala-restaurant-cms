@@ -79,7 +79,18 @@ export default{
     },
     created(){
         permissionListApi({}).then(res=>{
-            console.log(res);
+            // console.log(res.data.data);
+           res.data.data.forEach(element => {
+            // console.log(element);
+            res.data.data.forEach(el => {
+                   if (element.pid == el.id) {
+                    el.children = []
+                    el.children.push({permissionName:element.permissionName})
+                    console.log(el);
+                    console.log(1);
+                   }
+            })
+           });
         }).catch(err => {
             console.log(err);
         })
