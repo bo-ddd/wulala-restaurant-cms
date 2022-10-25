@@ -66,9 +66,8 @@ export default {
             <el-table :data="tableData" style="width: 100%">
                 <el-table-column label="用户头像" width="180">
                     <template slot-scope="scope">
-                        <!-- <i class="el-icon-time"></i> -->
-                        <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
-                        <img class="banner-food_png" :src="scope.row.avatarImg" alt="">
+                        <img v-if="scope.row.avatarImg" class="banner-food_png" :src="scope.row.avatarImg" alt="">
+                    <div class="avatarImg" v-else></div>
                     </template>
                 </el-table-column>
                 <el-table-column label="用户id" width="180">
@@ -159,5 +158,11 @@ export default {
     width: 40px;
     height: 40px;
     border-radius: 20px;
+}
+.avatarImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #ccc;
 }
 </style>
