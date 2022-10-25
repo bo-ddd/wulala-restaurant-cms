@@ -52,11 +52,24 @@ export const loginApi = function (payload = {}) {
 export const permissionListApi = function(payload = {}){
   return instance.post('/permission/list',payload)
 }
+// /**
+// * @description 添加权限列表
+// */
+// export const permissionAddApi = function(payload = {}){
+//   return instance.post('/permission/add',payload);
+// }
 /**
-* @description 添加权限列表
-*/
-export const permissionAddApi = function(payload = {}){
-  return instance.post('/permission/add',payload);
+ *  @description 创建角色
+ */
+export const roleCreate = function(payload = {}){
+  return instance.post('/role/create',payload)
+}
+
+/**
+ * @description 获取角色列表
+ */
+export const roleListApi = function(payload = {}){
+  return instance.post('/role/list',payload)
 }
 /**
  * @description 注册接口
@@ -78,13 +91,31 @@ export const deleteFood = function (options = {}) {
 export const foodAdd = function (options = {}) {
   return instance.post('/food/add', options)
 }
-
+/**
+ * @description 获取用户列表接口
+ */
+ export const userList = function (options = {}) {
+  return instance.post('/user/list', options,getPostConfig())
+}
 /**
  * @description 查询用户信息接口
  */
 
 export const userInfoApi = function (payload ={}){
   return instance.post('/user/info',payload,getPostConfig())
+}
+/**
+ * @description 给用户添加角色
+ */
+
+ export const addRoleApi = function (addrole ={}){
+  return instance.post('/user/addRole',addrole,getPostConfig())
+}
+/**
+ * @description 查询用户权限
+ */
+ export const getPermission = function (getPermission ={}){
+  return instance.post('/user/permission/list',getPermission,getPostConfig())
 }
 
 /**
@@ -110,4 +141,6 @@ export const attributeCreateApi = function (payload ={}) {
 export const attributeListApi = function (payload ={}) {
   return instance.post('/attribute/list',payload)
 }
+
+
 

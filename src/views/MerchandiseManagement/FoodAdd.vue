@@ -5,7 +5,7 @@ export default {
         return {
             imageUrl: '',
             form: {
-                foodType: '', //菜肴类型 1：菜 2：粥
+                categoryName: '', //菜肴类型 1：菜 2：粥
                 foodName: '', //菜肴名称
                 description: '', //菜肴描述
                 bannerUrl: '',
@@ -67,9 +67,9 @@ export default {
                         <el-input v-model="form.price"></el-input>
                     </el-form-item>
                     <el-form-item label="菜品类型">
-                        <el-select v-model="form.foodType" placeholder="请选择菜品类型">
-                            <el-option label="菜" value="1"></el-option>
-                            <el-option label="粥" value="2"></el-option>
+                        <el-select v-model="form.categoryId" placeholder="请选择菜品类型">
+                            <el-option label="川菜" value="1"></el-option>
+                            <el-option label="东北菜" value="2"></el-option>
                         </el-select>
                     </el-form-item>
 

@@ -21,6 +21,11 @@ const routes = [
     component : Home,
     children:[
       {
+        path: '/setusermg',
+        name: 'setusermg',
+        component:() =>import("@/views/Permissions/SetUserManagement.vue")
+      },
+      {
         path: '/goodsdata',
         name: 'goodsdata',
         component:() => import("@/views/MerchandiseManagement/GoodsData.vue")

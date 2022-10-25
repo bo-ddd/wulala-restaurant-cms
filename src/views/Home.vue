@@ -7,8 +7,8 @@
           <span>实时数据/数据管理</span>
           <div class="box-userinfo">
             <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
-            <img class="icon-avater" src="@/assets/images/avater.png" alt="">
-            <span class="username">峰将军飞拳</span>
+            <img class="icon-avater" :src=this.avatar alt="">
+            <span class="username">{{this.avatarName}}</span>
             <el-dropdown>
               <span class="el-dropdown-link">
                 <i class="el-icon-arrow-down el-icon--right"></i>
@@ -25,30 +25,6 @@
         </div>
       </div>
     </el-header>
-
-    <!-- <el-header>
-    <div class="wrap box-top">
-      <div class="title">乌拉拉餐饮管理</div>
-      <div class="box-user ">
-        <div>实时数据/数据管理</div>
-        <div class="box-userinfo">
-          <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
-          <img class="icon-avater" src="@/assets/images/avater.png" alt="">
-          <span class="username">峰将军飞拳</span>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>个人主页</el-dropdown-item>
-              <el-dropdown-item>账户设置</el-dropdown-item>
-              <el-dropdown-item>退出</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
-
-      </div>
-    </el-header>-->
     <el-container>
       <el-aside width="200px">
         <el-row class="tac">
@@ -116,7 +92,10 @@
 import { userInfoApi } from '@/api/api'
 export default {
   data(){
-    return{}
+    return{
+      avatarName : "昵称",
+      avatar:''
+    }
   },
   name: 'HomeView',
   components: {
@@ -139,7 +118,9 @@ export default {
       let res = await userInfoApi({
 
       })
-      console.log(res);
+      this.avatarName = res.data.data.avatarName
+      this.avatar = res.data.data.avatarImg
+      // console.log(res.data.data.avatarImg);
     }
   },
   created(){
@@ -163,6 +144,8 @@ h3 {
 ::v-deep .el-main {
   background-color: #0e80f3;
   border-radius: 10px;
+ height: calc(100vh - 60px);
+  overflow-y: scroll;
 }
 
 
@@ -225,6 +208,7 @@ h3 {
 
 .icon-avater {
   width: 30px;
+  height: 30px;
   border-radius: 15px;
   margin: 0 5px 0 15px;
 }
@@ -243,5 +227,8 @@ h3 {
   margin-left: 5px;
   font-size: 14px;
   font-weight: 600;
+}
+::v-deep .el-aside{
+  /* height: 1000px; */
 }
 </style>
