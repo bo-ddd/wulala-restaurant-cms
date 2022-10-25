@@ -132,6 +132,8 @@ h3 {
 ::v-deep .el-main {
   background-color: #0e80f3;
   border-radius: 10px;
+ height: calc(100vh - 60px);
+  overflow-y: scroll;
 }
 
 
@@ -213,5 +215,8 @@ h3 {
   margin-left: 5px;
   font-size: 14px;
   font-weight: 600;
+}
+::v-deep .el-aside{
+  /* height: 1000px; */
 }
 </style>

@@ -21,6 +21,11 @@ const routes = [
     component : Home,
     children:[
       {
+        path: '/setusermg',
+        name: 'setusermg',
+        component:() =>import("@/views/Permissions/SetUserManagement.vue")
+      },
+      {
         path: '/goodsdata',
         name: 'goodsdata',
         component:() => import("@/views/MerchandiseManagement/GoodsData.vue")
@@ -49,7 +54,8 @@ const routes = [
         path: '/addrole',
         name: 'addrole',
         component:() =>import("@/views/MerchandiseManagement/AddRole.vue")
-      }
+      },
+     
     ]
   }
 
