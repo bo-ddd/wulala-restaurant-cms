@@ -79,7 +79,7 @@ export default {
     created() {
         roleListApi({}).then(res=>{
             this.obtainRoleList = res.data.data;
-            console.log(res);
+            // console.log(res);
         }).catch(err => {
             console.log(err);
         })
