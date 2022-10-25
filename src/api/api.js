@@ -46,17 +46,30 @@ export const loginApi = function (payload = {}) {
   //就是网页的预览
   return instance.post('/user/login', payload)
 }
+// /**
+// * @description 获取权限列表
+// */
+// export const permissionListApi = function(payload = {}){
+//   return instance.post('/permission/list',payload)
+// }
+// /**
+// * @description 添加权限列表
+// */
+// export const permissionAddApi = function(payload = {}){
+//   return instance.post('/permission/add',payload);
+// }
 /**
-* @description 获取权限列表
-*/
-export const permissionListApi = function(payload = {}){
-  return instance.post('/permission/list',payload)
+ *  @description 创建角色
+ */
+export const roleCreate = function(payload = {}){
+  return instance.post('/role/create',payload)
 }
+
 /**
-* @description 添加权限列表
-*/
-export const permissionAddApi = function(payload = {}){
-  return instance.post('/permission/add',payload);
+ * @description 获取角色列表
+ */
+export const roleListApi = function(payload = {}){
+  return instance.post('/role/list',payload)
 }
 /**
  * @description 注册接口
