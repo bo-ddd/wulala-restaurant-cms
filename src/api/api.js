@@ -87,7 +87,11 @@ export const signUp = function (options = {}) {
   return instance.post('/user/register', options)
 }
 
-
+/**
+ * 
+ * @param {food/list} foodList 菜肴列表
+ * 
+ */
 
 export const foodList = function (foodList = {}) {
   return instance.post('food/list', foodList)

@@ -24,14 +24,16 @@
                         选择所有权限</el-checkbox>
                     <div style="margin: 15px 0;"></div>
                 </div>
-                <div class="power-list">
+                <div class="power-list" v-for="(item, index) in array" :key="index">
                     <div class="power-list_nav">
                         <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                            全选</el-checkbox>
+                            {{ item.permissionName }}</el-checkbox>
                     </div>
-                    <div class="power-list_content">
-                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                            <el-checkbox v-for="city in cities" :label="city" :key="city">{{ city }}</el-checkbox>
+                    <div class="power-list_content" v-if="item.children != 0">
+                        <el-checkbox-group v-model="item.children" @change="handleCheckedCitiesChange">
+                            <el-checkbox v-for="city in item.children" :label="city" :key="city">{{ city.permissionName
+                            }}
+                            </el-checkbox>
                         </el-checkbox-group>
                     </div>
                 </div>
@@ -49,12 +51,10 @@ export default {
         return {
             input1: '',
             input2: '',
-            aa: [],
             checkAll: false,
             checkedCities: ['北京'],
             cities: cityOptions,
             isIndeterminate: true,
-
             options: [{
                 value: '选项1',
                 label: '黄金糕'
@@ -71,44 +71,23 @@ export default {
                 value: '选项5',
                 label: '北京烤鸭'
             }],
+            array: [],
         }
-    },
-    components: {
-
     },
     created() {
         permissionListApi({}).then(res => {
-            // console.log(res.data.data);
-
             res.data.data.forEach(element => {
-                // console.log(element);
+                element.children = [];
                 res.data.data.forEach(el => {
-                    if (element.pid == el.id) {
-                        el.children = []
-                        el.children.push({ permissionName: element.permissionName })
-                        this.aa.push(el)
-                    } else {
-
-                        this.aa.push(el)
+                    if (element.id == el.pid) {
+                        element.children.push({
+                            permissionName: el.permissionName,
+                        })
                     }
                 })
-
+                this.array.push(element);
             });
-            console.log(this.aa);
-            //数组去重方法
-            function unlink(aa) {
-                for (var i = 0; i < aa.length; i++) {   
-                    for (var j = i + 1; j < aa.length; j++) {  
-                        if (aa[i].id == aa[j].id) {        
-                            aa.splice(j, 1);         
-                            j--;
-                        }
-                    }
-                }
-                return aa
-            }
-            console.log(unlink(this.aa));
-
+            console.log(this.array);
         }).catch(err => {
             console.log(err);
         })
@@ -135,7 +114,6 @@ export default {
                 console.log(err);
             })
         },
-
         handleCheckAllChange(val) {
             this.checkedCities = val ? cityOptions : [];
             this.isIndeterminate = false;

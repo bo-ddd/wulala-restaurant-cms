@@ -83,14 +83,14 @@
 
 
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column label="菜名图片" width="180">
+                <el-table-column label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <!-- <i class="el-icon-time"></i> -->
                         <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
                         <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
                     </template>
                 </el-table-column>
-                <el-table-column label="菜名" width="180">
+                <el-table-column label="菜肴名称" width="180">
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="top">
                             <p>菜名: {{ scope.row.foodName }}</p>
@@ -101,19 +101,20 @@
                         </el-popover>
                     </template>
                 </el-table-column>
+                <el-table-column label="菜肴价格">
+                    <template slot-scope="scope">
+                        <el-tag size="medium">{{ scope.row.price + '元' }}</el-tag>
+                    </template>
+                </el-table-column>
 
-                <el-table-column label="描述">
+                <el-table-column label="菜肴描述">
                     <template slot-scope="scope">
                         <el-tag size="medium">{{ scope.row.description }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column label="价格">
-                    <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.price + '元' }}</el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="操作">
+
+                <el-table-column align="center" label="菜肴操作">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
                         <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除
