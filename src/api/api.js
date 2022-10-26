@@ -59,15 +59,14 @@ export const permissionListApi = function (payload = {}) {
 //   return instance.post('/permission/add',payload);
 // }
 /**
-<<<<<<< HEAD
 * @description 添加权限列表
 */
 export const permissionAddApi = function (payload = {}) {
   return instance.post('/permission/add', payload);
 }
 /*
- *  @description 创建角色
- */
+*  @description 创建角色
+*/
 export const roleCreate = function (payload = {}) {
   return instance.post('/role/create', payload)
 }
@@ -103,7 +102,7 @@ export const foodAdd = function (options = {}) {
 /**
  * @description 获取用户列表接口
  */
-export const userlist = function (options = {}) {
+export const userList = function (options = {}) {
   return instance.post('/user/list', options, getPostConfig())
 }
 /**
