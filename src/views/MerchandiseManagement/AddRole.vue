@@ -11,11 +11,8 @@
                     <div action="" class="role-name">
                         <div class="role-title"><span>*</span>所属部门</div>
                         <el-select v-model="input2" placeholder="请选择所属部门">
-                            <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                :value="item.value">
                             </el-option>
                         </el-select>
                     </div>
@@ -23,34 +20,36 @@
                 </div>
                 <!-- 全选 -->
                 <div class="select-all pt-15">
-                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">选择所有权限</el-checkbox>
+                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                        选择所有权限</el-checkbox>
                     <div style="margin: 15px 0;"></div>
                 </div>
                 <div class="power-list">
                     <div class="power-list_nav">
-                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                            全选</el-checkbox>
                     </div>
                     <div class="power-list_content">
                         <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                            <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+                            <el-checkbox v-for="city in cities" :label="city" :key="city">{{ city }}</el-checkbox>
                         </el-checkbox-group>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </template>
 
 <script>
-import {roleCreate ,permissionListApi} from '@/api/api';
+import { roleCreate, permissionListApi } from '@/api/api';
 const cityOptions = ['上海', '北京', '广州', '深圳'];
-export default{
-    data(){
-        return{
+export default {
+    data() {
+        return {
             input1: '',
             input2: '',
-
+            aa: [],
             checkAll: false,
             checkedCities: ['北京'],
             cities: cityOptions,
@@ -74,31 +73,48 @@ export default{
             }],
         }
     },
-    components:{
-       
+    components: {
+
     },
-    created(){
-        permissionListApi({}).then(res=>{
+    created() {
+        permissionListApi({}).then(res => {
             // console.log(res.data.data);
-           res.data.data.forEach(element => {
-            // console.log(element);
-            res.data.data.forEach(el => {
-                   if (element.pid == el.id) {
-                    el.children = []
-                    el.children.push({permissionName:element.permissionName})
-                    console.log(el);
-                    console.log(1);
-                   }
-            })
-           });
+            res.data.data.forEach(element => {
+                // console.log(element);
+                res.data.data.forEach(el => {
+                    if (element.pid == el.id) {
+                        el.children = []
+                        el.children.push({ permissionName: element.permissionName })
+                        this.aa.push(el)
+                    } else {
+
+                        this.aa.push(el)
+                    }
+                })
+
+            });
+            console.log(this.aa);
+            //数组去重方法
+            function unlink(aa) {
+                for (var i = 0; i < aa.length; i++) {   
+                    for (var j = i + 1; j < aa.length; j++) {  
+                        if (aa[i].id == aa[j].id) {        
+                            aa.splice(j, 1);         
+                            j--;
+                        }
+                    }
+                }
+                return aa
+            }
+            console.log(unlink(this.aa));
         }).catch(err => {
             console.log(err);
         })
     },
-    methods:{
-        foundRole : function (){
+    methods: {
+        foundRole: function () {
             roleCreate({
-                roleName:this.input
+                roleName: this.input
             }).then(res => {
                 if (res.data.status == 10300) {
                     this.$message({
@@ -119,8 +135,8 @@ export default{
         },
 
         handleCheckAllChange(val) {
-        this.checkedCities = val ? cityOptions : [];
-        this.isIndeterminate = false;
+            this.checkedCities = val ? cityOptions : [];
+            this.isIndeterminate = false;
         },
         handleCheckedCitiesChange(value) {
             let checkedCount = value.length;
@@ -134,14 +150,16 @@ export default{
 <style scoped>
 .box-contont {
     margin: 10px;
-    background-color:#f6fafd;
+    background-color: #f6fafd;
     border-radius: 10px;
     min-height: 700px;
     padding: 15px;
 }
-.title{
+
+.title {
     color: white;
 }
+
 .add-role {
     display: flex;
     align-items: center;
@@ -150,29 +168,36 @@ export default{
     padding: 15px 0;
     border-bottom: 1px solid #eee;
 }
-.role-name{
+
+.role-name {
     display: flex;
     align-items: center;
 }
-.role-title{
+
+.role-title {
     width: 124px;
 }
-.role-name span{
+
+.role-name span {
     color: red;
 }
-.content{
+
+.content {
     background-color: #fff;
     border-radius: 10px;
 }
-.power-list{
+
+.power-list {
     border: 1px solid #eee;
 }
-.power-list_nav{
-    background-color:#f6fafd;
+
+.power-list_nav {
+    background-color: #f6fafd;
     border-bottom: 1px solid #eee;
     padding: 20px;
 }
-.power-list_content{
+
+.power-list_content {
     padding: 20px 20px 20px 50px;
 }
 </style>
