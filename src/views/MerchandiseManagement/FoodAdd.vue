@@ -1,8 +1,9 @@
 <script>
-import { foodAdd } from '@/api/api'
+import { foodAdd ,getCategoryList} from '@/api/api'
 export default {
     data() {
         return {
+            categorylist:[],
             imageUrl: '',
             form: {
                 categoryName: '', //菜肴类型 1：菜 2：粥
@@ -12,6 +13,14 @@ export default {
                 price: '',
             }
         }
+    },
+    created(){
+        getCategoryList({
+
+}).then(res =>{
+    this.categorylist = res.data.data
+   console.log(res.data.data);
+});
     },
 
     methods: {
@@ -32,7 +41,7 @@ export default {
 
         },
 
-
+       
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.form.bannerUrl = res.data.url
@@ -49,7 +58,8 @@ export default {
                 this.$message.error('上传头像图片大小不能超过 1MB!');
             }
             return isPNG && isLt1M;
-        }
+        },
+
     }
 }
 </script>
@@ -68,8 +78,8 @@ export default {
                     </el-form-item>
                     <el-form-item label="菜品类型">
                         <el-select v-model="form.categoryId" placeholder="请选择菜品类型">
-                            <el-option label="川菜" value="1"></el-option>
-                            <el-option label="东北菜" value="2"></el-option>
+                            <el-option  v-for="(el,i) in categorylist" :key="i" :label="el.name" :value="el.id"></el-option>
+                          
                         </el-select>
                     </el-form-item>
 

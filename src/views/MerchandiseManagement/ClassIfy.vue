@@ -8,8 +8,9 @@
                 <el-button class="btn" type="success" size="mini" @click="add">添加</el-button>
             </div>
             <div >
-                <el-tabs  @tab-click="handleClick" >
-                    <el-tab-pane v-for="(el,i) in categoryList" :key="i" :label="el.name">
+                <el-tabs @tab-click="handleClick" >
+                    
+                    <el-tab-pane v-for="el in categoryList" :key="el.id" :label="el.name" >
                     
                     </el-tab-pane>
                 </el-tabs>
@@ -26,15 +27,25 @@ export default {
         return {
             // activeName: 'first',
             input: '',
-            categoryList: []
+            categoryList: [],
+           
         };
     },
 
 
     methods: {
         handleClick(tab, event) {
-            console.log(tab, event);
+            console.log(event);
+            this.categoryList.forEach(el =>{
+                if (tab.label == el.name) {
+                    
+                    
+                    console.log(el.id);
+                }
+            })
+            console.log(tab.label);
         },
+      
         add() {
             getCategoryAddApi({
                 name: this.input, //类目名称
