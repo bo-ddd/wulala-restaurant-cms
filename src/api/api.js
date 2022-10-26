@@ -139,7 +139,7 @@ export const attributeCreateApi = function (payload ={}) {
  */
 
 export const attributeListApi = function (payload ={}) {
-  return instance.post('/attribute/list',payload)
+  return instance.post('/product/attribute/list',payload)
 }
 
 

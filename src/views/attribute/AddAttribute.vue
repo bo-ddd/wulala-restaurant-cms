@@ -14,8 +14,8 @@
         <el-form-item label="类型
         ">
           <el-radio-group v-model="form.type">
-            <el-radio :label="0" value="0">属性</el-radio>
-            <el-radio :label="1" value="1">规格</el-radio>
+            <el-radio :label="0">属性</el-radio>
+            <el-radio :label="1">规格</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
@@ -52,6 +52,17 @@ export default {
             type:this.form.type
         })
         console.log(res);
+        if (res.data.status == 1) {
+          this.$message({
+          type: "success",
+          message: "增加成功",
+        });
+        }else{
+          this.$message({
+          type: "warning",
+          message: res.data.msg,
+        });
+        }
     },
     async ApplyCategory(){
         let res = await categoryListApi()

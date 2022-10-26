@@ -3,21 +3,29 @@
     <h4 class="mg-rl_20 title">属性列表</h4>
     <div class="box-content">
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="日期" width="180">
+        <el-table-column label="id" width="180">
           <template slot-scope="scope">
-            <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ scope.row.date }}</span>
+            <span style="margin-left: 10px">{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="姓名" width="180">
+        <el-table-column label="类目id" width="180">
           <template slot-scope="scope">
-            <el-popover trigger="hover" placement="top">
-              <p>姓名: {{ scope.row.name }}</p>
-              <p>住址: {{ scope.row.address }}</p>
-              <div slot="reference" class="name-wrapper">
-                <el-tag size="medium">{{ scope.row.name }}</el-tag>
-              </div>
-            </el-popover>
+            <span style="margin-left: 10px">{{ scope.row.categoryId }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="属性名" width="180">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.attrName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="类型" width="180">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.type }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="类名" width="180">
+          <template slot-scope="scope">
+            <span style="margin-left: 10px">{{ scope.row.categoryName }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作">
@@ -34,54 +42,65 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[5, 10, 20, 30]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import { attributeListApi } from '@/api/api'
+import { attributeListApi } from "@/api/api";
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: [],
+      currentPage4: 1,
+      total: 0,
+      pageSize: 5,
+      pageNum: 1,
     };
   },
-  created(){
-    // this.applyTable();
+  created() {
+    this.applytable();
   },
   methods: {
-      handleEdit(index, row) {
-        console.log(index, row);
-      },
-      handleDelete(index, row) {
-        console.log(index, row);
-      }
+    handleEdit(index, row) {
+      console.log(index, row);
     },
-    async applyTable(){
-        let res = await attributeListApi();
-        console.log(res);
-    }
+    handleDelete(index, row) {
+      console.log(index, row);
+    },
+    async handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.applytable();
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.pageNum = val;
+      this.applytable();
+    },
+
+    async applytable() {
+      let res = await attributeListApi({
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+      });
+      this.total = res.data.data.total;
+      this.pageSize = res.data.data.pageSize;
+      this.pageNum = res.data.data.pageNum;
+      this.tableData = res.data.data.list;
+    },
+  },
 };
 </script>
 
@@ -96,5 +115,9 @@ export default {
   min-height: 700px;
   padding: 15px 0;
 }
-
+.el-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
 </style>
