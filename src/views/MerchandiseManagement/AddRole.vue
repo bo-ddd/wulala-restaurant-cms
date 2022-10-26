@@ -26,13 +26,13 @@
                     <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">选择所有权限</el-checkbox>
                     <div style="margin: 15px 0;"></div>
                 </div>
-                <div class="power-list">
+                <div class="power-list" v-for="(item , index) in array" :key="index">
                     <div class="power-list_nav">
-                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">{{item.permissionName}}</el-checkbox>
                     </div>
-                    <div class="power-list_content">
-                        <el-checkbox-group v-model="checkedCities" @change="handleCheckedCitiesChange">
-                            <el-checkbox v-for="city in cities" :label="city" :key="city">{{city}}</el-checkbox>
+                    <div class="power-list_content" v-if="item.children != 0">
+                        <el-checkbox-group v-model="item.children" @change="handleCheckedCitiesChange">
+                            <el-checkbox v-for="city in item.children" :label="city" :key="city">{{city.permissionName}}</el-checkbox>
                         </el-checkbox-group>
                     </div>
                 </div>
@@ -72,6 +72,8 @@ export default{
                 value: '选项5',
                 label: '北京烤鸭'
             }],
+
+            array : [],
         }
     },
     components:{
@@ -79,19 +81,18 @@ export default{
     },
     created(){
         permissionListApi({}).then(res=>{
-            // console.log(res.data.data);
-           res.data.data.forEach(element => {
-            // console.log(element);
-            res.data.data.forEach(el => {
-                el.children = []
-                   if (element.pid == el.id) {
-                    el.children.push({permissionName:element.permissionName})
-                    console.log(el);
-                    console.log(1);
-                   }
-                   console.log(el);
-            })
-           });
+            res.data.data.forEach(element => {
+                element.children = [];
+                res.data.data.forEach(el => {
+                    if (element.id == el.pid) {
+                        element.children.push({
+                            permissionName : el.permissionName,
+                        })
+                    }
+                })
+                this.array.push(element);
+            });
+            console.log(this.array);
         }).catch(err => {
             console.log(err);
         })
