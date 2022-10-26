@@ -2,28 +2,31 @@
     <div>
         <h4 class="title">菜品分类</h4>
         <div class="box-contont">
-            
+            <div class="mt-14">
+                <span class="category">添加类目 &nbsp;</span>
+                <el-input class="input" v-model="input" size="mini" placeholder="请输入内容"></el-input>
+                <el-button class="btn" type="success" size="mini" @click="add">添加</el-button>
+            </div>
+            <div >
+                <el-tabs  @tab-click="handleClick" >
+                    <el-tab-pane v-for="(el,i) in categoryList" :key="i" :label="el.name">
+                    
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
         </div>
 
     </div>
 </template>
 <script>
+import { getCategoryAddApi, getCategoryList } from '@/api/api'
 export default {
+
     data() {
         return {
-            activeName: 'first',
-            classify: [
-                {
-                    className: '家常饭',
-                }, {
-                    className: '川菜',
-                }, {
-                    className: '粤菜',
-                }, {
-                    className: '东北菜',
-                },
-            ],
-            abc: 0,
+            // activeName: 'first',
+            input: '',
+            categoryList: []
         };
     },
 
@@ -32,10 +35,28 @@ export default {
         handleClick(tab, event) {
             console.log(tab, event);
         },
-        activeInedx(i) {
-            this.abc = i
+        add() {
+            getCategoryAddApi({
+                name: this.input, //类目名称
+                productUnit: "盘", //单位
+                parentId: 0, //父级id，如果不填则为0，  如果为0，表示一级类目
+                sort: 1 //排序
+            }).then(res => {
+                console.log('---------类目----------');
+                console.log(res);
+            })
         }
     },
+    mounted() {
+        getCategoryList({
+
+        }).then(res => {
+            this.categoryList = res.data.data
+            console.log('---------类目列表----------');
+            console.log(this.categoryList);
+        })
+    }
+
 };
 </script>
 <style scoped>
@@ -45,32 +66,24 @@ export default {
     border-radius: 10px;
 }
 
-.box {
-    display: flex;
-    justify-content: space-around;
-
-}
-
-.text-classify {
-    background-color: #409EFF;
-
-}
-
-.pp {
-    width: 150px;
-    border: 1px solid red;
-    padding: 5px 10px;
-    color: #fff;
-    border-radius: 10px;
-}
-.title{
-    color: white;
-}
 .box-contont {
     margin: 10px;
     background-color: white;
     border-radius: 10px;
     height: 100%;
     padding: 15px;
+}
+
+.input {
+    width: 250px;
+}
+
+.category {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn {
+    margin-left: 10px;
 }
 </style>

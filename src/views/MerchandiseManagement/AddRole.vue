@@ -11,11 +11,8 @@
                     <div action="" class="role-name">
                         <div class="role-title"><span>*</span>所属部门</div>
                         <el-select v-model="input2" placeholder="请选择所属部门">
-                            <el-option
-                            v-for="item in options"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value">
+                            <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                :value="item.value">
                             </el-option>
                         </el-select>
                     </div>
@@ -23,39 +20,41 @@
                 </div>
                 <!-- 全选 -->
                 <div class="select-all pt-15">
-                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">选择所有权限</el-checkbox>
+                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                        选择所有权限</el-checkbox>
                     <div style="margin: 15px 0;"></div>
                 </div>
-                <div class="power-list" v-for="(item , index) in array" :key="index">
+                <div class="power-list" v-for="(item, index) in array" :key="index">
                     <div class="power-list_nav">
-                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">{{item.permissionName}}</el-checkbox>
+                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
+                            {{ item.permissionName }}</el-checkbox>
                     </div>
                     <div class="power-list_content" v-if="item.children != 0">
                         <el-checkbox-group v-model="item.children" @change="handleCheckedCitiesChange">
-                            <el-checkbox v-for="city in item.children" :label="city" :key="city">{{city.permissionName}}</el-checkbox>
+                            <el-checkbox v-for="city in item.children" :label="city" :key="city">{{ city.permissionName
+                            }}
+                            </el-checkbox>
                         </el-checkbox-group>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
 </template>
 
 <script>
-import {roleCreate ,permissionListApi} from '@/api/api';
+import { roleCreate, permissionListApi } from '@/api/api';
 const cityOptions = ['上海', '北京', '广州', '深圳'];
-export default{
-    data(){
-        return{
+export default {
+    data() {
+        return {
             input1: '',
             input2: '',
-
             checkAll: false,
             checkedCities: ['北京'],
             cities: cityOptions,
             isIndeterminate: true,
-
             options: [{
                 value: '选项1',
                 label: '黄金糕'
@@ -72,21 +71,17 @@ export default{
                 value: '选项5',
                 label: '北京烤鸭'
             }],
-
-            array : [],
+            array: [],
         }
     },
-    components:{
-       
-    },
-    created(){
-        permissionListApi({}).then(res=>{
+    created() {
+        permissionListApi({}).then(res => {
             res.data.data.forEach(element => {
                 element.children = [];
                 res.data.data.forEach(el => {
                     if (element.id == el.pid) {
                         element.children.push({
-                            permissionName : el.permissionName,
+                            permissionName: el.permissionName,
                         })
                     }
                 })
@@ -97,10 +92,10 @@ export default{
             console.log(err);
         })
     },
-    methods:{
-        foundRole : function (){
+    methods: {
+        foundRole: function () {
             roleCreate({
-                roleName:this.input
+                roleName: this.input
             }).then(res => {
                 if (res.data.status == 10300) {
                     this.$message({
@@ -119,10 +114,9 @@ export default{
                 console.log(err);
             })
         },
-
         handleCheckAllChange(val) {
-        this.checkedCities = val ? cityOptions : [];
-        this.isIndeterminate = false;
+            this.checkedCities = val ? cityOptions : [];
+            this.isIndeterminate = false;
         },
         handleCheckedCitiesChange(value) {
             let checkedCount = value.length;
@@ -136,14 +130,16 @@ export default{
 <style scoped>
 .box-contont {
     margin: 10px;
-    background-color:#f6fafd;
+    background-color: #f6fafd;
     border-radius: 10px;
     min-height: 700px;
     padding: 15px;
 }
-.title{
+
+.title {
     color: white;
 }
+
 .add-role {
     display: flex;
     align-items: center;
@@ -152,29 +148,36 @@ export default{
     padding: 15px 0;
     border-bottom: 1px solid #eee;
 }
-.role-name{
+
+.role-name {
     display: flex;
     align-items: center;
 }
-.role-title{
+
+.role-title {
     width: 124px;
 }
-.role-name span{
+
+.role-name span {
     color: red;
 }
-.content{
+
+.content {
     background-color: #fff;
     border-radius: 10px;
 }
-.power-list{
+
+.power-list {
     border: 1px solid #eee;
 }
-.power-list_nav{
-    background-color:#f6fafd;
+
+.power-list_nav {
+    background-color: #f6fafd;
     border-bottom: 1px solid #eee;
     padding: 20px;
 }
-.power-list_content{
+
+.power-list_content {
     padding: 20px 20px 20px 50px;
 }
 </style>
