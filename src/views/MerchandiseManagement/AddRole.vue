@@ -79,6 +79,7 @@ export default {
     created() {
         permissionListApi({}).then(res => {
             // console.log(res.data.data);
+
             res.data.data.forEach(element => {
                 // console.log(element);
                 res.data.data.forEach(el => {
@@ -107,6 +108,7 @@ export default {
                 return aa
             }
             console.log(unlink(this.aa));
+
         }).catch(err => {
             console.log(err);
         })
