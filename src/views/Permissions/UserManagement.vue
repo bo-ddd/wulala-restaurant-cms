@@ -1,5 +1,5 @@
 <script>
-import { userlist } from '@/api/api';
+import { userList } from '@/api/api';
 export default {
     data() {
         return {
@@ -11,10 +11,16 @@ export default {
         }
     },
     methods: {
+        toSetUser: function (data) {
+            this.$router.push({ path: '/setusermg',query:{
+                userId : data.userId
+            } })
+            console.log(data);
+        },
         handleSizeChange(val) {
             // console.log(`每页 ${val} 条`);
             this.sizechange = val
-            userlist({
+            userList({
             pageNum: this.currentchange,
             pageSize: this.sizechange,
         }).then(res => {
@@ -29,7 +35,7 @@ export default {
         },
         handleCurrentChange(val) {
             this.currentchange = val
-            userlist({
+            userList({
             pageNum: this.currentchange,
             pageSize: this.sizechange,
         }).then(res => {
@@ -44,7 +50,7 @@ export default {
         },
     },
     mounted() {
-        userlist({
+        userList({
             pageNum: this.currentchange,
             pageSize: this.sizechange,
         }).then(res => {
@@ -63,15 +69,14 @@ export default {
         <h4 class="mg-rl_20 title">用户管理</h4>
         <div class="box-contont">
 
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column label="用户头像" width="180">
+            <el-table  :data="tableData" style="width: 100%">
+                <el-table-column align="center" label="用户头像" width="180">
                     <template slot-scope="scope">
-                        <!-- <i class="el-icon-time"></i> -->
-                        <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
-                        <img class="banner-food_png" :src="scope.row.avatarImg" alt="">
+                        <img v-if="scope.row.avatarImg" class="banner-food_png" :src="scope.row.avatarImg" alt="">
+                    <div class="avatarImg" v-else></div>
                     </template>
                 </el-table-column>
-                <el-table-column label="用户id" width="180">
+                <el-table-column align="center" label="用户id" width="180">
                     <template slot-scope="scope">
                           
                             <div slot="reference" class="name-wrapper">
@@ -81,18 +86,18 @@ export default {
                     </template>
                 </el-table-column>
 
-                <el-table-column label="昵称">
+                <el-table-column align="center" label="昵称">
                     <template slot-scope="scope">
                         <el-tag size="medium">{{ scope.row.avatarName }}</el-tag>
                     </template>
                 </el-table-column>
 
-                <el-table-column label="手机号">
+                <el-table-column align="center" label="手机号">
                     <template slot-scope="scope">
                         <el-tag size="medium">{{ scope.row.phoneNumber }}</el-tag>
                     </template>
                 </el-table-column>
-                <el-table-column label="角色">
+                <el-table-column align="center" label="角色">
                     <template >
                         <el-tag size="medium">特一级厨师</el-tag>
                         <!-- <el-button size="mini" >添加角色</el-button>
@@ -100,10 +105,10 @@ export default {
                         <el-button size="mini" >查看角色</el-button> -->
                     </template>
                 </el-table-column>
-                <el-table-column label="操作">
-                    <template >
-                        
-                        <el-button size="mini">查看用户角色</el-button>
+
+                <el-table-column align="center" label="操作">
+                    <template slot-scope="scope">
+                        <el-button size="mini" @click="toSetUser(scope.row)">查看用户角色</el-button>
                         <!-- <el-button size="mini" type="danger" >删除角色</el-button>
                         <el-button size="mini" >查看角色</el-button> -->
                     </template>
@@ -159,5 +164,12 @@ export default {
     width: 40px;
     height: 40px;
     border-radius: 20px;
+}
+.avatarImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #ccc;
+    display: inline-block;
 }
 </style>

@@ -8,19 +8,10 @@
                         <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                     </template>
                 </el-tab-pane>
-                <!-- <el-tab-pane label="超级管理员">
-                    <div class="subject">
-                        超级管理员
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane label="管理员">
-                    <div class="subject">管理员</div>
-                </el-tab-pane> -->
-               
 
-                    <el-tab-pane :label="item.permissionName" v-for="(item,i) in permissionName" :key="i">
+                    <el-tab-pane :label="item.roleName" v-for="(item,i) in obtainRoleList" :key="i">
                         <div class="subject">
-                            <p class="subjext-title">特一级厨师<span class="pl-5">该角色没有管理权限</span></p>
+                            <p class="subjext-title">{{item.roleName}}<span class="pl-5">该角色没有管理权限</span></p>
                             <el-tabs :tab-position="tabPositions" style="" class="mt-20">
                                 <el-tab-pane label="角色成员">
                                     <div class="nav">
@@ -28,14 +19,14 @@
                                         <el-button type="primary">+添加成员</el-button>
                                     </div>
                                     <el-table :data="tableData" style="width: 100%">
-                                        <el-table-column prop="name" label="姓名" width="150">
+                                        <el-table-column prop="name" label="角色ID" width="150">
                                         </el-table-column>
-                                        <el-table-column prop="avatarphone" label="手机号" width="150">
+                                        <el-table-column prop="avatarphone" label="角色名称" width="150">
                                         </el-table-column>
-                                        <el-table-column prop="date" label="部门" width="150">
+                                        <!-- <el-table-column prop="date" label="部门" width="150">
                                         </el-table-column>
                                         <el-table-column prop="address" label="职位">
-                                        </el-table-column>
+                                        </el-table-column> -->
                                         <el-table-column fixed="right" label="操作">
                                             <div class="delete">
                                                 <p><img src="@/assets/images/icon-mines.png" alt="">-移除</p>
@@ -59,7 +50,7 @@
 </template>
 
 <script>
-import { permissionListApi } from '@/api/api';
+import { roleListApi } from '@/api/api';
 export default {
     data() {
         return {
@@ -68,35 +59,30 @@ export default {
             tableData: [{
                 date: '2016-05-02',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1518 弄',
                 avatarphone: '1231562369'
             }, {
                 date: '2016-05-04',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1517 弄',
                 avatarphone: '1231562369'
             }, {
                 date: '2016-05-01',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1519 弄',
                 avatarphone: '1231562369'
             }, {
                 date: '2016-05-03',
                 name: '王小虎',
-                address: '上海市普陀区金沙江路 1516 弄',
                 avatarphone: '1231562369'
             }],
-            permissionName: '',
+            obtainRoleList:''//角色
         }
     },
     created() {
-        permissionListApi({}).then(res => {
-            this.permissionName = res.data.data;
-            console.log('------res-------');
-            console.log(res.data.data);
-            console.log('--------this permissionName----');
-            console.log(this.permissionName.length);
-        });
+        roleListApi({}).then(res=>{
+            this.obtainRoleList = res.data.data;
+            // console.log(res);
+        }).catch(err => {
+            console.log(err);
+        })
     },
     methods: {
         toAddRole: function () {

@@ -52,11 +52,31 @@ export const loginApi = function (payload = {}) {
 export const permissionListApi = function (payload = {}) {
   return instance.post('/permission/list', payload)
 }
+// /**
+// * @description 添加权限列表
+// */
+// export const permissionAddApi = function(payload = {}){
+//   return instance.post('/permission/add',payload);
+// }
 /**
+<<<<<<< HEAD
 * @description 添加权限列表
 */
 export const permissionAddApi = function (payload = {}) {
   return instance.post('/permission/add', payload);
+}
+/*
+ *  @description 创建角色
+ */
+export const roleCreate = function (payload = {}) {
+  return instance.post('/role/create', payload)
+}
+
+/**
+ * @description 获取角色列表
+ */
+export const roleListApi = function (payload = {}) {
+  return instance.post('/role/list', payload)
 }
 /**
  * @description 注册接口
@@ -107,4 +127,43 @@ export const getCategoryAddApi = function (payload = {}) {
 export const getCategoryList = function (payload = {}) {
   return instance.post('category/list', payload, getPostConfig())
 }
+/**
+ * @description 给用户添加角色
+ */
+
+export const addRoleApi = function (addrole = {}) {
+  return instance.post('/user/addRole', addrole, getPostConfig())
+}
+/**
+ * @description 查询用户权限
+ */
+export const getPermission = function (getPermission = {}) {
+  return instance.post('/user/permission/list', getPermission, getPostConfig())
+}
+
+/**
+ * @description 获取类目列表
+ */
+
+export const categoryListApi = function (payload = {}) {
+  return instance.post('/category/list', payload)
+}
+
+/**
+ * @description 增加商品属性规格
+ */
+
+export const attributeCreateApi = function (payload = {}) {
+  return instance.post('/product/attribute/create', payload)
+}
+
+/**
+ * @description 获取商品属性列表
+ */
+
+export const attributeListApi = function (payload = {}) {
+  return instance.post('/attribute/list', payload)
+}
+
+
 

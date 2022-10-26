@@ -64,6 +64,18 @@
                   <el-menu-item index="usermg">用户管理</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
+              <el-submenu index="5">
+                <template slot="title">
+                  <i class="el-icon-location"></i>
+                  <span>属性规格</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="addattribute">新增属性规格</el-menu-item>
+                </el-menu-item-group>
+                <el-menu-item-group>
+                  <el-menu-item index="attributelist">属性规格列表</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
             </el-menu>
           </el-col>
         </el-row>
@@ -132,6 +144,8 @@ h3 {
 ::v-deep .el-main {
   background-color: #0e80f3;
   border-radius: 10px;
+ height: calc(100vh - 60px);
+  overflow-y: scroll;
 }
 
 
@@ -213,5 +227,8 @@ h3 {
   margin-left: 5px;
   font-size: 14px;
   font-weight: 600;
+}
+::v-deep .el-aside{
+  /* height: 1000px; */
 }
 </style>
