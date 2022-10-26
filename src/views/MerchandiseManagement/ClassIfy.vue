@@ -50,7 +50,6 @@
                                 </template>
                             </el-table-column>
                         </el-table>
->>>>>>> b05c81a04499f0a55a53b5b39a164b09f65201f9
                     </el-tab-pane>
                 </el-tabs>
 
