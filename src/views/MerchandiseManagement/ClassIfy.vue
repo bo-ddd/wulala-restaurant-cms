@@ -24,13 +24,13 @@
                             </el-table-column>
                             <el-table-column prop="description" label="菜肴属性" width="268">
                             </el-table-column>
-                            <el-table-column align="center" label="菜肴价格"  width="268">
+                            <el-table-column align="center" label="菜肴价格" width="268">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.price + '元' }}</span>
                                 </template>
                             </el-table-column>
 
-                            <el-table-column align="center" label="菜肴操作" width="268" >
+                            <el-table-column align="center" label="菜肴操作" width="268">
                                 <template slot-scope="scope">
                                     <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改 </el-button>
                                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
@@ -55,7 +55,7 @@ export default {
             input: '',
             categoryList: [], //类目列表
             foodList: [], //菜肴列表
-            defaultDisplay: [],//默认展示
+            defaultDisplay: '',//默认展示
             attributeList: [],//获取商品属性列表
         };
     },
@@ -70,15 +70,7 @@ export default {
                         categoryId: el.id //商品列表 categoryId
                     }).then(res => {
                         this.foodList = res.data.data.list
-                        console.log(this.foodList);
-                    })
-                    attributeListApi({}).then(res => {
-                        res.data.data.list.forEach(item => {
-                            if (item.type == 0) {
-                                console.log('-----------点击事件得log---------');
-                                console.log(item);
-                            }
-                        })
+                        // console.log(this.foodList);
                     })
                 }
             })
@@ -100,20 +92,21 @@ export default {
 
         }).then(res => {
             this.categoryList = res.data.data
-            this.defaultDisplay = res.data.data[0]
+            this.defaultDisplay = res.data.data[0].id
+            console.log(this.defaultDisplay);
+            console.log('-----------res.data.data-----------------');
+            // console.log(res.data.data);
 
+            foodList({
+                categoryId: this.defaultDisplay
+            }).then(res => {
+                this.foodList = res.data.data.list
+                console.log(res);
+            });
+            attributeListApi({}).then(res => {
+                this.attributeList = res.data.data.list
+            })
         });
-        foodList({
-            categoryId: this.defaultDisplay.id
-        }).then(res => {
-            this.foodList = res.data.data.list
-            console.log(this.foodList[0]);
-        });
-        attributeListApi({}).then(res => {
-            this.attributeList = res.data.data.list
-            console.log(this.attributeList);
-
-        })
     }
 
 };
