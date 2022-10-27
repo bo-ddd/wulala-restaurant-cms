@@ -51,3 +51,7 @@ p{
 .pt-15{
     padding: 15px;
 }
+
+ul li{
+    list-style: none;
+}
