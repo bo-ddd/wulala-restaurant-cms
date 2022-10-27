@@ -164,9 +164,14 @@ export const attributeCreateApi = function (payload = {}) {
  * @description 获取商品属性列表
  */
 
-export const attributeListApi = function (payload = {}) {
-  return instance.post('/attribute/list', payload)
+export const attributeListApi = function (payload ={}) {
+  return instance.post('/product/attribute/list',payload)
 }
 
+/**
+ * @description 删除商品属性规格
+ */
 
-
+export const attributeDeleteApi = function (payload ={}) {
+  return instance.post('product/attribute/delete',payload)
+}

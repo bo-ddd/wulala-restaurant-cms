@@ -73,6 +73,7 @@
         </div>
       </div>
       </el-header>
+
       <el-main>
         <router-view />
       </el-main>
@@ -119,7 +120,6 @@ export default {
 
       })
       this.avatarName = res.data.data.avatarName
-      console.log(this.avatarName);
       this.avatar = res.data.data.avatarImg
       // console.log(res.data.data.avatarImg);
     }
