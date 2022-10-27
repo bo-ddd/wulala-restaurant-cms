@@ -64,7 +64,11 @@ const routes = [
         path:'/attributelist',
         name:'addattributelist',
         component:() =>import("@/views/attribute/AttributeList.vue")
-      },
+      },{
+        path:'/setrolepower',
+        name:'setrolepower',
+        component:()=>import("../views/attribute/SetRolePower.vue")
+      }
     ]
   }
 
