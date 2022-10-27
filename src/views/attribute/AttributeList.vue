@@ -42,23 +42,22 @@
           </template>
         </el-table-column>
       </el-table>
-
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[5, 10, 20, 30]"
-        :page-size="pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
-      >
-      </el-pagination>
     </div>
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="currentPage4"
+      :page-sizes="[5, 10, 20, 30]"
+      :page-size="pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total"
+    >
+    </el-pagination>
   </div>
 </template>
 
 <script>
-import { attributeListApi } from "@/api/api";
+import { attributeListApi,attributeDeleteApi } from "@/api/api";
 export default {
   data() {
     return {
@@ -78,8 +77,24 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.attributeDelete(row);
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
     },
-    async handleSizeChange(val) {
+    handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize = val;
       this.applytable();
@@ -100,6 +115,13 @@ export default {
       this.pageNum = res.data.data.pageNum;
       this.tableData = res.data.data.list;
     },
+    async attributeDelete(row){
+      let res = await attributeDeleteApi({
+        id: row.id
+      })
+      console.log(res);
+      this.applytable();
+    }
   },
 };
 </script>
