@@ -1,5 +1,5 @@
 <template>
-  <!-- <el-container>
+  <el-container>
     <el-aside width="230px">
       <el-row class="tac">
         <el-col :span="12">
@@ -78,10 +78,10 @@
         <router-view />
       </el-main>
     </el-container>
-  </el-container> -->
-  <div>
+  </el-container>
+  <!-- <div>
     <el-container>
-  <el-aside width="200px">
+  <el-aside width="230px">
     <el-row class="tac">
         <el-col :span="12">
           <el-menu background-color="#7b40f2" text-color="#fff" active-text-color="#2fd2d9" router default-active="home"
@@ -160,7 +160,7 @@
   </el-container>
 </el-container>
     
-  </div>
+  </div> -->
 </template>
 
 <script>
