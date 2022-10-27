@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h4 class="title">菜品分类</h4>
+    <div class="box">
+        <h3 class="title">菜品分类</h3>
         <div class="box-contont">
             <div class="mt-14">
                 <span class="category">添加类目 &nbsp;</span>
@@ -131,13 +131,6 @@ export default {
     border-radius: 10px;
 }
 
-.box-contont {
-    margin: 10px;
-    background-color: white;
-    border-radius: 10px;
-    height: 100%;
-    padding: 15px;
-}
 
 .input {
     width: 250px;

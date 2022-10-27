@@ -1,10 +1,58 @@
 <template>
   <el-container>
-    <el-header>
-      <div class="wrap box-top">
-        <div class="title">乌拉拉餐饮管理</div>
+    <el-aside width="230px">
+      <el-row class="tac">
+        <el-col :span="12">
+          <el-menu background-color="#7b40f2" text-color="#fff" active-text-color="#2fd2d9" router default-active="home"
+          class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+          <img class="logo" src="../assets/images/icon-wll_logo.png" alt="">
+            <el-menu-item index="home">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">首页</span>
+            </el-menu-item>
+            
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>菜品管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="goodsdata">菜品数据</el-menu-item>
+                <el-menu-item index="classify">菜品分类</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>权限管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="rolemg">角色管理</el-menu-item>
+                <el-menu-item index="usermg">用户管理</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>属性规格</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="addattribute">新增属性规格</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group>
+                <el-menu-item index="attributelist">属性规格列表</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-row>
+    </el-aside>
+    <el-container>
+      <el-header>
+        <div class=" box-top">
+       
         <div class="box-user ">
-          <span>实时数据/数据管理</span>
+         
           <div class="box-userinfo">
             <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
             <img class="icon-avater" :src=this.avatar alt="">
@@ -24,66 +72,18 @@
           </div>
         </div>
       </div>
-    </el-header>
-    <el-container>
-      <el-aside width="200px">
-        <el-row class="tac">
-          <el-col :span="12">
-            <el-menu router default-active="home" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-              <el-menu-item index="home">
-                <i class="el-icon-menu"></i>
-                <span slot="title">首页</span>
-              </el-menu-item>
-              <el-submenu index="2">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>数据中心</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="shuju">实时数据</el-menu-item>
-                  <el-menu-item index="1-2">菜品数据</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="3">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>菜品管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="goodsdata">菜品数据</el-menu-item>
-                  <el-menu-item index="classify">菜品分类</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="4">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>权限管理</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="rolemg">角色管理</el-menu-item>
-                  <el-menu-item index="usermg">用户管理</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-              <el-submenu index="5">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>属性规格</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="addattribute">新增属性规格</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group>
-                  <el-menu-item index="attributelist">属性规格列表</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-        </el-row>
-      </el-aside>
+      </el-header>
       <el-main>
         <router-view />
       </el-main>
     </el-container>
+
+
+
+
+
+
+
   </el-container>
 </template>
 
@@ -91,15 +91,15 @@
 // @ is an alias to /src
 import { userInfoApi } from '@/api/api'
 export default {
-  data(){
-    return{
-      avatarName : "昵称",
-      avatar:''
+  data() {
+    return {
+      avatarName: "昵称",
+      avatar: ''
     }
   },
   name: 'HomeView',
   components: {
-    
+
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -108,13 +108,13 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-    loginout(){
-      sessionStorage.setItem('token','');
+    loginout() {
+      sessionStorage.setItem('token', '');
       this.$router.push({
-        name:'loginview'
+        name: 'loginview'
       })
     },
-    async render(){
+    async render() {
       let res = await userInfoApi({
 
       })
@@ -124,35 +124,63 @@ export default {
       // console.log(res.data.data.avatarImg);
     }
   },
-  created(){
+  created() {
     this.render();
   }
 }
 </script>
 <style scoped>
-h3 {
-  text-align: center;
-}
-
-.el-icon-arrow-down {
-  font-size: 12px;
-}
-
 ::v-deep .el-col-12 {
   width: 100%;
 }
+.logo{
+  width: 100px;
+  height: 100px;
+  filter: invert(100%);
+  margin: 25px 65px;
+}
+
+::v-deep .el-aside {
+  overflow: hidden;
+}
+::v-deep .el-menu-vertical-demo{
+  height: 100vh;
+}
+::v-deep .el-submenu{
+  padding-left: 20px;
+}
+::v-deep .el-submenu__icon-arrow{
+  position: absolute;
+      top: 50%;
+      right: 50px;
+      margin-top: -7px;
+      transition: transform .3s;
+      font-size: 12px;
+}
+.el-icon-s-home{
+  padding-left: 22px;
+}
+
+.box-top {
+ margin: 15px 0;
+}
+::v-deep .el-header{
+  background-color: #eeeeee;
+}
+
+/* 就样式 */
+
+
 
 ::v-deep .el-main {
-  background-color: #0e80f3;
-  border-radius: 10px;
- height: calc(100vh - 60px);
-  overflow-y: scroll;
+  padding: 0;
+  /* overflow-y: scroll; */
 }
 
 
 ::v-deep .el-header {
-  /* line-height: 60px; */
   padding: 0px;
+  border-bottom: 2px solid #ccc;
 }
 
 .el-col {
@@ -160,15 +188,15 @@ h3 {
 }
 
 .bg-purple-dark {
-  background: #99a9bf;
+  /* background: #99a9bf; */
 }
 
 .bg-purple {
-  background: #d3dce6;
+  /* background: #d3dce6; */
 }
 
 .bg-purple-light {
-  background: #e5e9f2;
+  /* background: #e5e9f2; */
 }
 
 .grid-content {
@@ -178,16 +206,15 @@ h3 {
 
 .row-bg {
   padding: 10px 0;
-  background-color: #f9fafc;
+  /* background-color: #f9fafc; */
 }
 
 .box-user {
-  width: 85%;
+  /* width: 85%;
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center */
 }
-
 
 
 .title {
@@ -197,15 +224,8 @@ h3 {
   min-width: 170px;
 }
 
-.box-top {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-evenly
-}
 
-.content {
-  background-color: #ccc;
-}
+
 
 .icon-avater {
   width: 30px;
@@ -219,17 +239,15 @@ h3 {
 }
 
 .box-userinfo {
-  min-width: 120px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  margin-right: 50px;
 }
 
 .username {
   margin-left: 5px;
   font-size: 14px;
   font-weight: 600;
-}
-::v-deep .el-aside{
-  /* height: 1000px; */
 }
 </style>

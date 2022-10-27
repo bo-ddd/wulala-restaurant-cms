@@ -56,11 +56,5 @@ export default {
     </div>
 </template>
 <style scoped>
-.box-contont {
-    margin: 10px;
-    background-color: white;
-    border-radius: 10px;
-    height: 100%;
-    padding: 15px;
-}
+
 </style>

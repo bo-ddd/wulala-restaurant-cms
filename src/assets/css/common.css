@@ -55,3 +55,12 @@ p{
 ul li{
     list-style: none;
 }
+.box-contont {
+    margin: 15px 30px;
+    background-color: white;
+    padding: 15px;
+}
+.title {
+    color: black;
+    padding: 15px 0px 0px 38px;
+}

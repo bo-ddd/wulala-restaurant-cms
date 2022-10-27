@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <h4 class="mg-rl_20 title">菜品管理</h4>
+    <div class="box">
+        <h3 class="title ">菜品管理</h3>
         <div class="box-contont">
             <div class="box-inquire">
                 <div class="box-inquire_inp">
@@ -44,8 +44,6 @@
                     <el-button size="mini">批量下架</el-button>
                     <el-button size="mini">批量删除</el-button>
                 </el-row>
-               
-
                 <el-dialog title="菜品详情" :visible.sync="dialogFormVisible">
                     <el-form ref="form" :model="form" label-width="80px">
                     <el-form-item label="菜品名称">
@@ -57,11 +55,8 @@
                     <el-form-item label="菜品类型">
                         <el-select v-model="form.categoryId" placeholder="菜系">
                             <el-option  v-for="(el,i) in categorylist" :key="i" :label="el.name" :value="el.id"></el-option>
-                          
                         </el-select>
                     </el-form-item>
-
-
                     <el-form-item label="菜品描述">
                         <el-input type="textarea" v-model="form.description"></el-input>
                     </el-form-item>
@@ -82,7 +77,7 @@
             </div>
 
 
-            <el-table :data="tableData" style="width: 100%">
+            <el-table  :data="tableData"  height="600" style="width: 100% ">
                 <el-table-column label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <!-- <i class="el-icon-time"></i> -->
@@ -125,13 +120,13 @@
             </el-table>
 
 
-        </div>
-        <div class="block">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                :page-sizes="[10, 20, 30, 40]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
-                :total=total>
-            </el-pagination>
-
+            <div class="block">
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                    :page-sizes="[5, 15, 20, 25]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
+                    :total=total>
+                </el-pagination>
+    
+            </div>
         </div>
     </div>
 </template>
@@ -192,7 +187,7 @@ export default {
     },
     methods: {
         handleSizeChange(val) {
-            // console.log(`每页 ${val} 条`);
+            console.log(`每页 ${val} 条`);
             this.sizechange = val
             foodList({
                 pageNum: this.currentchange,
@@ -220,11 +215,8 @@ export default {
                 this.pagesize = res.data.data.pageSize
                 console.log(this.total);
             })
-            // console.log(`当前页: ${val}`);
+            console.log(`当前页: ${val}`);
         },
-
-
-
         toFoodAdd: function () {
             this.$router.push({ path: '/foodadd' })
         },
@@ -305,13 +297,21 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-.box-contont {
-    margin: 10px;
-    background-color: white;
-    border-radius: 10px;
-    height: 100%;
-    padding: 15px;
+
+.box{
+    background-color: #eeeeee;
+    height: calc(100vh - 60px);
 }
+
+
+
+
+
+
+
+
+
+
 
 ::v-deep .el-select {
     width: 100px;
@@ -336,9 +336,7 @@ export default {
     margin-right: 5px;
 }
 
-.title {
-    color: white;
-}
+
 
 .banner-food_png {
     width: 50px;
@@ -356,12 +354,7 @@ export default {
     margin-left: 160px;
 }
 
-.box {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-}
+
 
 ::v-deep .el-upload {
     border: 1px solid #ccc;

@@ -128,13 +128,7 @@ export default {
 </script>
 
 <style scoped>
-.box-contont {
-    margin: 10px;
-    background-color: #f6fafd;
-    border-radius: 10px;
-    min-height: 700px;
-    padding: 15px;
-}
+
 
 .title {
     color: white;
