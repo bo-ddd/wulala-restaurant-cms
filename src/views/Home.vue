@@ -25,7 +25,7 @@
         </div>
       </div>
     </el-header>
-    <el-container>
+    <el-container class="werq">
       <el-aside width="200px">
         <el-row class="tac">
           <el-col :span="12">
@@ -119,7 +119,6 @@ export default {
 
       })
       this.avatarName = res.data.data.avatarName
-      console.log(this.avatarName);
       this.avatar = res.data.data.avatarImg
       // console.log(res.data.data.avatarImg);
     }
@@ -228,8 +227,5 @@ h3 {
   margin-left: 5px;
   font-size: 14px;
   font-weight: 600;
-}
-::v-deep .el-aside{
-  /* height: 1000px; */
 }
 </style>
