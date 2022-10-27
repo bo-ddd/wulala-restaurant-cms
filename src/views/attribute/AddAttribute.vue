@@ -83,10 +83,9 @@ export default {
   margin: 10px;
   background-color: white;
   border-radius: 10px;
-  min-height: 700px;
   padding: 15px 0;
 }
 .el-form {
-  width: 24%;
+  width: 300px;
 }
 </style>

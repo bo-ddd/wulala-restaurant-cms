@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <!-- <el-container>
     <el-aside width="230px">
       <el-row class="tac">
         <el-col :span="12">
@@ -78,14 +78,89 @@
         <router-view />
       </el-main>
     </el-container>
-
-
-
-
-
-
-
+  </el-container> -->
+  <div>
+    <el-container>
+  <el-aside width="200px">
+    <el-row class="tac">
+        <el-col :span="12">
+          <el-menu background-color="#7b40f2" text-color="#fff" active-text-color="#2fd2d9" router default-active="home"
+          class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+          <img class="logo" src="../assets/images/icon-wll_logo.png" alt="">
+            <el-menu-item index="home">
+              <i class="el-icon-s-home"></i>
+              <span slot="title">首页</span>
+            </el-menu-item>
+            
+            <el-submenu index="2">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>菜品管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="goodsdata">菜品数据</el-menu-item>
+                <el-menu-item index="classify">菜品分类</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>权限管理</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="rolemg">角色管理</el-menu-item>
+                <el-menu-item index="usermg">用户管理</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>属性规格</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item index="addattribute">新增属性规格</el-menu-item>
+              </el-menu-item-group>
+              <el-menu-item-group>
+                <el-menu-item index="attributelist">属性规格列表</el-menu-item>
+              </el-menu-item-group>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-row>
+  </el-aside>
+  <el-container>
+    <el-header>
+      <div class=" box-top">
+       
+       <div class="box-user ">
+        
+         <div class="box-userinfo">
+           <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
+           <img class="icon-avater" :src=this.avatar alt="">
+           <span class="username">{{this.avatarName}}</span>
+           <el-dropdown>
+             <span class="el-dropdown-link">
+               <i class="el-icon-arrow-down el-icon--right"></i>
+             </span>
+             <el-dropdown-menu slot="dropdown">
+               <el-dropdown-item>个人主页</el-dropdown-item>
+               <el-dropdown-item>账户设置</el-dropdown-item>
+               <el-dropdown-item>
+                 <span @click="loginout">退出</span>
+               </el-dropdown-item>
+             </el-dropdown-menu>
+           </el-dropdown>
+         </div>
+       </div>
+     </div>
+    </el-header>
+    <el-main>
+      <router-view />
+    </el-main>
   </el-container>
+</el-container>
+    
+  </div>
 </template>
 
 <script>
@@ -129,6 +204,30 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.el-header {
+    background-color: #B3C0D1;
+    color: #333;
+    text-align: center;
+    line-height: 60px;
+  }
+
+  .el-aside {
+    background-color: #7b40f2;
+    color: #333;
+  }
+
+  .el-main {
+    display: block;
+    flex: 1;
+    flex-basis: auto;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0;
+  }
+</style>
+
 <style scoped>
 ::v-deep .el-col-12 {
   width: 100%;
@@ -162,42 +261,12 @@ export default {
 }
 
 .box-top {
- margin: 15px 0;
-}
-::v-deep .el-header{
-  background-color: #eeeeee;
+ /* margin: 15px 0; */
 }
 
-/* 就样式 */
-
-
-
-::v-deep .el-main {
-  padding: 0;
-  /* overflow-y: scroll; */
-}
-
-
-::v-deep .el-header {
-  padding: 0px;
-  border-bottom: 2px solid #ccc;
-}
-
-.el-col {
+/* .el-col {
   border-radius: 4px;
-}
-
-.bg-purple-dark {
-  /* background: #99a9bf; */
-}
-
-.bg-purple {
-  /* background: #d3dce6; */
-}
-
-.bg-purple-light {
-  /* background: #e5e9f2; */
-}
+} */
 
 .grid-content {
   border-radius: 4px;
@@ -206,16 +275,7 @@ export default {
 
 .row-bg {
   padding: 10px 0;
-  /* background-color: #f9fafc; */
 }
-
-.box-user {
-  /* width: 85%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center */
-}
-
 
 .title {
   display: inline-block;
@@ -223,9 +283,6 @@ export default {
   font-weight: 600;
   min-width: 170px;
 }
-
-
-
 
 .icon-avater {
   width: 30px;
@@ -251,3 +308,4 @@ export default {
   font-weight: 600;
 }
 </style>
+

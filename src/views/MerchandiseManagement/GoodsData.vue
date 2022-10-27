@@ -77,7 +77,7 @@
             </div>
 
 
-            <el-table  :data="tableData"  height="600" style="width: 100% ">
+            <el-table  :data="tableData"  height="400" style="width: 100% ">
                 <el-table-column label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <!-- <i class="el-icon-time"></i> -->
@@ -120,13 +120,13 @@
             </el-table>
 
 
-            <div class="block">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                    :page-sizes="[5, 15, 20, 25]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
-                    :total=total>
-                </el-pagination>
-    
-            </div>
+        </div>
+        <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                :page-sizes="[5, 15, 20, 25]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
+                :total=total>
+            </el-pagination>
+
         </div>
     </div>
 </template>
@@ -301,17 +301,8 @@ export default {
 .box{
     background-color: #eeeeee;
     height: calc(100vh - 60px);
+    /* height: 100vh; */
 }
-
-
-
-
-
-
-
-
-
-
 
 ::v-deep .el-select {
     width: 100px;
