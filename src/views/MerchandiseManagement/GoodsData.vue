@@ -77,7 +77,7 @@
             </div>
 
 
-            <el-table  :data="tableData"  height="400" style="width: 100% ">
+            <el-table height="600" :data="tableData"   style="width: 100%;">
                 <el-table-column label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <!-- <i class="el-icon-time"></i> -->
