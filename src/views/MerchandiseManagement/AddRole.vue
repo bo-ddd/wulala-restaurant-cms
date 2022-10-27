@@ -19,23 +19,18 @@
                     <el-button class="btn" type="primary" plain @click="foundRole">创建角色</el-button>
                 </div>
                 <!-- 全选 -->
-                <div class="select-all pt-15">
-                    <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                        选择所有权限</el-checkbox>
-                    <div style="margin: 15px 0;"></div>
-                </div>
-                <div class="power-list" v-for="(item, index) in array" :key="index">
-                    <div class="power-list_nav">
-                        <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange">
-                            {{ item.permissionName }}</el-checkbox>
-                    </div>
-                    <div class="power-list_content" v-if="item.children != 0">
-                        <el-checkbox-group v-model="item.children" @change="handleCheckedCitiesChange">
-                            <el-checkbox v-for="city in item.children" :label="city" :key="city">{{ city.permissionName
-                            }}
-                            </el-checkbox>
-                        </el-checkbox-group>
-                    </div>
+                <div class="power-list">
+                    <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
+                    <el-tree :data="array" show-checkbox node-key="id" default-expand-all :expand-on-click-node="false">
+                        <span class="custom-tree-node" slot-scope="{ node, data }">
+                            <span>{{ data.permissionName }}</span>
+                            <span>
+                                <el-button type="text" size="mini" @click="() => remove(node, data)">
+                                    Delete
+                                </el-button>
+                            </span>
+                        </span>
+                    </el-tree>
                 </div>
             </div>
         </div>
@@ -45,15 +40,12 @@
 
 <script>
 import { roleCreate, permissionListApi } from '@/api/api';
-const cityOptions = ['上海', '北京', '广州', '深圳'];
+
 export default {
     data() {
         return {
             input1: '',
             input2: '',
-            checkAll: false,
-            checkedCities: ['北京'],
-            cities: cityOptions,
             isIndeterminate: true,
             options: [{
                 value: '选项1',
@@ -76,18 +68,10 @@ export default {
     },
     created() {
         permissionListApi({}).then(res => {
-            res.data.data.forEach(element => {
-                element.children = [];
-                res.data.data.forEach(el => {
-                    if (element.id == el.pid) {
-                        element.children.push({
-                            permissionName: el.permissionName,
-                        })
-                    }
-                })
-                this.array.push(element);
-            });
-            console.log(this.array);
+            let dataList = this.formatData(res.data.data);
+            console.log(res.data.data);
+            this.array = dataList;
+            console.log(this.array)
         }).catch(err => {
             console.log(err);
         })
@@ -114,14 +98,34 @@ export default {
                 console.log(err);
             })
         },
-        handleCheckAllChange(val) {
-            this.checkedCities = val ? cityOptions : [];
-            this.isIndeterminate = false;
+        formatData(data) {
+            // 深拷贝
+            let res = JSON.parse(JSON.stringify(data));
+            res.forEach(item => {
+                if (!item.children) item.children = [];
+                if (item.pid != 0) {
+                    let pItem = res.find(pItem => pItem.id == item.pid);
+                    pItem.children.push(item)
+                }
+
+                
+                // item.children = [];
+                // if (pItem && pItem.children) pItem.children = [];
+                // res.forEach(el => {
+                //     if (item.id == el.pid) {
+                //         item.children.push({
+                //             permissionName: el.permissionName,
+                //         })
+                //     }
+                // })
+            });
+            return res.filter(item => item.pid == 0);
         },
-        handleCheckedCitiesChange(value) {
-            let checkedCount = value.length;
-            this.checkAll = checkedCount === this.cities.length;
-            this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+        remove(node, data) {
+            const parent = node.parent;
+            const children = parent.data.children || parent.data;
+            const index = children.findIndex(d => d.id === data.id);
+            children.splice(index, 1);
         },
     }
 }
@@ -132,7 +136,7 @@ export default {
     margin: 10px;
     background-color: #f6fafd;
     border-radius: 10px;
-    min-height: 700px;
+    min-height: 100%;
     padding: 15px;
 }
 
@@ -164,20 +168,22 @@ export default {
 
 .content {
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .power-list {
-    border: 1px solid #eee;
+    width: 95%;
+    margin: 10px auto;
 }
-
-.power-list_nav {
-    background-color: #f6fafd;
-    border-bottom: 1px solid #eee;
-    padding: 20px;
+.custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-right: 8px;
 }
-
-.power-list_content {
-    padding: 20px 20px 20px 50px;
+::v-deep .el-tree-node__content{
+    height: 40px;
 }
 </style>

@@ -2,7 +2,7 @@
     <div>
         <h4 class="mg-rl_20 title">角色管理</h4>
         <div class="box-contont">
-            <el-tabs :tab-position="tabPosition" value="1" style="height: 700px;" >
+            <el-tabs :tab-position="tabPosition" value="1" style="height: 100%;" >
                 <el-tab-pane disabled="" class="tab">
                     <template #label>
                         <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
@@ -97,7 +97,7 @@ export default {
     margin: 10px;
     background-color: white;
     border-radius: 10px;
-    min-height: 700px;
+    min-height: 100%;
     padding: 15px;
 }
 
