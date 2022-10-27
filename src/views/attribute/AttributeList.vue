@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 class="mg-rl_20 title">属性列表</h4>
+    <h3 class="title">属性列表</h3>
     <div class="box-content">
       <el-table :data="tableData" style="width: 100%">
         <el-table-column label="id" width="180">
@@ -42,17 +42,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage4"
+        :page-sizes="[5, 10, 20, 30]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      >
+      </el-pagination>
     </div>
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[5, 10, 20, 30]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-    >
-    </el-pagination>
   </div>
 </template>
 
@@ -127,15 +127,12 @@ export default {
 </script>
 
 <style scoped>
-.title {
-  color: #fff;
-}
 .box-content {
-  margin: 10px;
+  /* margin: 10px;
   background-color: white;
   border-radius: 10px;
   min-height: 700px;
-  padding: 15px 0;
+  padding: 15px 0; */
 }
 .el-pagination {
   display: flex;
