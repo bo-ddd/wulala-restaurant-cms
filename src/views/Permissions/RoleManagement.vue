@@ -1,6 +1,6 @@
 <template>
-    <div class="bodys">
-        <h4 class="mg-rl_20 title">角色管理</h4>
+    <div class="box">
+        <h3 class="title">角色管理</h3>
         <div class="box-contont">
             <div class="content">
                 <el-tabs :tab-position="tabPosition" value="1" style="height: 100%;" >
@@ -96,17 +96,9 @@ export default {
 </script>
 
 <style scoped>
-/* .box-contont {
-    margin: 10px;
-    background-color: white;
-    border-radius: 10px;
-    min-height: 100%;
-    padding: 15px;
-} */
 
-.title {
-    color: white;
-}
+
+
 .content {
     background-color: #fff;
     border-radius: 20px;
