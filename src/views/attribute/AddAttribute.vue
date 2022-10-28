@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <h3 class="title">菜品分类</h3>
+    <h3 class="title">新增属性规格</h3>
     <div class="box-content">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="类目名称">
