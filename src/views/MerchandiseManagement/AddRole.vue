@@ -17,11 +17,13 @@
                         </el-select>
                     </div>
                     <el-button class="btn" type="primary" plain @click="foundRole">创建角色</el-button>
+                    <!-- <el-button class="btn" type="primary" plain>{{permissionId}}</el-button> -->
                 </div>
                 <!-- 全选 -->
                 <div class="power-list">
                     <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
-                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" :expand-on-click-node="false">
+                    <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button>
+                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" @check="getId" :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ node, data }">
                             <span>{{ data.permissionName }}</span>
                             <span>
@@ -39,8 +41,8 @@
 </template>
 
 <script>
-import { roleCreate, permissionListApi } from '@/api/api';
-
+import { roleCreate, permissionListApi,roleAddPermission } from '@/api/api';
+import { showLoading,hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -64,14 +66,20 @@ export default {
                 label: '北京烤鸭'
             }],
             array: [],
+            roleId:'',
+            permissionId:[],
         }
     },
     created() {
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        },1000),
         permissionListApi({}).then(res => {
             let dataList = this.formatData(res.data.data);
-            console.log(res.data.data);
+            // console.log(res.data.data);
             this.array = dataList;
-            console.log(this.array)
+            // console.log(this.array)
         }).catch(err => {
             console.log(err);
         })
@@ -79,8 +87,11 @@ export default {
     methods: {
         foundRole: function () {
             roleCreate({
-                roleName: this.input
+                roleName: this.input1,
+                permissionIds:this.permissionId,
             }).then(res => {
+                console.log('-------foundRole------');
+                console.log(res);
                 if (res.data.status == 10300) {
                     this.$message({
                         message: res.data.msg,
@@ -88,16 +99,67 @@ export default {
                     });
                 } else {
                     this.$message({
-                        message: '创建成功',
+                        message: '角色创建成功,请添加权限',
                         type: 'success'
                     });
-                    this.$router.push({ path: '/rolemg' })
+                    this.roleId = res.data.data.id;
+                    // this.$router.push({ path: '/rolemg' })
                 }
-                // console.log(res);
             }).catch(err => {
                 console.log(err);
             })
         },
+        getId (data) {
+            this.permissionId.push(data.id);
+            console.log(this.permissionId);
+        },
+        addToPower : function(){
+            this.permissionId.forEach(el => {
+                // let pAll = Promise.all([roleAddPermission({
+                //     roleId:this.roleId,
+                //     permissionId: this.pAll,
+                // }),roleAddPermission({
+                //     roleId:this.roleId,
+                //     permissionId: this.pAll,
+                // }),roleAddPermission({
+                //     roleId:this.roleId,
+                //     permissionId: this.pAll,
+                // })]);
+                // console.log(pAll);
+                console.log(el);
+                console.log(1);
+                roleAddPermission({
+                    roleId:this.roleId,
+                    permissionId: el,
+                }).then(res => {
+                    console.log('----------------addToPower----');
+                    console.log(res);
+                    if (res.data.status == 10303) {
+                        this.$message({
+                            message: '角色名称不能为空',
+                            type: 'warning'
+                        });
+                    }else if(res.data.status == 10302){
+                        this.$message({
+                            message: '请选择权限',
+                            type: 'warning'
+                        });
+                    }else{
+                        this.$message({
+                            message: '创建成功',
+                            type: 'success'
+                        });
+                        this.$router.push({ path: '/rolemg' });
+                    }
+                }).catch(err => {
+                    console.log(err);
+                    this.$message({
+                        message: '失败请重试',
+                        type: 'warning'
+                    });
+                })
+            });
+        },  
         formatData(data) {
             // 深拷贝
             let res = JSON.parse(JSON.stringify(data));
@@ -107,17 +169,6 @@ export default {
                     let pItem = res.find(pItem => pItem.id == item.pid);
                     pItem.children.push(item)
                 }
-
-                
-                // item.children = [];
-                // if (pItem && pItem.children) pItem.children = [];
-                // res.forEach(el => {
-                //     if (item.id == el.pid) {
-                //         item.children.push({
-                //             permissionName: el.permissionName,
-                //         })
-                //     }
-                // })
             });
             return res.filter(item => item.pid == 0);
         },

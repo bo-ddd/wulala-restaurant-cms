@@ -3,93 +3,135 @@
         <h3 class="title">角色管理</h3>
         <div class="box-content">
             <div class="content">
-                <el-tabs :tab-position="tabPosition" value="1" style="height: 100%;" >
-                    <el-tab-pane disabled="" class="tab">
-                        <template #label>
-                            <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
-                        </template>
-                    </el-tab-pane>
-    
-                        <el-tab-pane :label="item.roleName" v-for="(item,i) in obtainRoleList" :key="i">
-                            <div class="subject">
-                                <div class="flex-sp">
-                                    <p class="subjext-title">{{item.roleName}}<span class="pl-5">该角色没有管理权限</span></p>
-                                    <el-button type="primary" @click="toSetRolePower">设置角色权限</el-button>
+                <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
+                <el-button type="primary" @click="toSetRolePower">设置角色权限</el-button>
+                <!-- <el-tabs :tab-position="tabPosition" value="1" style="height: 100%;" >
+                    <div class="subject">
+                        <el-tabs :tab-position="tabPositions" style="" class="mt-20">
+                                <div class="nav">
+                                    <span>全部成员，共{{obtainRoleList.length}}人</span>
                                 </div>
-                                <el-tabs :tab-position="tabPositions" style="" class="mt-20">
-                                    <el-tab-pane label="角色成员">
-                                        <div class="nav">
-                                            <span>全部成员，共{{2}}人</span>
-                                            <el-button type="primary">+添加成员</el-button>
-                                        </div>
-                                        <el-table :data="tableData" style="width: 100%">
-                                            <el-table-column prop="name" label="角色ID" width="150">
-                                            </el-table-column>
-                                            <el-table-column prop="avatarphone" label="角色名称" width="150">
-                                            </el-table-column>
-                                            <el-table-column fixed="right" label="操作">
-                                                <div class="delete">
-                                                    <p><img src="@/assets/images/icon-mines.png" alt="">-移除</p>
-                                                </div>
-                                            </el-table-column>
-                                        </el-table>
-                                    </el-tab-pane>
-                                    <el-tab-pane label="功能权限">
-                                        功能权限
-                                    </el-tab-pane>
-                                    <el-tab-pane label="数据范围">
-                                        数据范围
-                                    </el-tab-pane>
-                                </el-tabs>
-                            </div>
-                        </el-tab-pane>
-                </el-tabs>
+                                <el-table :data="obtainRoleList" style="width: 100%">
+                                    <el-table-column prop="id" label="角色ID" width="250">
+                                    </el-table-column>
+                                    <el-table-column prop="roleName" label="角色名称" width="250">
+                                    </el-table-column>
+                                    <el-table-column fixed="right" label="操作">
+                                        <el-button
+                                        size="mini"
+                                        type="danger"
+                                        @click="handleDelete(res)">
+                                            <div class="delete">
+                                                <p><img src="@/assets/images/icon-mines.png" alt="">-移除</p>
+                                            </div>
+                                        </el-button>
+                                    </el-table-column>
+                                </el-table>
+                        </el-tabs>
+                    </div>
+                </el-tabs> -->
+                <el-table
+                    :data="obtainRoleList"
+                    style="width: 100%">
+                    <el-table-column
+                    label="用户ID"
+                    width="180">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.id }}</span>
+                    </template>
+                    </el-table-column>
+                    <el-table-column
+                    label="姓名"
+                    width="180">
+                    <template slot-scope="scope">
+                        <el-popover trigger="hover" placement="top">
+                        <p>姓名: {{ scope.row.roleName }}</p>
+                        <p>住址: {{ scope.row.address }}</p>
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.roleName }}</el-tag>
+                        </div>
+                        </el-popover>
+                    </template>
+                    </el-table-column>
+                    <el-table-column label="操作">
+                    <template slot-scope="scope">
+                        <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        <el-button
+                        size="mini"
+                        type="danger"
+                        @click="handleDelete(scope.row.id)">删除</el-button>
+                    </template>
+                    </el-table-column>
+                </el-table>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { roleListApi } from '@/api/api';
+import { roleListApi , roleDelete} from '@/api/api';
+import { showLoading,hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
-            tabPosition: 'left',
+            tabPosition: 'top',
             tabPositions: 'top',
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-                avatarphone: '1231562369'
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                avatarphone: '1231562369'
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                avatarphone: '1231562369'
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-                avatarphone: '1231562369'
-            }],
-            obtainRoleList:''//角色
+            obtainRoleList:[]//角色
         }
     },
     created() {
-        roleListApi({}).then(res=>{
-            this.obtainRoleList = res.data.data;
-            // console.log(res);
-        }).catch(err => {
-            console.log(err);
-        })
+        // roleListApi({}).then(res=>{
+        //     this.obtainRoleList = res.data.data;
+        // }).catch(err => {
+        //     console.log(err);
+        // }),
+        this.rolelist()
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        },1000)
     },
     methods: {
+        rolelist:function(){
+            roleListApi({}).then(res=>{
+                this.obtainRoleList = res.data.data;
+            }).catch(err => {
+                console.log(err);
+            })
+        },
         toAddRole: function () {
             this.$router.push({ path: '/addrole' })
         },
         toSetRolePower : function(){
             this.$router.push({path:'setrolepower'})
+        },
+        handleDelete(ids) {
+            // console.log(ids);
+            this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+            }).then(() => {
+                roleDelete({
+                    id:ids,
+                }).then(res => {
+                    if (res.data.status == 1) {
+                        this.rolelist()
+                    }
+                })
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
         }
     },
 }
@@ -98,7 +140,6 @@ export default {
 <style scoped>
 .content {
     background-color: #fff;
-    border-radius: 20px;
     overflow-y: scroll;
     height: calc(100vh - 9.8rem);
 }
@@ -129,7 +170,7 @@ export default {
 .delete p {
     display: flex;
     align-items: center;
-    color: #ccc;
+    color: #fff;
 }
 
 .delete :hover {
@@ -139,6 +180,7 @@ export default {
 .delete img {
     width: 18px;
     font-size: 12px;
+    color: #fff;
 }
 .bodys{
     height: calc(100vh - 60px);

@@ -39,7 +39,7 @@
 
 <script>
 import { permissionListApi, roleListApi } from '@/api/api';
-
+import { showLoading,hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -51,6 +51,11 @@ export default {
         }
     },
     created() {
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        },1000),
+        console.log(1);
         permissionListApi({}).then(res => {
             let dataList = this.formatData(res.data.data);
             // console.log(res.data.data);
@@ -61,10 +66,13 @@ export default {
         }),
         roleListApi({}).then(res=>{
             this.options = res.data.data;
-            console.log(res);
+            // console.log(res);
         }).catch(err => {
             console.log(err);
         })
+
+
+
     },
     methods: {
         foundRole: function () {
