@@ -11,23 +11,23 @@
             <div>
                 <el-tabs @tab-click="handle" v-model="activeName">
                     <el-tab-pane v-for="(el, i) in categoryList" :key="i" :label="el.name" :name="el.name">
-                        <el-table :data="foodList"  max-height="700px">
-                            <el-table-column label="菜肴图片">
+
+                        <el-table height="600" :data="foodList" style="width: 100%">
+                            <el-table-column label="菜肴图片" >
                                 <template slot-scope="scope">
                                     <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="foodName" label="菜肴名称">
+                            <el-table-column prop="foodName" label="菜肴名称" >
                             </el-table-column>
-                            <el-table-column prop="description" label="菜肴描述">
+                            <el-table-column prop="description" label="菜肴描述" >
                             </el-table-column>
                             <el-table-column align="center" label="菜肴价格">
                                 <template slot-scope="scope">
                                     <span>{{ scope.row.price + '元' }}</span>
                                 </template>
                             </el-table-column>
-
-                            <el-table-column align="center" label="菜肴操作">
+                            <el-table-column align="center" label="菜肴操作" >
                                 <template slot-scope="scope">
                                     <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改 </el-button>
                                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
