@@ -182,3 +182,15 @@ export const attributeDeleteApi = function (payload ={}) {
 export const roleAddPermission = function(payload = {}){
   return instance.post('/role/addPermission',payload)
 }
+/**
+ * @description 删除角色
+ */
+ export const roleDelete = function(payload = {}){
+  return instance.post('/role/delete',payload)
+}
+/**
+ * @description 删除角色对应的权限
+ */
+ export const roleDeletePermission = function(payload = {}){
+  return instance.post('/role/deletePermission',payload)
+}
