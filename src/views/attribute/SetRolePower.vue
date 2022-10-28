@@ -6,17 +6,13 @@
                 <div class="add-role">
                     <div action="" class="role-name">
                         <div class="role-title"><span>*</span>角色名称</div>
-                        <el-input v-model="input1" placeholder="请输入新增角色名称"></el-input>
-                    </div>
-                    <div action="" class="role-name">
-                        <div class="role-title"><span>*</span>所属部门</div>
-                        <el-select v-model="input2" placeholder="请选择所属部门">
+                        <el-select v-model="input2" placeholder="请选择角色">
                             <el-option v-for="item in options" :key="item.value" :label="item.label"
                                 :value="item.value">
                             </el-option>
                         </el-select>
                     </div>
-                    <el-button class="btn" type="primary" plain @click="foundRole">创建角色</el-button>
+                    <el-button class="btn" type="primary" plain @click="foundRole">确定</el-button>
                 </div>
                 <!-- 全选 -->
                 <div class="power-list">
