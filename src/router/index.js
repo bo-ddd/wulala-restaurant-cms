@@ -68,7 +68,10 @@ const routes = [
         path:'/cuisineAttribute',
         name:'cuisineAttribute',
         component:() =>import("@/views/MerchandiseManagement/CuisineAttribute.vue")
-
+      },{
+        path:'/setrolepower',
+        name:'setrolepower',
+        component:()=>import("../views/attribute/SetRolePower.vue")
       }
     ]
   }
