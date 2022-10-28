@@ -1,7 +1,7 @@
 <template>
     <div class="box">
         <h3 class="title">菜品分类</h3>
-        <div class="box-contont">
+        <div class="box-content">
             <div class="mt-14">
                 <span class="category">添加类目 &nbsp;</span>
                 <el-input class="input" v-model="input" size="mini" placeholder="请输入内容"></el-input>

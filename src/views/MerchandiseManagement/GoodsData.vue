@@ -1,7 +1,7 @@
 <template>
     <div class="box">
         <h3 class="title ">菜品管理</h3>
-        <div class="box-contont">
+        <div class="box-content">
             <div class="box-inquire">
                 <div class="box-inquire_inp">
                     <div>
@@ -338,11 +338,6 @@ export default {
     display: flex;
     justify-content: space-around;
     margin-bottom: 10px;
-}
-.box-content {
-    margin-top: 50px;
-    width: 400px;
-    margin-left: 160px;
 }
 
 

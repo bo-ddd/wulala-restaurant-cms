@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <h3 class="title">属性列表</h3>
     <div class="box-content">
       <el-table :data="tableData" style="width: 100%">
@@ -127,13 +127,7 @@ export default {
 </script>
 
 <style scoped>
-.box-content {
-  /* margin: 10px;
-  background-color: white;
-  border-radius: 10px;
-  min-height: 700px;
-  padding: 15px 0; */
-}
+
 .el-pagination {
   display: flex;
   justify-content: center;

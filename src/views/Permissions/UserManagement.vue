@@ -67,7 +67,7 @@ export default {
 <template>
       <div class="box">
         <h4 class="title">用户管理</h4>
-        <div class="box-contont">
+        <div class="box-content">
 
 
             <el-table height="600"  :data="tableData" style="width: 100%">

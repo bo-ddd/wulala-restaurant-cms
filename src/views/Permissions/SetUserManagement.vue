@@ -41,7 +41,7 @@ export default {
 }
 </script>
 <template>
-    <div class="box-contont">
+    <div class="box-content">
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="添加角色">
                 <el-select v-model="form.roleId" placeholder="请选择想添加的角色">

@@ -79,12 +79,7 @@ export default {
 </script>
 
 <style scoped>
-.box-content {
-  margin: 10px;
-  background-color: white;
-  border-radius: 10px;
-  padding: 15px 0;
-}
+
 .el-form {
   width: 300px;
 }

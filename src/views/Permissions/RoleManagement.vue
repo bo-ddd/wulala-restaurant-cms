@@ -1,7 +1,7 @@
 <template>
     <div class="box">
         <h3 class="title">角色管理</h3>
-        <div class="box-contont">
+        <div class="box-content">
             <div class="content">
                 <el-tabs :tab-position="tabPosition" value="1" style="height: 100%;" >
                     <el-tab-pane disabled="" class="tab">

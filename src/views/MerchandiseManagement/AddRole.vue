@@ -1,7 +1,7 @@
 <template>
     <div class="bodys">
         <h4 class="mg-rl_20 title">添加角色</h4>
-        <div class="box-contont">
+        <div class="box-content">
             <div class="content">
                 <div class="add-role">
                     <div action="" class="role-name">
@@ -181,7 +181,7 @@ export default {
 ::v-deep .el-tree-node__content{
     height: 40px;
 }
-.box-contont{
+.box-content{
     background-color: rebeccapurple;
 }
 .bodys{
