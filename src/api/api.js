@@ -64,8 +64,9 @@ export const permissionListApi = function (payload = {}) {
 export const permissionAddApi = function (payload = {}) {
   return instance.post('/permission/add', payload);
 }
-/*
-*  @description 创建角色
+
+/**
+  *  @description 创建角色
 */
 export const roleCreate = function (payload = {}) {
   return instance.post('/role/create', payload)
@@ -174,4 +175,10 @@ export const attributeListApi = function (payload ={}) {
 
 export const attributeDeleteApi = function (payload ={}) {
   return instance.post('product/attribute/delete',payload)
+}
+/**
+ * @description 给角色添加权限接口
+ */
+export const roleAddPermission = function(payload = {}){
+  return instance.post('/role/addPermission',payload)
 }
