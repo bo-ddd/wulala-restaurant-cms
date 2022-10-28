@@ -7,8 +7,8 @@
                     <div action="" class="role-name">
                         <div class="role-title"><span>*</span>角色名称</div>
                         <el-select v-model="input2" placeholder="请选择角色">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                :value="item.value">
+                            <el-option v-for="item in options" :key="item.roleName" :label="item.roleName"
+                                :value="item.roleName">
                             </el-option>
                         </el-select>
                     </div>
@@ -18,14 +18,17 @@
                 <div class="power-list">
                     <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
                     <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" :expand-on-click-node="false">
-                        <span class="custom-tree-node" slot-scope="{ node, data }">
+                        <span class="custom-tree-node" slot-scope="{ data }">
+                            <span>{{ data.permissionName }}</span>
+                        </span>
+                        <!-- <span class="custom-tree-node" slot-scope="{ node, data }">
                             <span>{{ data.permissionName }}</span>
                             <span>
                                 <el-button type="text" size="mini" @click="() => remove(node, data)">
                                     Delete
                                 </el-button>
                             </span>
-                        </span>
+                        </span> -->
                     </el-tree>
                 </div>
             </div>
@@ -35,7 +38,7 @@
 </template>
 
 <script>
-import { roleCreate, permissionListApi } from '@/api/api';
+import { permissionListApi, roleListApi } from '@/api/api';
 
 export default {
     data() {
@@ -43,56 +46,29 @@ export default {
             input1: '',
             input2: '',
             isIndeterminate: true,
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }, {
-                value: '选项2',
-                label: '双皮奶'
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
+            options: [],
             array: [],
         }
     },
     created() {
         permissionListApi({}).then(res => {
             let dataList = this.formatData(res.data.data);
-            console.log(res.data.data);
+            // console.log(res.data.data);
             this.array = dataList;
-            console.log(this.array)
+            // console.log(this.array)
+        }).catch(err => {
+            console.log(err);
+        }),
+        roleListApi({}).then(res=>{
+            this.options = res.data.data;
+            console.log(res);
         }).catch(err => {
             console.log(err);
         })
     },
     methods: {
         foundRole: function () {
-            roleCreate({
-                roleName: this.input
-            }).then(res => {
-                if (res.data.status == 10300) {
-                    this.$message({
-                        message: res.data.msg,
-                        type: 'warning'
-                    });
-                } else {
-                    this.$message({
-                        message: '创建成功',
-                        type: 'success'
-                    });
-                    this.$router.push({ path: '/rolemg' })
-                }
-                // console.log(res);
-            }).catch(err => {
-                console.log(err);
-            })
+            console.log(1);
         },
         formatData(data) {
             // 深拷贝
@@ -103,26 +79,15 @@ export default {
                     let pItem = res.find(pItem => pItem.id == item.pid);
                     pItem.children.push(item)
                 }
-
-                
-                // item.children = [];
-                // if (pItem && pItem.children) pItem.children = [];
-                // res.forEach(el => {
-                //     if (item.id == el.pid) {
-                //         item.children.push({
-                //             permissionName: el.permissionName,
-                //         })
-                //     }
-                // })
             });
             return res.filter(item => item.pid == 0);
         },
-        remove(node, data) {
-            const parent = node.parent;
-            const children = parent.data.children || parent.data;
-            const index = children.findIndex(d => d.id === data.id);
-            children.splice(index, 1);
-        },
+        // remove(node, data) {
+        //     const parent = node.parent;
+        //     const children = parent.data.children || parent.data;
+        //     const index = children.findIndex(d => d.id === data.id);
+        //     children.splice(index, 1);
+        // },
     }
 }
 </script>

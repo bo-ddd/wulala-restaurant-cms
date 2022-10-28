@@ -96,13 +96,13 @@ export default {
 </script>
 
 <style scoped>
-.box-contont {
+/* .box-contont {
     margin: 10px;
     background-color: white;
     border-radius: 10px;
     min-height: 100%;
     padding: 15px;
-}
+} */
 
 .title {
     color: white;
@@ -152,7 +152,7 @@ export default {
     font-size: 12px;
 }
 .bodys{
-    height: calc(100vh - 4rem);
+    height: calc(100vh - 60px);
     overflow-y: scroll;
     background: rebeccapurple;
 }
