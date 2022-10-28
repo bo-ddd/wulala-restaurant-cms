@@ -65,24 +65,22 @@ export default {
 }
 </script>
 <template>
-    <div>
-        <h4 class="mg-rl_20 title">用户管理</h4>
+      <div class="box">
+        <h4 class="title">用户管理</h4>
         <div class="box-contont">
 
-            <el-table  :data="tableData" style="width: 100%">
+            <el-table height="600"  :data="tableData" style="width: 100%">
+                <el-table-column align="center" label="用户id" width="100">
+                    <template slot-scope="scope">
+                        <div slot="reference" class="name-wrapper">
+                            <el-tag size="medium">{{ scope.row.userId }}</el-tag>
+                        </div>
+                    </template>
+                </el-table-column>
                 <el-table-column align="center" label="用户头像" width="180">
                     <template slot-scope="scope">
                         <img v-if="scope.row.avatarImg" class="banner-food_png" :src="scope.row.avatarImg" alt="">
                     <div class="avatarImg" v-else></div>
-                    </template>
-                </el-table-column>
-                <el-table-column align="center" label="用户id" width="180">
-                    <template slot-scope="scope">
-                          
-                            <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium">{{ scope.row.userId }}</el-tag>
-                            </div>
-                    
                     </template>
                 </el-table-column>
 
@@ -125,18 +123,11 @@ export default {
     </div>
 </template>
 <style scoped>
-.box-contont {
-    margin: 10px;
-    background-color: white;
-    border-radius: 10px;
-    height: 100%;
-    padding: 15px;
+.box{
+    background-color: #eeeeee;
+    height: calc(100vh - 60px);
+   
 }
-
-.title {
-    color: white;
-}
-
 
 ::v-deep .el-select {
     width: 100px;

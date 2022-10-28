@@ -301,7 +301,7 @@ export default {
 .box{
     background-color: #eeeeee;
     height: calc(100vh - 60px);
-    /* height: 100vh; */
+   
 }
 
 ::v-deep .el-select {
