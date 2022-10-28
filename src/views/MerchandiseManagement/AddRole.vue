@@ -87,7 +87,8 @@ export default {
     methods: {
         foundRole: function () {
             roleCreate({
-                roleName: this.input1
+                roleName: this.input1,
+                permissionIds:this.permissionId,
             }).then(res => {
                 console.log('-------foundRole------');
                 console.log(res);
