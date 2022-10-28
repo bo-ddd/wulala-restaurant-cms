@@ -51,6 +51,7 @@
 
 <script>
 import { roleListApi } from '@/api/api';
+import { showLoading,hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -82,7 +83,11 @@ export default {
             // console.log(res);
         }).catch(err => {
             console.log(err);
-        })
+        }),
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        },1000)
     },
     methods: {
         toAddRole: function () {
