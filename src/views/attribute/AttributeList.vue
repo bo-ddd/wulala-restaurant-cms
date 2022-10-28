@@ -3,27 +3,22 @@
     <h3 class="title">属性列表</h3>
     <div class="box-content">
       <el-table :data="tableData" style="width: 100%" height="550">
-        <el-table-column label="id" width="180">
+        <el-table-column label="id" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="类目id" width="180">
-          <template slot-scope="scope">
-            <span style="margin-left: 10px">{{ scope.row.categoryId }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="属性名" width="180">
+        <el-table-column label="属性名" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.attrName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="类型" width="180">
+        <el-table-column label="类型" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="类名" width="180">
+        <el-table-column label="分类名称" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.categoryName }}</span>
           </template>
