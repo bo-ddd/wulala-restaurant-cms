@@ -96,9 +96,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 .content {
     background-color: #fff;
     border-radius: 20px;

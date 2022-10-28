@@ -3,12 +3,14 @@
     <el-aside width="230px">
       <el-row class="tac">
         <el-col :span="12">
-          <el-menu background-color="#7b40f2" text-color="#fff" active-text-color="#2fd2d9" router default-active="home"
+          <el-menu :default-active="routers" background-color="#86bcd6" text-color="red" active-text-color="#fff" router 
           class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
           <img class="logo" src="../assets/images/icon-wll_logo.png" alt="">
             <el-menu-item index="home">
               <i class="el-icon-s-home"></i>
-              <span slot="title">首页</span>
+              <span slot="title">首页
+                {{ routers}}
+              </span>
             </el-menu-item>
             
             <el-submenu index="2">
@@ -87,12 +89,16 @@ export default {
   data() {
     return {
       avatarName: "昵称",
-      avatar: ''
+      avatar: '',
+      router : '',
     }
   },
   name: 'HomeView',
-  components: {
-
+  computed:{
+    routers(){
+    
+     return this.$route.name
+    }
   },
   methods: {
     handleOpen(key, keyPath) {
@@ -110,6 +116,7 @@ export default {
     async render() {
       let res = await userInfoApi({
       })
+      console.log(res);
       this.avatarName = res.data.data.avatarName
       this.avatar = res.data.data.avatarImg
     }
@@ -122,7 +129,7 @@ export default {
 
 <style scoped>
 .el-header {
-    background-color: #B3C0D1;
+    background-color: #9dced3;
     color: #333;
     text-align: center;
     line-height: 60px;

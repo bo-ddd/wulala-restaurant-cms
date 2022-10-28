@@ -116,7 +116,7 @@ export default {
         </div>
         <div class="block">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                :page-sizes="[10, 20, 30, 40]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
+                :page-sizes="[5, 20, 30, 40]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
                 :total=total>
             </el-pagination>
 
