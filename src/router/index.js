@@ -64,7 +64,12 @@ const routes = [
         path:'/attributelist',
         name:'addattributelist',
         component:() =>import("@/views/attribute/AttributeList.vue")
-      },
+      },{
+        path:'/cuisineAttribute',
+        name:'cuisineAttribute',
+        component:() =>import("@/views/MerchandiseManagement/CuisineAttribute.vue")
+
+      }
     ]
   }
 

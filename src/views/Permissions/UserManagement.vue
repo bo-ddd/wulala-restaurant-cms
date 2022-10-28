@@ -69,7 +69,7 @@ export default {
         <h4 class="mg-rl_20 title">用户管理</h4>
         <div class="box-contont">
 
-            <el-table  :data="tableData" style="width: 100%">
+            <el-table  :data="tableData" style="width: 100%" >
                 <el-table-column align="center" label="用户头像" width="180">
                     <template slot-scope="scope">
                         <img v-if="scope.row.avatarImg" class="banner-food_png" :src="scope.row.avatarImg" alt="">
