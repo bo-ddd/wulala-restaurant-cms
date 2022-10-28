@@ -39,7 +39,7 @@
             </div>
             <div class="box-btn">
                 <el-row>
-                    <el-button @click="dialogFormVisible = true" size="mini" type="primary">新增菜品</el-button>
+                    <el-button @click="toFoodPage" size="mini" type="primary">新增菜品</el-button>
                     <el-button size="mini">批量上架</el-button>
                     <el-button size="mini">批量下架</el-button>
                     <el-button size="mini">批量删除</el-button>
@@ -80,8 +80,6 @@
             <el-table height="600" :data="tableData"   style="width: 100%;">
                 <el-table-column label="菜肴图片" width="180">
                     <template slot-scope="scope">
-                        <!-- <i class="el-icon-time"></i> -->
-                        <!-- <span style="margin-left: 10px">{{ scope.row.date }}</span> -->
                         <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
                     </template>
                 </el-table-column>
@@ -178,14 +176,15 @@ export default {
         }
     },
     created(){
-        getCategoryList({
-
-}).then(res =>{
+        getCategoryList({}).then(res =>{
     this.categorylist = res.data.data
    console.log(res.data.data);
 });
     },
     methods: {
+        toFoodPage() {
+            this.$router.push({ path: '/foodadd' })
+        },
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
             this.sizechange = val
@@ -298,11 +297,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-.box{
-    background-color: #eeeeee;
-    height: calc(100vh - 60px);
-   
-}
+
 
 ::v-deep .el-select {
     width: 100px;

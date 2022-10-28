@@ -138,9 +138,6 @@ export default {
 </script>
 
 <style scoped>
-
-
-
 .content {
     background-color: #fff;
     overflow-y: scroll;

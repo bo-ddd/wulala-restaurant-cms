@@ -1,51 +1,75 @@
 <script>
-import { foodAdd ,getCategoryList} from '@/api/api'
+import { foodAdd, getCategoryList ,attributeListApi} from '@/api/api'
 export default {
     data() {
         return {
-            categorylist:[],
+            categorylist: [],
             imageUrl: '',
-            form: {
-                categoryName: '', //菜肴类型 1：菜 2：粥
                 foodName: '', //菜肴名称
                 description: '', //菜肴描述
                 bannerUrl: '',
                 price: '',
-            }
+                categoryId:'',
+                attributeList:[],//类目列表
+                attributeKey:[]
         }
     },
-    created(){
+    watch: {
+        categoryId(oldValue,newValue) {
+            attributeListApi({
+                categoryId: 1
+            }).then(res =>{
+                this.attributeKey=[]
+                this.attributeList = res.data.data
+                // console.log(res.data.data);
+                this.attributeList.forEach(el =>{
+                    if (el.categoryId == oldValue) {
+                        this.attributeKey.push(el)
+                    }
+                })
+                console.log(this.attributeKey);
+                console.log(oldValue);
+                console.log(newValue);
+            })
+        }
+    },
+    created() {
         getCategoryList({
 
-}).then(res =>{
-    this.categorylist = res.data.data
-   console.log(res.data.data);
-});
+        }).then(res => {
+            this.categorylist = res.data.data
+            console.log(res.data.data);
+        });
+
     },
 
     methods: {
-       
         upload: function () {
             let token = sessionStorage.getItem('token')
-            if(!token){
-               alert('请先登录')
-            }else{
-                let addfood = this.form
-                console.log(addfood);
-                foodAdd(
-                    addfood
-                ).then(res => {
+            if (!token) {
+                alert('请先登录')
+            } else {
+                
+                foodAdd({
+                foodName: this.foodName, //菜肴名称
+                description:this.description, //菜肴描述
+                bannerUrl:this.bannerUrl,
+                price: this.price,
+                categoryId:this.categoryId
+                }).then(res => {
                     console.log(res);
                 })
             }
 
         },
 
-       
+        goBack() {
+            this.$router.back(-1)
+        },
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
-            this.form.bannerUrl = res.data.url
-            console.log(this.form.bannerUrl);
+            this.bannerUrl = res.data.url
+            console.log(this.bannerUrl);
         },
         beforeAvatarUpload(file) {
             const isPNG = file.type === 'image/png';
@@ -60,63 +84,53 @@ export default {
             return isPNG && isLt1M;
         },
 
-    }
+    },
+    
 }
 </script>
 <template>
-    <div>
-        <h4>返回</h4>
-        <div class="box">
-            <h3>菜品详情</h3>
-            <div class="box-content">
-                <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="菜品名称">
-                        <el-input v-model="form.foodName"></el-input>
+    <div class="box">
+        <el-page-header @back="goBack" content="菜品详情">
+        </el-page-header>
+        <!-- <h3 class="title">菜品详情</h3> -->
+        <div class="box-content">
+            <el-form  label-width="80px">
+                <el-form-item label="菜品名称">
+                    <el-input v-model="foodName"></el-input>
+                </el-form-item>
+                <el-form-item label="价格">
+                    <el-input v-model="price"></el-input>
+                </el-form-item>
+                <el-form-item label="菜品类型">
+                    <el-select v-model="categoryId" placeholder="请选择菜品类型">
+                        <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
+                        </el-option>
+                    </el-select>
+                    <el-form-item v-for="(el,i) in attributeKey" :label="el.attrName" :key="i">
+                        <el-input></el-input>
                     </el-form-item>
-                    <el-form-item label="价格">
-                        <el-input v-model="form.price"></el-input>
-                    </el-form-item>
-                    <el-form-item label="菜品类型">
-                        <el-select v-model="form.categoryId" placeholder="请选择菜品类型">
-                            <el-option  v-for="(el,i) in categorylist" :key="i" :label="el.name" :value="el.id"></el-option>
-                          
-                        </el-select>
-                    </el-form-item>
+                </el-form-item>
 
-
-                    <el-form-item label="菜品描述">
-                        <el-input type="textarea" v-model="form.description"></el-input>
-                    </el-form-item>
-                    <el-form-item label="菜品主图">
-                        <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
-                            :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="upload()">添加</el-button>
-                        <el-button>取消</el-button>
-                    </el-form-item>
-                </el-form>
-            </div>
+                <el-form-item label="菜品描述">
+                    <el-input type="textarea" v-model="description"></el-input>
+                </el-form-item>
+                <el-form-item label="菜品主图">
+                    <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
+                        :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="upload()">添加</el-button>
+                    <el-button>取消</el-button>
+                </el-form-item>
+            </el-form>
         </div>
     </div>
+
 </template>
 <style scoped>
-.box-content {
-    margin-top: 50px;
-    width: 400px;
-    margin-left: 160px;
-}
-
-.box {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: white;
-    border-radius: 10px;
-}
-
 ::v-deep .el-upload {
     border: 1px solid #ccc;
     border-radius: 5px;
