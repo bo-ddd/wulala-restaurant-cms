@@ -220,7 +220,7 @@ export default {
             this.$router.push({ path: '/foodadd' })
         },
         handleEdit(index, row) {
-            if (localStorage.getItem('token')) {
+            if (sessionStorage.getItem('token')) {
                 console.log('1');
             } else {
                 alert('请登录')
