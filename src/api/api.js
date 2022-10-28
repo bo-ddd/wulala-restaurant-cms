@@ -175,3 +175,11 @@ export const attributeListApi = function (payload ={}) {
 export const attributeDeleteApi = function (payload ={}) {
   return instance.post('product/attribute/delete',payload)
 }
+
+/**
+ * @description 修改商品属性规格
+ */
+
+export const attributeUpdateApi = function (payload ={}){
+  return instance.post('product/attribute/update',payload)
+}
