@@ -1,6 +1,6 @@
 <template>
     <div class="bodys">
-        <h4 class="mg-rl_20 title">添加角色</h4>
+        <h4 class="mg-rl_20 title">设置角色权限</h4>
         <div class="box-contont">
             <div class="content">
                 <div class="add-role">
@@ -21,14 +21,6 @@
                         <span class="custom-tree-node" slot-scope="{ data }">
                             <span>{{ data.permissionName }}</span>
                         </span>
-                        <!-- <span class="custom-tree-node" slot-scope="{ node, data }">
-                            <span>{{ data.permissionName }}</span>
-                            <span>
-                                <el-button type="text" size="mini" @click="() => remove(node, data)">
-                                    Delete
-                                </el-button>
-                            </span>
-                        </span> -->
                     </el-tree>
                 </div>
             </div>
@@ -55,40 +47,33 @@ export default {
         setTimeout(function () {
             hideLoading();
         },1000),
-        console.log(1);
         permissionListApi({}).then(res => {
-            let dataList = this.formatData(res.data.data);
-            // console.log(res.data.data);
+            let dataList = this.formatePermissionList(res.data.data);
             this.array = dataList;
-            // console.log(this.array)
         }).catch(err => {
             console.log(err);
         }),
         roleListApi({}).then(res=>{
             this.options = res.data.data;
-            // console.log(res);
         }).catch(err => {
             console.log(err);
         })
-
-
-
     },
     methods: {
         foundRole: function () {
             console.log(1);
         },
-        formatData(data) {
-            // 深拷贝
-            let res = JSON.parse(JSON.stringify(data));
-            res.forEach(item => {
-                if (!item.children) item.children = [];
-                if (item.pid != 0) {
-                    let pItem = res.find(pItem => pItem.id == item.pid);
-                    pItem.children.push(item)
-                }
-            });
-            return res.filter(item => item.pid == 0);
+        formatePermissionList : function(data) {
+         let res = JSON.parse(JSON.stringify(data));
+         res.forEach(item => {
+             item.children = [];
+             if (item.pid != 0) {
+              let pItem = res.find((pItem) => pItem.id == item.pid)
+              if (pItem && !pItem.children) pItem.children = [];
+              pItem?.children.push(item)
+             }
+         })
+         return res.filter((item) => item.pid == 0)
         },
         // remove(node, data) {
         //     const parent = node.parent;

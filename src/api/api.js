@@ -202,3 +202,9 @@ export const roleAddPermission = function(payload = {}){
  export const roleDeletePermission = function(payload = {}){
   return instance.post('/role/deletePermission',payload)
 }
+/**
+ * @description 给商品添加属性值和value
+ */
+ export const productAttributeValueApi = function(payload = {}){
+  return instance.post('/product/attribute/value/add',payload)
+}

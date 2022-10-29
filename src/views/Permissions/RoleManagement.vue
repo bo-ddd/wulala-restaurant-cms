@@ -5,37 +5,12 @@
             <div class="content">
                 <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                 <el-button type="primary" @click="toSetRolePower">设置角色权限</el-button>
-                <!-- <el-tabs :tab-position="tabPosition" value="1" style="height: 100%;" >
-                    <div class="subject">
-                        <el-tabs :tab-position="tabPositions" style="" class="mt-20">
-                                <div class="nav">
-                                    <span>全部成员，共{{obtainRoleList.length}}人</span>
-                                </div>
-                                <el-table :data="obtainRoleList" style="width: 100%">
-                                    <el-table-column prop="id" label="角色ID" width="250">
-                                    </el-table-column>
-                                    <el-table-column prop="roleName" label="角色名称" width="250">
-                                    </el-table-column>
-                                    <el-table-column fixed="right" label="操作">
-                                        <el-button
-                                        size="mini"
-                                        type="danger"
-                                        @click="handleDelete(res)">
-                                            <div class="delete">
-                                                <p><img src="@/assets/images/icon-mines.png" alt="">-移除</p>
-                                            </div>
-                                        </el-button>
-                                    </el-table-column>
-                                </el-table>
-                        </el-tabs>
-                    </div>
-                </el-tabs> -->
                 <el-table
                     :data="obtainRoleList"
                     style="width: 100%">
                     <el-table-column
                     label="用户ID"
-                    width="180">
+                    width="">
                     <template slot-scope="scope">
                         <i class="el-icon-time"></i>
                         <span style="margin-left: 10px">{{ scope.row.id }}</span>
@@ -43,7 +18,7 @@
                     </el-table-column>
                     <el-table-column
                     label="姓名"
-                    width="180">
+                    width="">
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="top">
                         <p>姓名: {{ scope.row.roleName }}</p>
@@ -56,9 +31,9 @@
                     </el-table-column>
                     <el-table-column label="操作">
                     <template slot-scope="scope">
-                        <el-button
+                        <!-- <el-button
                         size="mini"
-                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                        @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
                         <el-button
                         size="mini"
                         type="danger"
@@ -186,5 +161,8 @@ export default {
     height: calc(100vh - 60px);
     overflow-y: scroll;
     background: rebeccapurple;
+}
+.title{
+    color: #fff;
 }
 </style>

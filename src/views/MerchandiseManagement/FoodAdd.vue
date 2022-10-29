@@ -1,28 +1,30 @@
 <script>
-import { foodAdd, getCategoryList ,attributeListApi} from '@/api/api'
+import { foodAdd, getCategoryList, attributeListApi,  productAttributeValueApi} from '@/api/api'
 export default {
     data() {
         return {
+            from: {},
             categorylist: [],
             imageUrl: '',
-                foodName: '', //菜肴名称
-                description: '', //菜肴描述
-                bannerUrl: '',
-                price: '',
-                categoryId:'',
-                attributeList:[],//类目列表
-                attributeKey:[]
+            foodName: '', //菜肴名称
+            description: '', //菜肴描述
+            bannerUrl: '',
+            price: '',
+            categoryId: '',
+            attributeList: [],//类目列表
+            attributeKey: [],
+            attrId: ''
         }
     },
     watch: {
-        categoryId(oldValue,newValue) {
+        categoryId(oldValue, newValue) {
             attributeListApi({
                 categoryId: 1
-            }).then(res =>{
-                this.attributeKey=[]
+            }).then(res => {
+                this.attributeKey = []
                 this.attributeList = res.data.data
                 // console.log(res.data.data);
-                this.attributeList.forEach(el =>{
+                this.attributeList.forEach(el => {
                     if (el.categoryId == oldValue) {
                         this.attributeKey.push(el)
                     }
@@ -49,15 +51,27 @@ export default {
             if (!token) {
                 alert('请先登录')
             } else {
-                
+                console.log(this.from);
                 foodAdd({
-                foodName: this.foodName, //菜肴名称
-                description:this.description, //菜肴描述
-                bannerUrl:this.bannerUrl,
-                price: this.price,
-                categoryId:this.categoryId
+                    foodName: this.foodName, //菜肴名称
+                    description: this.description, //菜肴描述
+                    bannerUrl: this.bannerUrl,
+                    price: this.price,
+                    categoryId: this.categoryId
                 }).then(res => {
+                    this.attrId = res.data.data.id
                     console.log(res);
+                    this.attributeKey.forEach((el,i) =>{
+                        console.log(this.attrId);
+    
+                        productAttributeValueApi({
+                            productId: this.attrId,
+                            attributeId: el.attrId,
+                            value: this.from[i]
+                        }).then(res => {
+                            console.log(res);
+                        })
+                    })
                 })
             }
 
@@ -85,7 +99,7 @@ export default {
         },
 
     },
-    
+
 }
 </script>
 <template>
@@ -94,25 +108,25 @@ export default {
         </el-page-header>
         <!-- <h3 class="title">菜品详情</h3> -->
         <div class="box-content">
-            <el-form  label-width="80px">
+            <el-form label-width="80px">
                 <el-form-item label="菜品名称">
-                    <el-input v-model="foodName"></el-input>
+                    <el-input class="aa" v-model="foodName"></el-input>
                 </el-form-item>
                 <el-form-item label="价格">
-                    <el-input v-model="price"></el-input>
+                    <el-input class="aa" v-model="price"></el-input>
                 </el-form-item>
                 <el-form-item label="菜品类型">
-                    <el-select v-model="categoryId" placeholder="请选择菜品类型">
+                    <el-select class="aa" v-model="categoryId" placeholder="请选择菜品类型">
                         <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
                         </el-option>
                     </el-select>
-                    <el-form-item v-for="(el,i) in attributeKey" :label="el.attrName" :key="i">
-                        <el-input></el-input>
+                    <el-form-item v-for="(el, i) in attributeKey" :label="el.attrName" :key="i">
+                        <el-input class="aa" v-model="from[i]"></el-input>
                     </el-form-item>
                 </el-form-item>
 
                 <el-form-item label="菜品描述">
-                    <el-input type="textarea" v-model="description"></el-input>
+                    <el-input type="textarea" class="aa" v-model="description"></el-input>
                 </el-form-item>
                 <el-form-item label="菜品主图">
                     <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
@@ -161,5 +175,9 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+}
+
+.aa {
+    width: 223px;
 }
 </style>
