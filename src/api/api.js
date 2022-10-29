@@ -202,3 +202,9 @@ export const roleAddPermission = function(payload = {}){
  export const roleDeletePermission = function(payload = {}){
   return instance.post('/role/deletePermission',payload)
 }
+/**
+ * @description 查询角色拥有的权限
+ */
+ export const rolePermissionList = function(payload = {}){
+  return instance.post('/role/permission/list',payload)
+}

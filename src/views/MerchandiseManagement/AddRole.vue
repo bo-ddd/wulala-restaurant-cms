@@ -22,7 +22,7 @@
                 <!-- 全选 -->
                 <div class="power-list">
                     <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
-                    <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button>
+                    <!-- <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button> -->
                     <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" @check="getId"
                         :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ node, data }">
@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { roleCreate, permissionListApi, roleAddPermission } from '@/api/api';
+// roleAddPermission
+import { roleCreate, permissionListApi } from '@/api/api';
 import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
@@ -115,42 +116,42 @@ export default {
             this.permissionId.push(data.id);
             console.log(this.permissionId);
         },
-        addToPower: function () {
-            this.permissionId.forEach(el => {
-                console.log(el);
-                console.log(1);
-                roleAddPermission({
-                    roleId: this.roleId,
-                    permissionId: el,
-                }).then(res => {
-                    console.log('----------------addToPower----');
-                    console.log(res);
-                    if (res.data.status == 10303) {
-                        this.$message({
-                            message: '角色名称不能为空',
-                            type: 'warning'
-                        });
-                    } else if (res.data.status == 10302) {
-                        this.$message({
-                            message: '请选择权限',
-                            type: 'warning'
-                        });
-                    } else {
-                        this.$message({
-                            message: '创建成功',
-                            type: 'success'
-                        });
-                        this.$router.push({ path: '/rolemg' });
-                    }
-                }).catch(err => {
-                    console.log(err);
-                    this.$message({
-                        message: '失败请重试',
-                        type: 'warning'
-                    });
-                })
-            });
-        },
+        // addToPower: function () {
+        //     this.permissionId.forEach(el => {
+        //         console.log(el);
+        //         console.log(1);
+        //         roleAddPermission({
+        //             roleId: this.roleId,
+        //             permissionId: el,
+        //         }).then(res => {
+        //             console.log('----------------addToPower----');
+        //             console.log(res);
+        //             if (res.data.status == 10303) {
+        //                 this.$message({
+        //                     message: '角色名称不能为空',
+        //                     type: 'warning'
+        //                 });
+        //             } else if (res.data.status == 10302) {
+        //                 this.$message({
+        //                     message: '请选择权限',
+        //                     type: 'warning'
+        //                 });
+        //             } else {
+        //                 this.$message({
+        //                     message: '创建成功',
+        //                     type: 'success'
+        //                 });
+        //                 this.$router.push({ path: '/rolemg' });
+        //             }
+        //         }).catch(err => {
+        //             console.log(err);
+        //             this.$message({
+        //                 message: '失败请重试',
+        //                 type: 'warning'
+        //             });
+        //         })
+        //     });
+        // },
         formatePermissionList(data) {
             // 深拷贝
             let res = JSON.parse(JSON.stringify(data));
