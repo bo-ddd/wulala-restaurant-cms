@@ -72,6 +72,10 @@ const routes = [
         path:'/setrolepower',
         name:'setrolepower',
         component:()=>import("../views/attribute/SetRolePower.vue")
+      },{
+        path:'/homePage',
+        name:'homePage',
+        component:()=>import("../views/homePage/HomePage.vue")
       }
     ]
   }
