@@ -1,5 +1,5 @@
 <template>
-    <div>
-        this is haome page
-    </div>
+  <div>
+    
+  </div>
 </template>
