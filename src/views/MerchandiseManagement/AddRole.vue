@@ -22,8 +22,9 @@
                 <!-- 全选 -->
                 <div class="power-list">
                     <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
-                    <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button>
-                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" @check="getId" :expand-on-click-node="false">
+                    <!-- <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button> -->
+                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" @check="getId"
+                        :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ node, data }">
                             <span>{{ data.permissionName }}</span>
                             <span>
@@ -41,8 +42,9 @@
 </template>
 
 <script>
-import { roleCreate, permissionListApi,roleAddPermission } from '@/api/api';
-import { showLoading,hideLoading } from "@/api/loading";
+// roleAddPermission
+import { roleCreate, permissionListApi } from '@/api/api';
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -66,21 +68,20 @@ export default {
                 label: '北京烤鸭'
             }],
             array: [],
-            roleId:'',
-            permissionId:[],
+            permissionId: [],
         }
     },
     created() {
         showLoading();
         setTimeout(function () {
             hideLoading();
-        },1000),
+        }, 1000);
         permissionListApi({}).then(res => {
-            let dataList = this.formatData(res.data.data);
-            // console.log(res.data.data);
+            let dataList = this.formatePermissionList(res.data.data);
             this.array = dataList;
-            // console.log(this.array)
-        }).catch(err => {
+
+        })
+        .catch(err => {
             console.log(err);
         })
     },
@@ -88,7 +89,7 @@ export default {
         foundRole: function () {
             roleCreate({
                 roleName: this.input1,
-                permissionIds:this.permissionId,
+                permissionIds: this.permissionId, //给角色添加默认权限
             }).then(res => {
                 console.log('-------foundRole------');
                 console.log(res);
@@ -97,76 +98,39 @@ export default {
                         message: res.data.msg,
                         type: 'warning'
                     });
-                } else {
+                }
+                else if(this.permissionId == ''){
                     this.$message({
                         message: '角色创建成功,请添加权限',
                         type: 'success'
                     });
-                    this.roleId = res.data.data.id;
-                    // this.$router.push({ path: '/rolemg' })
+                    this.$router.push({ path: '/rolemg' })
                 }
-            }).catch(err => {
+                else if(res.data.status == 1){
+                    this.$message({
+                        message: '角色创建成功',
+                        type: 'success'
+                    });
+                    this.$router.push({ path: '/rolemg' })
+                } 
+                
+            })
+            .catch(err => {
                 console.log(err);
             })
         },
-        getId (data) {
+        getId(data) {
             this.permissionId.push(data.id);
             console.log(this.permissionId);
         },
-        addToPower : function(){
-            this.permissionId.forEach(el => {
-                // let pAll = Promise.all([roleAddPermission({
-                //     roleId:this.roleId,
-                //     permissionId: this.pAll,
-                // }),roleAddPermission({
-                //     roleId:this.roleId,
-                //     permissionId: this.pAll,
-                // }),roleAddPermission({
-                //     roleId:this.roleId,
-                //     permissionId: this.pAll,
-                // })]);
-                // console.log(pAll);
-                console.log(el);
-                console.log(1);
-                roleAddPermission({
-                    roleId:this.roleId,
-                    permissionId: el,
-                }).then(res => {
-                    console.log('----------------addToPower----');
-                    console.log(res);
-                    if (res.data.status == 10303) {
-                        this.$message({
-                            message: '角色名称不能为空',
-                            type: 'warning'
-                        });
-                    }else if(res.data.status == 10302){
-                        this.$message({
-                            message: '请选择权限',
-                            type: 'warning'
-                        });
-                    }else{
-                        this.$message({
-                            message: '创建成功',
-                            type: 'success'
-                        });
-                        this.$router.push({ path: '/rolemg' });
-                    }
-                }).catch(err => {
-                    console.log(err);
-                    this.$message({
-                        message: '失败请重试',
-                        type: 'warning'
-                    });
-                })
-            });
-        },  
-        formatData(data) {
+        formatePermissionList(data) {
             // 深拷贝
             let res = JSON.parse(JSON.stringify(data));
             res.forEach(item => {
                 if (!item.children) item.children = [];
                 if (item.pid != 0) {
                     let pItem = res.find(pItem => pItem.id == item.pid);
+                    if (pItem && !pItem.children) pItem.children = []
                     pItem.children.push(item)
                 }
             });
@@ -183,7 +147,6 @@ export default {
 </script>
 
 <style scoped>
-
 .title {
     color: white;
 }
@@ -221,6 +184,7 @@ export default {
     width: 95%;
     margin: 10px auto;
 }
+
 .custom-tree-node {
     flex: 1;
     display: flex;
@@ -229,13 +193,16 @@ export default {
     font-size: 14px;
     padding-right: 8px;
 }
-::v-deep .el-tree-node__content{
+
+::v-deep .el-tree-node__content {
     height: 40px;
 }
-.box-content{
+
+.box-content {
     background-color: rebeccapurple;
 }
-.bodys{
+
+.bodys {
     background-color: rebeccapurple;
     overflow: hidden;
 }

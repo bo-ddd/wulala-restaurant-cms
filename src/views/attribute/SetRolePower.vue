@@ -1,34 +1,30 @@
 <template>
     <div class="bodys">
-        <h4 class="mg-rl_20 title">添加角色</h4>
+        <h4 class="mg-rl_20 title">设置角色权限</h4>
         <div class="box-contont">
             <div class="content">
                 <div class="add-role">
                     <div action="" class="role-name">
                         <div class="role-title"><span>*</span>角色名称</div>
-                        <el-select v-model="input2" placeholder="请选择角色">
+                        <el-select v-model="input2" placeholder="请选择角色" @change="foundRole">
                             <el-option v-for="item in options" :key="item.roleName" :label="item.roleName"
-                                :value="item.roleName">
+                                :value="item.id">
                             </el-option>
                         </el-select>
                     </div>
-                    <el-button class="btn" type="primary" plain @click="foundRole">确定</el-button>
+                    <!-- <el-button class="btn" type="primary" plain @click="foundRole">确定</el-button> -->
                 </div>
                 <!-- 全选 -->
-                <div class="power-list">
+                <div class="power-list" v-if="ifs == ''">
+                    <div class="erroy">请先选择角色名称</div>
+                </div>
+                <div class="power-list" v-else>
                     <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
-                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" :expand-on-click-node="false">
+                    <el-button class="btn" type="primary" plain @click="addToRole">添加权限</el-button>
+                    <el-tree :data="array" :show-checkbox="true" node-key="id" :default-expand-all="false" @check="getId" :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ data }">
                             <span>{{ data.permissionName }}</span>
                         </span>
-                        <!-- <span class="custom-tree-node" slot-scope="{ node, data }">
-                            <span>{{ data.permissionName }}</span>
-                            <span>
-                                <el-button type="text" size="mini" @click="() => remove(node, data)">
-                                    Delete
-                                </el-button>
-                            </span>
-                        </span> -->
                     </el-tree>
                 </div>
             </div>
@@ -38,8 +34,10 @@
 </template>
 
 <script>
-import { permissionListApi, roleListApi } from '@/api/api';
+// rolePermissionList
+import { permissionListApi, roleListApi ,roleAddPermission} from '@/api/api';
 import { showLoading,hideLoading } from "@/api/loading";
+import { ref } from 'vue';
 export default {
     data() {
         return {
@@ -48,6 +46,8 @@ export default {
             isIndeterminate: true,
             options: [],
             array: [],
+            ifs:ref(''),
+            permissionId:[],
         }
     },
     created() {
@@ -55,47 +55,78 @@ export default {
         setTimeout(function () {
             hideLoading();
         },1000),
-        console.log(1);
         permissionListApi({}).then(res => {
-            let dataList = this.formatData(res.data.data);
-            // console.log(res.data.data);
+            let dataList = this.formatePermissionList(res.data.data);
             this.array = dataList;
-            // console.log(this.array)
         }).catch(err => {
             console.log(err);
         }),
         roleListApi({}).then(res=>{
             this.options = res.data.data;
-            // console.log(res);
         }).catch(err => {
             console.log(err);
         })
-
-
-
     },
     methods: {
-        foundRole: function () {
-            console.log(1);
+        getId(data) {
+            this.permissionId.push(data.id);
         },
-        formatData(data) {
-            // 深拷贝
+        foundRole: function () {
+            if (this.input2 == '') {
+                this.$message({
+                    message: '请选择角色',
+                    type: 'warning'
+                });
+            }else{
+                this.ifs = 1
+            }
+        },
+        addToRole : function(){
+            if (this.permissionId == '') {
+                this.$message({
+                    message: '请选择权限',
+                    type: 'warning'
+                });
+            }else{
+                this.permissionId.forEach(el => {
+                    roleAddPermission({
+                        roleId:this.input2,
+                        permissionId:el
+                    }).then(res => {
+                        // console.log(res);
+                        if (res.data.status == 10303) {
+                            this.$message({ 
+                                message: '角色名称不能为空',
+                                type: 'warning'
+                            });
+                        } else if (res.data.status == 10302) {
+                            this.$message({
+                                message: '请选择权限',
+                                type: 'warning'
+                            });
+                        } else {
+                            this.$message({
+                                message: '创建成功',
+                                type: 'success'
+                            });
+                            this.$router.push({ path: '/rolemg' });
+                        }
+                    })
+                })
+            }
+        },
+        formatePermissionList : function(data) {
             let res = JSON.parse(JSON.stringify(data));
             res.forEach(item => {
                 if (!item.children) item.children = [];
                 if (item.pid != 0) {
                     let pItem = res.find(pItem => pItem.id == item.pid);
-                    pItem.children.push(item)
+                    if (pItem && !pItem.children) pItem.children = [];
+                    pItem.children.push(item);
                 }
             });
             return res.filter(item => item.pid == 0);
         },
-        // remove(node, data) {
-        //     const parent = node.parent;
-        //     const children = parent.data.children || parent.data;
-        //     const index = children.findIndex(d => d.id === data.id);
-        //     children.splice(index, 1);
-        // },
     }
 }
 </script>
@@ -156,5 +187,11 @@ export default {
 .bodys{
     background-color: rebeccapurple;
     overflow: hidden;
+}
+.erroy{
+    color: #ccc;
+    font-size: 1.6rem;
+    margin: 50px auto;
+    text-align: center;
 }
 </style>
