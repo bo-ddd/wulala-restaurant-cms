@@ -6,13 +6,13 @@
                 <div class="add-role">
                     <div action="" class="role-name">
                         <div class="role-title"><span>*</span>角色名称</div>
-                        <el-select v-model="input2" placeholder="请选择角色" @focus="getRolePermissionName">
+                        <el-select v-model="input2" placeholder="请选择角色" @change="foundRole">
                             <el-option v-for="item in options" :key="item.roleName" :label="item.roleName"
                                 :value="item.id">
                             </el-option>
                         </el-select>
                     </div>
-                    <el-button class="btn" type="primary" plain @click="foundRole">确定</el-button>
+                    <!-- <el-button class="btn" type="primary" plain @click="foundRole">确定</el-button> -->
                 </div>
                 <!-- 全选 -->
                 <div class="power-list" v-if="ifs == ''">
@@ -70,10 +70,7 @@ export default {
     methods: {
         getId(data) {
             this.permissionId.push(data.id);
-            console.log(this.permissionId);
         },
-        getRolePermissionName:function(){},
-
         foundRole: function () {
             if (this.input2 == '') {
                 this.$message({
@@ -96,7 +93,7 @@ export default {
                         roleId:this.input2,
                         permissionId:el
                     }).then(res => {
-                        console.log(res);
+                        // console.log(res);
                         if (res.data.status == 10303) {
                             this.$message({ 
                                 message: '角色名称不能为空',
@@ -124,18 +121,12 @@ export default {
                 if (!item.children) item.children = [];
                 if (item.pid != 0) {
                     let pItem = res.find(pItem => pItem.id == item.pid);
-                    if (pItem && !pItem.children) pItem.children = []
-                    pItem.children.push(item)
+                    if (pItem && !pItem.children) pItem.children = [];
+                    pItem.children.push(item);
                 }
             });
             return res.filter(item => item.pid == 0);
         },
-        // remove(node, data) {
-        //     const parent = node.parent;
-        //     const children = parent.data.children || parent.data;
-        //     const index = children.findIndex(d => d.id === data.id);
-        //     children.splice(index, 1);
-        // },
     }
 }
 </script>
