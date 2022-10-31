@@ -2,16 +2,34 @@
   <div class="box">
     <h3 class="title">属性列表</h3>
     <div class="box-content">
-      <el-table
-        :data="
-          tableData.filter(
-            (data) =>
-              !search || data.categoryName.toLowerCase().includes(search.toLowerCase()) || data.attrName.toLowerCase().includes(search.toLowerCase())
-          )
-        "
-        style="width: 100%"
-        height="550"
-      >
+      <div class="select">
+        <div class="demo-input-suffix">
+          查找属性：
+          <el-input
+            placeholder="请输入内容"
+            prefix-icon="el-icon-search"
+            v-model="input1"
+          >
+          </el-input>
+          <!-- <el-button class="button" type="primary" @click="findName"
+            >查找属性</el-button
+          > -->
+        </div>
+
+        <div class="demo-input-suffixs">
+          查找分类：
+          <el-input
+            placeholder="请输入内容"
+            prefix-icon="el-icon-search"
+            v-model="input2"
+          >
+          </el-input>
+          <el-button class="button" type="primary" @click="findCategory"
+            >查找分类</el-button
+          >
+        </div>
+      </div>
+      <el-table :data="tableData" style="width: 100%" height="550">
         <el-table-column label="id" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
@@ -32,15 +50,7 @@
             <span style="margin-left: 10px">{{ scope.row.categoryName }}</span>
           </template>
         </el-table-column>
-        <el-table-column align="right">
-          <template slot="header" slot-scope="scope">
-            {{scope.row}}
-            <el-input
-              v-model="search"
-              size="mini"
-              placeholder="输入关键字搜索"
-            />
-          </template>
+        <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
               >编辑</el-button
@@ -109,8 +119,11 @@ import {
 export default {
   data() {
     return {
-      search:'',
+      input1: "",
+      input2: "",
+      search: "",
       tableData: [],
+      tempData: [],
       currentPage4: 1,
       total: 0,
       pageSize: 5,
@@ -131,13 +144,11 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
       this.form = row;
       this.dialogFormVisible = true;
       this.attributeUpdate();
     },
     handleDelete(index, row) {
-      console.log(index, row);
       this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -177,8 +188,6 @@ export default {
       // this.pageSize = res.data.data.pageSize;
       // this.pageNum = res.data.data.pageNum;
       this.tableData = res.data.data;
-      console.log(this.tableData);
-      console.log(res);
     },
     async attributeDelete(row) {
       let res = await attributeDeleteApi({
@@ -192,18 +201,12 @@ export default {
       this.categoryIds = res.data.data;
     },
     async submit() {
-      console.log(this.form);
       let res = await attributeUpdateApi({
         id: this.form.id,
         categoryId: this.form.categoryId,
         name: this.form.attrName,
         type: this.form.type,
       });
-      // let res = await attributeUpdateApi(this.form);
-      console.log(res);
-      console.log(this.form.id);
-      console.log(this.form.categoryId);
-      console.log(this.form.type);
       if (res.data.status == 1) {
         this.$message({
           type: "success",
@@ -217,6 +220,56 @@ export default {
         });
       }
     },
+    async findName() {
+      let res = await attributeListApi();
+      let findName = res.data.data;
+      if (this.input1 === "") {
+        this.tableData = findName;
+      } else {
+        let arr = findName.filter((item) => {
+          return item.attrName.indexOf(this.input1) != -1;
+        });
+        this.tableData = arr;
+      }
+      this.input1 = "";
+    },
+    async findCategory() {
+      let res = await attributeListApi();
+      let findName = res.data.data;
+      // if (this.input1 && this.input2 == "") {
+      //   this.tableData = findName;
+      //   console.log('cnm');
+      // } else {
+      //   let arr = findName.filter((item) => {
+      //     return item.categoryName.indexOf(this.input2) != -1;
+      //   }) && findName.filter((item) => {
+      //     return item.attrName.indexOf(this.input1) != -1;
+      //   });
+      //   console.log('nmlgb');
+      //   this.tableData = arr;
+      // }
+      // this.input1 = "";
+      // this.input2 = "";
+      console.log(findName);
+      if (this.input1 === "" && this.input2 === "") {
+        this.tableData = findName;
+      } else if (this.input1 === "" && this.input2 !== "") {
+        let arr = findName.filter((item) =>{
+          return item.categoryName.indexOf(this.input2) != -1;
+        })
+        this.tableData = arr;
+      } else if(this.input1 !=="" && this.input2 === ""){
+        let arr = findName.filter((item) =>{
+          return item.attrName.indexOf(this.input1) != -1;
+        })
+        this.tableData = arr;
+      } else {
+        let arr = findName.filter((item) =>{
+          return item.attrName.indexOf(this.input1) != -1 && item.categoryName.indexOf(this.input2)!=-1;
+        })
+        this.tableData = arr; 
+      }
+    },
   },
 };
 </script>
@@ -226,5 +279,25 @@ export default {
   display: flex;
   justify-content: center;
   margin: 10px 0;
+}
+.demo-input-suffix {
+  display: flex;
+  align-items: center;
+}
+.demo-input-suffixs {
+  display: flex;
+  align-items: center;
+  margin: 0 50px;
+}
+.el-input {
+  width: 200px;
+}
+.button {
+  margin: 0 10px;
+  background: #86bcd6;
+  border-color: #86bcd6;
+}
+.select {
+  display: flex;
 }
 </style>
