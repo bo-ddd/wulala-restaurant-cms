@@ -15,7 +15,7 @@
                 </div>
                 <!-- 全选 -->
                 <div class="power-list" v-if="ifs == ''">
-                    <div class="erroy">请先选择角色名称</div>
+                    <div class="erroy">{{content}}</div>
                 </div>
                 <div class="power-list" v-else>
                     <el-tree :data="array" :show-checkbox="true"
@@ -42,7 +42,7 @@
 // import { permissionListApi, roleListApi , rolePermissionList , roleDeletePermission} from '@/api/api';
 import {  roleListApi , rolePermissionList , roleDeletePermission} from '@/api/api';
 import { showLoading,hideLoading } from "@/api/loading";
-// import { ref } from 'vue';
+import { ref } from 'vue';
 export default {
     data() {
         return {
@@ -54,7 +54,7 @@ export default {
             ifs:'',
             permissionId:[],
             defaultPower : [],
-            // idsss:[],
+            content:ref('请先选择角色名称'),
         }
     },
     created() {
@@ -99,6 +99,7 @@ export default {
                     this.array = res.data.data
                     if (res.data.data == '') {
                         this.ifs = '';
+                        this.content = '该角色还没有权限'
                     }else{
                         res.data.data.forEach(el => {
                             this.defaultPower.push(el.id);
