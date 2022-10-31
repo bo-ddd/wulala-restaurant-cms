@@ -81,6 +81,10 @@ const routes = [
         path:'/homePage',
         name:'homePage',
         component:()=>import("../views/homePage/HomePage.vue")
+      },{
+        path:'/deleterolepower',
+        name:'deleterolepower',
+        component:()=>import("../views/role/DeleteRolePower.vue")
       }
     ]
   }
