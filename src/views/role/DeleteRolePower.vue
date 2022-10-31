@@ -12,15 +12,12 @@
                             </el-option>
                         </el-select>
                     </div>
-                    <!-- <el-button class="btn" type="primary" plain @click="foundRole">确定</el-button> -->
                 </div>
                 <!-- 全选 -->
                 <div class="power-list" v-if="ifs == ''">
                     <div class="erroy">请先选择角色名称</div>
                 </div>
                 <div class="power-list" v-else>
-                    <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
-                    <!-- <el-button class="btn" type="primary" plain @click="addToRole">添加权限</el-button> -->
                     <el-tree :data="array" :show-checkbox="true" node-key="id"
                     :default-checked-keys="defaultPower" 
                     :default-expanded-keys="defaultPower"
@@ -33,15 +30,6 @@
                                 </el-button>
                             </span>
                         </span>
-
-                        <!-- <span class="custom-tree-node" slot-scope="{ data }">
-                            <span>{{ data.permissionName }}</span>
-                        </span>
-                        <span>
-                            <el-button type="text" size="mini" @click="() => remove(node, data)">
-                                Delete
-                            </el-button>
-                        </span> -->
                     </el-tree>
                 </div>
             </div>
@@ -71,17 +59,6 @@ export default {
         setTimeout(function () {
             hideLoading();
         },1000),
-            // permissionListApi({}).then(res => {
-            // let dataList = this.formatePermissionList(res.data.data);
-            // this.array = dataList;
-            // }).catch(err => {
-            //     console.log(err);
-            // }),
-            // roleListApi({}).then(res=>{
-            //     this.options = res.data.data;
-            // }).catch(err => {
-            //     console.log(err);
-            // })
         this.permissionList();
     },
     methods: {
@@ -238,5 +215,8 @@ export default {
     font-size: 1.6rem;
     margin: 50px auto;
     text-align: center;
+}
+::-webkit-scrollbar{
+    display:none;
 }
 </style>

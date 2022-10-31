@@ -10,7 +10,7 @@
                     :data="obtainRoleList.filter(data => !search || data.roleName.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
                     <el-table-column
-                    label="用户ID"
+                    label="角色ID"
                     width="">
                     <template slot-scope="scope">
                         <i class="el-icon-time"></i>
@@ -30,14 +30,6 @@
                         </el-popover>
                     </template>
                     </el-table-column>
-                    <!-- <el-table-column label="操作">
-                    <template slot-scope="scope">
-                        <el-button
-                        size="mini"
-                        type="danger"
-                        @click="handleDelete(scope.row.id)">删除</el-button>
-                    </template>
-                    </el-table-column> -->
                     <el-table-column
                         align="right">
                         <template slot="header" slot-scope="scope">
@@ -76,11 +68,6 @@ export default {
         }
     },
     created() {
-        // roleListApi({}).then(res=>{
-        //     this.obtainRoleList = res.data.data;
-        // }).catch(err => {
-        //     console.log(err);
-        // }),
         this.rolelist()
         showLoading();
         setTimeout(function () {
