@@ -221,4 +221,9 @@ export const productAttributeValueApi = function (payload = {}) {
 export const updateFood = function (payload = {}) {
   return instance.post('food/update', payload)
 }
-
+/**
+ * @description 获取菜肴详情
+ */
+ export const foodDetail = function (payload = {}) {
+  return instance.post('food/detail', payload)
+}

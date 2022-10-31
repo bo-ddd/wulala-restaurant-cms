@@ -33,13 +33,13 @@
                 <div class="box-inquire_btn">
                     <el-row>
                         <el-button size="mini">查询</el-button>
-                        <el-button size="mini" type="primary">重置</el-button>
+                        <el-button size="mini" >重置</el-button>
                     </el-row>
                 </div>
             </div>
             <div class="box-btn">
                 <el-row>
-                    <el-button @click="toFoodPage" size="mini" type="primary">新增菜品</el-button>
+                    <el-button @click="toFoodPage" size="mini" >新增菜品</el-button>
                     <el-button size="mini">批量上架</el-button>
                     <el-button size="mini">批量下架</el-button>
                     <el-button size="mini">批量删除</el-button>
@@ -72,7 +72,6 @@
                         <el-button>取消</el-button>
                     </el-form-item>
                 </el-form>
-                  
                 </el-dialog>
             </div>
 
@@ -89,20 +88,20 @@
                             <p>菜名: {{ scope.row.foodName }}</p>
                             <p>价格: {{ scope.row.price }}</p>
                             <div slot="reference" class="name-wrapper">
-                                <el-tag size="medium">{{ scope.row.foodName }}</el-tag>
+                                <span size="medium">{{ scope.row.foodName }}</span>
                             </div>
                         </el-popover>
                     </template>
                 </el-table-column>
                 <el-table-column label="菜肴价格">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.price + '元' }}</el-tag>
+                        <span size="medium">{{ scope.row.price + '元' }}</span>
                     </template>
                 </el-table-column>
 
                 <el-table-column label="菜肴描述">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.description }}</el-tag>
+                        <span size="medium">{{ scope.row.description }}</span>
                     </template>
                 </el-table-column>
 
@@ -110,7 +109,7 @@
                 <el-table-column align="center" label="菜肴操作">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-                        <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除
+                        <el-button size="mini"  @click="handleDelete(scope.$index, scope.row)">删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -148,7 +147,7 @@ export default {
             sizechange: 10,
             pagesize: 0,
             total: 0,
-            currentPage4: 4,
+            // currentPage4: 4,
             input1: '',
             input2: '',
             input3: '',
@@ -192,7 +191,7 @@ export default {
                 pageNum: this.currentchange,
                 pageSize: this.sizechange,
             }).then(res => {
-                //  this.tableData.push(res.data.data.list)
+                console.log(res);
                 this.tableData = res.data.data.list
                 console.log(res.data.data);
                 this.total = res.data.data.total
@@ -233,7 +232,7 @@ export default {
             }).then(res => {
                 console.log('删除菜品', res.data);
                 foodList({
-
+                    
                 }).then(res => {
                     //  this.tableData.push(res.data.data.list)
                     this.tableData = res.data.data.list
@@ -283,6 +282,7 @@ export default {
         foodList({
             pageNum: this.currentchange,
             pageSize: this.sizechange,
+            
         }).then(res => {
             //  this.tableData.push(res.data.data.list)
             this.tableData = res.data.data.list
@@ -367,5 +367,8 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+}
+.cell{
+    color: red;
 }
 </style>

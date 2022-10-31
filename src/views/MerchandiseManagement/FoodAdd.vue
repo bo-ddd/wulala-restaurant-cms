@@ -60,6 +60,7 @@ export default {
                     categoryId: this.categoryId
                 }).then(res => {
                     this.attrId = res.data.data.id
+                    console.log('=============');
                     console.log(res);
                     this.attributeKey.forEach((el,i) =>{
                         console.log(this.attrId);
