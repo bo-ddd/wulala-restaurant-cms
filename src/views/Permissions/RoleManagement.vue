@@ -5,11 +5,12 @@
             <div class="content">
                 <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                 <el-button type="primary" @click="toSetRolePower">设置角色权限</el-button>
+                <el-button class="btn" type="primary" plain @click="toDeleteRolePower()">删除角色权限</el-button>
                 <el-table
-                    :data="obtainRoleList"
+                    :data="obtainRoleList.filter(data => !search || data.roleName.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
                     <el-table-column
-                    label="用户ID"
+                    label="角色ID"
                     width="">
                     <template slot-scope="scope">
                         <i class="el-icon-time"></i>
@@ -29,8 +30,16 @@
                         </el-popover>
                     </template>
                     </el-table-column>
-                    <el-table-column label="操作">
-                    <template slot-scope="scope">
+                    <el-table-column
+                        align="right">
+                        <template slot="header" slot-scope="scope">
+                            {{scope.row}}
+                            <el-input
+                            v-model="search"
+                            size="mini"
+                            placeholder="输入角色关键字搜索"/>
+                        </template>
+                        <template slot-scope="scope">
                         <!-- <el-button
                         size="mini"
                         @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
@@ -38,7 +47,7 @@
                         size="mini"
                         type="danger"
                         @click="handleDelete(scope.row.id)">删除</el-button>
-                    </template>
+                        </template>
                     </el-table-column>
                 </el-table>
             </div>
@@ -54,15 +63,11 @@ export default {
         return {
             tabPosition: 'top',
             tabPositions: 'top',
-            obtainRoleList:[]//角色
+            obtainRoleList:[],//角色
+            search:'',
         }
     },
     created() {
-        // roleListApi({}).then(res=>{
-        //     this.obtainRoleList = res.data.data;
-        // }).catch(err => {
-        //     console.log(err);
-        // }),
         this.rolelist()
         showLoading();
         setTimeout(function () {
@@ -76,6 +81,9 @@ export default {
             }).catch(err => {
                 console.log(err);
             })
+        },
+        toDeleteRolePower : function(){
+            this.$router.push({path:'deleterolepower'})
         },
         toAddRole: function () {
             this.$router.push({ path: '/addrole' })
@@ -164,5 +172,12 @@ export default {
 }
 .title{
     color: #fff;
+}
+::v-deep .el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf{
+    border-bottom: 1px solid #EBEEF5;
+    text-align: center;
+}
+::v-deep .el-table th.el-table__cell>.cell{
+    text-align: center;
 }
 </style>

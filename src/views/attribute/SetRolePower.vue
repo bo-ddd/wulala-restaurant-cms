@@ -161,9 +161,11 @@ export default {
 
 .content {
     background-color: #fff;
-    border-radius: 20px;
     overflow-y: scroll;
     height: calc(100vh - 9.8rem);
+    margin: 15px 30px;
+    background-color: white;
+    padding: 15px;
 }
 
 .power-list {
@@ -182,10 +184,10 @@ export default {
     height: 40px;
 }
 .box-contont{
-    background-color: rebeccapurple;
+    background-color: #cce0e7;
 }
 .bodys{
-    background-color: rebeccapurple;
+    background-color: #cce0e7;
     overflow: hidden;
 }
 .erroy{

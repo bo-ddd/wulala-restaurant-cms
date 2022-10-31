@@ -228,3 +228,9 @@ export const updateFood = function (payload = {}) {
 export const updateUser = function (payload = {}) {
   return instance.post('user/update', payload)
 }
+/**
+ * @description 获取菜肴详情
+ */
+export const foodDetail = function (payload = {}) {
+  return instance.post('food/detail', payload)
+}

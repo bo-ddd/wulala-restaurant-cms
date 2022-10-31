@@ -1,12 +1,11 @@
 
 <script>
 
-import { foodAdd, getCategoryList, attributeListApi, productAttributeValueApi, foodList } from '@/api/api'
+import { getCategoryList, attributeListApi,productAttributeValueApi ,updateFood ,foodDetail} from '@/api/api'
 export default {
     data() {
         return {
             from: {
-
             },
             categorylist: [],
             imageUrl: '',
@@ -19,28 +18,29 @@ export default {
             attributeKey: [],
             attrId: '',
             foodId: '',
-            foodList: []
+            foodData: [],
+           
         }
     },
     watch: {
         categoryId(oldValue, newValue) {
-            attributeListApi({
-                // categoryId: 1
-            }).then(res => {
+            attributeListApi({}).then(res => {
                 this.attributeList = res.data.data
                 this.attributeKey = []
-                // console.log(res.data.data);
                 this.attributeList.forEach(el => {
                     if (el.categoryId == oldValue) {
                         this.attributeKey.push(el)
                     }
                 })
-                // console.log(this.attributeKey);
-                console.log(oldValue);
+                console.log('----');
+                console.log(this.attributeKey);
+                // console.log(oldValue);
                 console.log(newValue);
             })
-        }
+        },
+
     },
+
     created() {
 
         //类目列表
@@ -49,74 +49,39 @@ export default {
         }).then(res => {
             this.categorylist = res.data.data
         });
-        foodList({}).then(res => {
-            res.data.data.list.forEach(el => {
-                if (this.foodListId == el.foodId) {
-                    this.foodName = el.foodName
-                    this.price = el.price
-                    this.bannerUrl = el.bannerUrl
-                    this.description = el.description
-                    this.categoryId = el.categoryId
-                    attributeListApi({
-                    }).then(res => {
-                        this.attributeList = res.data.data
-                        this.attributeKey = []
-                        // console.log(res.data.data);
-                        this.attributeList.forEach(els => {
-                            if (els.categoryId == el.categoryId) {
-                                this.attributeKey.push(els)
-                            }
-                        })
-                        console.log(this.attributeKey);
-                        el.attrs.forEach((item) => {
-                            // console.log(i);
-                            // console.log(this.from);
-                            this.attributeKey.forEach(el => {
-                                // console.log("------------");
-                                if (item.attrName == el.attrName) {
-                                    console.log(el.attrName);
-                                    console.log("========");
-                                    console.log(item.attrName);
-                                    this.from[item.id] = item.attrValue
-                                }
-                            })
-                        })
-                    })
-                }
-            })
-        })
+        this.foodId = this.$route.query.foodId
+        this.getFoodList()
+        
 
-        this.foodListId = this.$route.query.id
-        console.log(this.foodListId);
     },
     mounted() {
 
     },
 
     methods: {
-        upload: function () {
+        upFood(){
             let token = sessionStorage.getItem('token')
             if (!token) {
                 alert('请先登录')
             } else {
                 console.log(this.from);
-                foodAdd({
+                updateFood({
+                    foodId:this.foodId,
                     foodName: this.foodName, //菜肴名称
                     description: this.description, //菜肴描述
                     bannerUrl: this.bannerUrl,
                     price: this.price,
                     categoryId: this.categoryId
                 }).then(res => {
-                    this.attrId = res.data.data.id
+                    // this.attrId = res.data.data.id
+                    console.log('===========');
                     console.log(res);
-                    this.attributeKey.forEach((el, i) => {
-                        console.log('==========');
+                    this.attributeKey.forEach((el) =>{
                         console.log(this.attrId);
-
                         productAttributeValueApi({
-                            productId: this.attrId,
-                            attributeId: el.attrId,
-                            value: this.from[i]
+                            productId: Number(this.foodId),
+                            attributeId:el.attrId,
+                            value: this.from[el.attrId]
                         }).then(res => {
                             console.log(res);
                         })
@@ -124,8 +89,6 @@ export default {
                 })
             }
         },
-
-
         goBack() {
             this.$router.back(-1)
         },
@@ -147,21 +110,26 @@ export default {
             return isPNG && isLt1M;
         },
         getFoodList() {
-            foodList({
-
+            console.log("aa");
+            console.log(this.foodId);
+            foodDetail({
+                foodId:this.foodId
             }).then(res => {
-                this.foodList = res.data.data.list[0]
+                this.foodData = res.data.data
                 console.log('----------');
-                console.log(this.foodList);
-                this.imageUrl = this.foodList.bannerUrl
-                this.foodName = this.foodList.foodName
-                this.price = this.foodList.price
-                this.categoryId = this.foodList.categoryId
-                this.description = this.foodList.description
-                this.foodList.attrs.forEach(el => {
+                console.log(res);
+                this.imageUrl = this.foodData.bannerUrl
+                this.foodName = this.foodData.foodName
+                this.price = this.foodData.price
+                this.categoryId = this.foodData.categoryId
+                this.description = this.foodData.description
+                this.foodData.attrs.forEach(el => {
+                    console.log('======');
                     console.log(this.from, el);
-                    this.from[el.attrId] = el.attrValue
+                    // this.from[el.attrName] = el.attrValue
+                    this.$set(this.from, el.attrId, el.attrValue);
                 })
+
             })
         }
 
@@ -205,7 +173,7 @@ export default {
                     <div><img src="" alt=""></div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="upload()">添加</el-button>
+                    <el-button type="primary" @click="upFood()">添加</el-button>
                     <el-button>取消</el-button>
                 </el-form-item>
             </el-form>
