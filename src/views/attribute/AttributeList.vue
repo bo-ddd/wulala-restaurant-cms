@@ -2,7 +2,16 @@
   <div class="box">
     <h3 class="title">属性列表</h3>
     <div class="box-content">
-      <el-table :data="tableData" style="width: 100%" height="550">
+      <el-table
+        :data="
+          tableData.filter(
+            (data) =>
+              !search || data.categoryName.toLowerCase().includes(search.toLowerCase()) || data.attrName.toLowerCase().includes(search.toLowerCase())
+          )
+        "
+        style="width: 100%"
+        height="550"
+      >
         <el-table-column label="id" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
@@ -23,7 +32,15 @@
             <span style="margin-left: 10px">{{ scope.row.categoryName }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column align="right">
+          <template slot="header" slot-scope="scope">
+            {{scope.row}}
+            <el-input
+              v-model="search"
+              size="mini"
+              placeholder="输入关键字搜索"
+            />
+          </template>
           <template slot-scope="scope">
             <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
               >编辑</el-button
@@ -92,6 +109,7 @@ import {
 export default {
   data() {
     return {
+      search:'',
       tableData: [],
       currentPage4: 1,
       total: 0,
@@ -120,7 +138,7 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row);
-      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -159,6 +177,7 @@ export default {
       // this.pageSize = res.data.data.pageSize;
       // this.pageNum = res.data.data.pageNum;
       this.tableData = res.data.data;
+      console.log(this.tableData);
       console.log(res);
     },
     async attributeDelete(row) {

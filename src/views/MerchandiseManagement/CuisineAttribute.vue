@@ -1,10 +1,13 @@
 
 <script>
-import { foodAdd, getCategoryList, attributeListApi,  productAttributeValueApi} from '@/api/api'
+
+import { foodAdd, getCategoryList, attributeListApi, productAttributeValueApi, foodList } from '@/api/api'
 export default {
     data() {
         return {
-            from: {},
+            from: {
+
+            },
             categorylist: [],
             imageUrl: '',
             foodName: '', //菜肴名称
@@ -14,35 +17,79 @@ export default {
             categoryId: '',
             attributeList: [],//类目列表
             attributeKey: [],
-            attrId: ''
+            attrId: '',
+            foodId: '',
+            foodList: []
         }
     },
     watch: {
         categoryId(oldValue, newValue) {
             attributeListApi({
-                categoryId: 1
+                // categoryId: 1
             }).then(res => {
-                this.attributeKey = []
                 this.attributeList = res.data.data
+                this.attributeKey = []
                 // console.log(res.data.data);
                 this.attributeList.forEach(el => {
                     if (el.categoryId == oldValue) {
                         this.attributeKey.push(el)
                     }
                 })
-                console.log(this.attributeKey);
+                // console.log(this.attributeKey);
                 console.log(oldValue);
                 console.log(newValue);
             })
         }
     },
     created() {
+
+        //类目列表
         getCategoryList({
 
         }).then(res => {
             this.categorylist = res.data.data
-            console.log(res.data.data);
         });
+        foodList({}).then(res => {
+            res.data.data.list.forEach(el => {
+                if (this.foodListId == el.foodId) {
+                    this.foodName = el.foodName
+                    this.price = el.price
+                    this.bannerUrl = el.bannerUrl
+                    this.description = el.description
+                    this.categoryId = el.categoryId
+                    attributeListApi({
+                    }).then(res => {
+                        this.attributeList = res.data.data
+                        this.attributeKey = []
+                        // console.log(res.data.data);
+                        this.attributeList.forEach(els => {
+                            if (els.categoryId == el.categoryId) {
+                                this.attributeKey.push(els)
+                            }
+                        })
+                        console.log(this.attributeKey);
+                        el.attrs.forEach((item) => {
+                            // console.log(i);
+                            // console.log(this.from);
+                            this.attributeKey.forEach(el => {
+                                // console.log("------------");
+                                if (item.attrName == el.attrName) {
+                                    console.log(el.attrName);
+                                    console.log("========");
+                                    console.log(item.attrName);
+                                    this.from[item.id] = item.attrValue
+                                }
+                            })
+                        })
+                    })
+                }
+            })
+        })
+
+        this.foodListId = this.$route.query.id
+        console.log(this.foodListId);
+    },
+    mounted() {
 
     },
 
@@ -62,9 +109,10 @@ export default {
                 }).then(res => {
                     this.attrId = res.data.data.id
                     console.log(res);
-                    this.attributeKey.forEach((el,i) =>{
+                    this.attributeKey.forEach((el, i) => {
+                        console.log('==========');
                         console.log(this.attrId);
-    
+
                         productAttributeValueApi({
                             productId: this.attrId,
                             attributeId: el.attrId,
@@ -75,8 +123,8 @@ export default {
                     })
                 })
             }
-
         },
+
 
         goBack() {
             this.$router.back(-1)
@@ -98,43 +146,63 @@ export default {
             }
             return isPNG && isLt1M;
         },
+        getFoodList() {
+            foodList({
+
+            }).then(res => {
+                this.foodList = res.data.data.list[0]
+                console.log('----------');
+                console.log(this.foodList);
+                this.imageUrl = this.foodList.bannerUrl
+                this.foodName = this.foodList.foodName
+                this.price = this.foodList.price
+                this.categoryId = this.foodList.categoryId
+                this.description = this.foodList.description
+                this.foodList.attrs.forEach(el => {
+                    console.log(this.from, el);
+                    this.from[el.attrId] = el.attrValue
+                })
+            })
+        }
 
     },
+
+
 
 }
 </script>
 <template>
     <div class="box">
-        <el-page-header @back="goBack" content="菜品详情">
+        <el-page-header @back="goBack" content="修改菜肴">
         </el-page-header>
-        <!-- <h3 class="title">菜品详情</h3> -->
         <div class="box-content">
             <el-form label-width="80px">
-                <el-form-item label="菜品名称">
+                <el-form-item label="菜肴名称">
                     <el-input class="aa" v-model="foodName"></el-input>
                 </el-form-item>
-                <el-form-item label="价格">
+                <el-form-item label="菜肴价格">
                     <el-input class="aa" v-model="price"></el-input>
                 </el-form-item>
-                <el-form-item label="菜品类型">
+                <el-form-item label="菜肴类型">
                     <el-select class="aa" v-model="categoryId" placeholder="请选择菜品类型">
                         <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
                         </el-option>
                     </el-select>
                     <el-form-item v-for="(el, i) in attributeKey" :label="el.attrName" :key="i">
-                        <el-input class="aa" v-model="from[i]"></el-input>
+                        <el-input class="aa" v-model="from[el.attrId]"></el-input>
                     </el-form-item>
                 </el-form-item>
 
-                <el-form-item label="菜品描述">
+                <el-form-item label="菜肴描述">
                     <el-input type="textarea" class="aa" v-model="description"></el-input>
                 </el-form-item>
-                <el-form-item label="菜品主图">
+                <el-form-item label="菜肴主图">
                     <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
                         :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                    <div><img src="" alt=""></div>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="upload()">添加</el-button>
@@ -182,4 +250,3 @@ export default {
     width: 223px;
 }
 </style>
->>>>>>> a9a035a13b2fbd4f614d9da9e534cb036713a981
