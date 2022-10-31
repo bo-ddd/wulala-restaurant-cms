@@ -1,5 +1,5 @@
 <template>
-    <div class="bodys">
+    <div class="box">
         <h4 class="mg-rl_20 title">添加角色</h4>
         <div class="box-content">
             <div class="content">
@@ -147,9 +147,6 @@ export default {
 </script>
 
 <style scoped>
-.title {
-    color: white;
-}
 
 .add-role {
     display: flex;
