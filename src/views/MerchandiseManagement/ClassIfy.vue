@@ -95,8 +95,11 @@ export default {
         handleEdit(a, b) {
             console.log(a, b);
             this.$router.push({
-                path: '/cuisineattribute'
+                path: '/cuisineattribute', query: {
+                    foodId: b.foodId
+                }
             })
+            // console.log(data);
         },
         confirm(foodId) {
             deleteFood({

@@ -1,5 +1,5 @@
 <script>
-import { foodAdd, getCategoryList, attributeListApi,  productAttributeValueApi} from '@/api/api'
+import { foodAdd, getCategoryList, attributeListApi, productAttributeValueApi ,foodList } from '@/api/api'
 export default {
     data() {
         return {
@@ -13,7 +13,9 @@ export default {
             categoryId: '',
             attributeList: [],//类目列表
             attributeKey: [],
-            attrId: ''
+            attrId: '',
+            foodId: '',
+            foodList: []
         }
     },
     watch: {
@@ -36,13 +38,16 @@ export default {
         }
     },
     created() {
+        //类目列表
         getCategoryList({
 
         }).then(res => {
             this.categorylist = res.data.data
             console.log(res.data.data);
         });
-
+        this.foodId = this.$route.query.foodId
+        this.getFoodList()
+       
     },
 
     methods: {
@@ -61,9 +66,10 @@ export default {
                 }).then(res => {
                     this.attrId = res.data.data.id
                     console.log(res);
-                    this.attributeKey.forEach((el,i) =>{
+                    this.attributeKey.forEach((el, i) => {
+                        console.log('==========');
                         console.log(this.attrId);
-    
+
                         productAttributeValueApi({
                             productId: this.attrId,
                             attributeId: el.attrId,
@@ -97,8 +103,28 @@ export default {
             }
             return isPNG && isLt1M;
         },
+        getFoodList() {
+                    foodList({
+                        
+                    }).then(res => {
+                        this.foodList = res.data.data.list[0]
+                        console.log('----------');
+                        console.log(this.foodList);
+                        this.imageUrl = this.foodList.bannerUrl
+                        this.foodName = this.foodList.foodName
+                        this.price = this.foodList.price
+                        this.categoryId = this.foodList.categoryId
+                        this.description = this.foodList.description
+                        this.foodList.attrs.forEach(el =>{
+                           console.log(this.from,el);
+                           this.from[el.attrId] = el.attrValue
+                        })
+                    })
+                }
+        
+        },
 
-    },
+    
 
 }
 </script>
@@ -121,7 +147,7 @@ export default {
                         </el-option>
                     </el-select>
                     <el-form-item v-for="(el, i) in attributeKey" :label="el.attrName" :key="i">
-                        <el-input class="aa" v-model="from[i]"></el-input>
+                        <el-input class="aa" v-model="from[el.attrId]"></el-input>
                     </el-form-item>
                 </el-form-item>
 
@@ -134,6 +160,7 @@ export default {
                         <img v-if="imageUrl" :src="imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
+                    <div><img src="" alt=""></div>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="upload()">添加</el-button>
