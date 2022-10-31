@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    
-    <router-view/>
+
+    <router-view />
   </div>
 </template>
 
@@ -26,7 +26,10 @@ nav {
     }
   }
 }
+
 #app {
   min-width: 1000px;
 }
+
+
 </style>
