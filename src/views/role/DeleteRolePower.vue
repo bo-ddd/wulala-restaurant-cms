@@ -25,9 +25,23 @@
                     :default-checked-keys="defaultPower" 
                     :default-expanded-keys="defaultPower"
                     :default-expand-all="false" @check="getId" :expand-on-click-node="false">
-                        <span class="custom-tree-node" slot-scope="{ data }">
+                        <span class="custom-tree-node" slot-scope="{ node, data }">
+                            <span>{{ data.permissionName }}</span>
+                            <span>
+                                <el-button type="text" size="mini" @click="() => remove(node, data)">
+                                    Delete
+                                </el-button>
+                            </span>
+                        </span>
+
+                        <!-- <span class="custom-tree-node" slot-scope="{ data }">
                             <span>{{ data.permissionName }}</span>
                         </span>
+                        <span>
+                            <el-button type="text" size="mini" @click="() => remove(node, data)">
+                                Delete
+                            </el-button>
+                        </span> -->
                     </el-tree>
                 </div>
             </div>
@@ -36,7 +50,7 @@
 </template>
 
 <script>
-import { permissionListApi, roleListApi , rolePermissionList} from '@/api/api';
+import { permissionListApi, roleListApi , rolePermissionList , roleDeletePermission} from '@/api/api';
 import { showLoading,hideLoading } from "@/api/loading";
 import { ref } from 'vue';
 export default {
@@ -57,23 +71,39 @@ export default {
         setTimeout(function () {
             hideLoading();
         },1000),
-        permissionListApi({}).then(res => {
-            let dataList = this.formatePermissionList(res.data.data);
-            this.array = dataList;
-        }).catch(err => {
-            console.log(err);
-        }),
-        roleListApi({}).then(res=>{
-            this.options = res.data.data;
-        }).catch(err => {
-            console.log(err);
-        })
+            // permissionListApi({}).then(res => {
+            // let dataList = this.formatePermissionList(res.data.data);
+            // this.array = dataList;
+            // }).catch(err => {
+            //     console.log(err);
+            // }),
+            // roleListApi({}).then(res=>{
+            //     this.options = res.data.data;
+            // }).catch(err => {
+            //     console.log(err);
+            // })
+        this.permissionList();
     },
     methods: {
+        permissionList : function(){
+            permissionListApi({}).then(res => {
+            let dataList = this.formatePermissionList(res.data.data);
+            this.array = dataList;
+            }).catch(err => {
+                console.log(err);
+            }),
+            roleListApi({}).then(res=>{
+                this.options = res.data.data;
+            }).catch(err => {
+                console.log(err)
+            })
+        },
         getId(data) {
             this.permissionId.push(data.id);
         },
         foundRole: function () {
+            this.defaultPower.push();
+            console.log(this.input2);
             if (this.input2 == '') {
                 this.$message({
                     message: '请选择角色',
@@ -90,7 +120,7 @@ export default {
                     }else{
                         res.data.data.forEach(el => {
                             this.defaultPower.push(el.permissionId);
-                            console.log(el.permissionId);
+                            // console.log(el.permissionId);
                         });
                     }
                 }).catch(err => {
@@ -109,6 +139,37 @@ export default {
                 }
             });
             return res.filter(item => item.pid == 0);
+        },
+        remove(node, data) {
+            this.$confirm('此操作该用户将删除该权限, 是否继续?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+            }).then(() => {
+                roleDeletePermission({
+                    id:data.id
+                }).then(res => {
+                    if (res.status == 200) {
+                        console.log(res);
+                    }
+                })
+                this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
+            // const parent = node.parent;
+            // const children = parent.data.children || parent.data;
+            // const index = children.findIndex(d => d.id === data.id);
+            // children.splice(index, 1);
+            // console.log(data);
+            console.log(node);
+            
         },
     }
 }
