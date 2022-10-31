@@ -1,7 +1,7 @@
 <template>
-    <div class="bodys">
-        <h4 class="mg-rl_20 title">设置角色权限</h4>
-        <div class="box-contont">
+    <div class="box">
+        <h3 class="title">删除角色权限</h3>
+        <div class="box-content">
             <div class="content">
                 <div class="add-role">
                     <div action="" class="role-name">
@@ -20,8 +20,11 @@
                 </div>
                 <div class="power-list" v-else>
                     <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
-                    <el-button class="btn" type="primary" plain @click="addToRole">添加权限</el-button>
-                    <el-tree :data="array" :show-checkbox="true" node-key="id" :default-expand-all="false" @check="getId" :expand-on-click-node="false">
+                    <!-- <el-button class="btn" type="primary" plain @click="addToRole">添加权限</el-button> -->
+                    <el-tree :data="array" :show-checkbox="true" node-key="id"
+                    :default-checked-keys="defaultPower" 
+                    :default-expanded-keys="defaultPower"
+                    :default-expand-all="false" @check="getId" :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ data }">
                             <span>{{ data.permissionName }}</span>
                         </span>
@@ -30,12 +33,10 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
-// rolePermissionList
-import { permissionListApi, roleListApi ,roleAddPermission} from '@/api/api';
+import { permissionListApi, roleListApi , rolePermissionList} from '@/api/api';
 import { showLoading,hideLoading } from "@/api/loading";
 import { ref } from 'vue';
 export default {
@@ -48,6 +49,7 @@ export default {
             array: [],
             ifs:ref(''),
             permissionId:[],
+            defaultPower : ref([]),
         }
     },
     created() {
@@ -78,40 +80,21 @@ export default {
                     type: 'warning'
                 });
             }else{
-                this.ifs = 1
-            }
-        },
-        addToRole : function(){
-            if (this.permissionId == '') {
-                this.$message({
-                    message: '请选择权限',
-                    type: 'warning'
-                });
-            }else{
-                this.permissionId.forEach(el => {
-                    roleAddPermission({
-                        roleId:this.input2,
-                        permissionId:el
-                    }).then(res => {
-                        // console.log(res);
-                        if (res.data.status == 10303) {
-                            this.$message({ 
-                                message: '角色名称不能为空',
-                                type: 'warning'
-                            });
-                        } else if (res.data.status == 10302) {
-                            this.$message({
-                                message: '请选择权限',
-                                type: 'warning'
-                            });
-                        } else {
-                            this.$message({
-                                message: '创建成功',
-                                type: 'success'
-                            });
-                            this.$router.push({ path: '/rolemg' });
-                        }
-                    })
+                this.ifs = 1;
+                rolePermissionList({
+                    roleId:this.input2,
+                }).then(res => {
+                    this.defaultPower = [];
+                    if (res.data.data == '') {
+                        this.ifs = '';
+                    }else{
+                        res.data.data.forEach(el => {
+                            this.defaultPower.push(el.permissionId);
+                            console.log(el.permissionId);
+                        });
+                    }
+                }).catch(err => {
+                    console.log(err);
                 })
             }
         },
@@ -132,7 +115,6 @@ export default {
 </script>
 
 <style scoped>
-
 .title {
     color: white;
 }
@@ -162,7 +144,7 @@ export default {
 .content {
     background-color: #fff;
     overflow-y: scroll;
-    height: calc(100vh - 9.8rem);
+    height: calc(100vh - 14.8rem);
     margin: 15px 30px;
     background-color: white;
     padding: 15px;

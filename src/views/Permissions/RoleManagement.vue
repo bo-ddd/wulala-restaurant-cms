@@ -5,8 +5,9 @@
             <div class="content">
                 <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                 <el-button type="primary" @click="toSetRolePower">设置角色权限</el-button>
+                <el-button class="btn" type="primary" plain @click="toDeleteRolePower()">删除角色权限</el-button>
                 <el-table
-                    :data="obtainRoleList"
+                    :data="obtainRoleList.filter(data => !search || data.roleName.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
                     <el-table-column
                     label="用户ID"
@@ -40,6 +41,16 @@
                         @click="handleDelete(scope.row.id)">删除</el-button>
                     </template>
                     </el-table-column>
+                    <el-table-column
+                        align="right">
+                        <template slot="header" slot-scope="scope">
+                            {{scope.row}}
+                            <el-input
+                            v-model="search"
+                            size="mini"
+                            placeholder="输入角色关键字搜索"/>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
         </div>
@@ -54,7 +65,8 @@ export default {
         return {
             tabPosition: 'top',
             tabPositions: 'top',
-            obtainRoleList:[]//角色
+            obtainRoleList:[],//角色
+            search:'',
         }
     },
     created() {
@@ -76,6 +88,9 @@ export default {
             }).catch(err => {
                 console.log(err);
             })
+        },
+        toDeleteRolePower : function(){
+            this.$router.push({path:'deleterolepower'})
         },
         toAddRole: function () {
             this.$router.push({ path: '/addrole' })
