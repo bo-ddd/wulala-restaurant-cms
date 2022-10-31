@@ -65,6 +65,8 @@ p {
     margin: 0px 30px;
     background-color: #ffffff;
     padding: 15px;
+    margin-top: 30px;
+     box-shadow: 0px 1.6px 3.6px rgb(0 0 0 / 13%), 0px 0px 2.9px rgb(0 0 0 / 11%);
 }
 .title {
     color: #ed4b0b;
@@ -78,6 +80,7 @@ p {
 .box{
     background-color: #eeeeee;
     height: calc(100vh - 60px);
+    overflow: hidden;
    
 }
 
