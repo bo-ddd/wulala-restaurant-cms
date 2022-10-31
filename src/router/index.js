@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import Register from '@/views/RegisterPage.vue'
 import loginview from '@/views/LoginView.vue'
+import Layout from "@/views/Layout.vue"
 Vue.use(VueRouter)
 const routes = [
   {
@@ -16,10 +16,15 @@ const routes = [
     component: Register,
   },
   {
-    path: '/home',
-    name: 'home',
-    component : Home,
+    path: '/layout',
+    name: 'layout',
+    component : Layout,
     children:[
+      {
+        path: '/home',
+        name: 'home',
+        component:() =>import("@/views/HomeViews.vue")
+      },
       {
         path: '/setusermg',
         name: 'setusermg',
@@ -76,6 +81,10 @@ const routes = [
         path:'/homePage',
         name:'homePage',
         component:()=>import("../views/homePage/HomePage.vue")
+      },{
+        path:'/deleterolepower',
+        name:'deleterolepower',
+        component:()=>import("../views/role/DeleteRolePower.vue")
       }
     ]
   }

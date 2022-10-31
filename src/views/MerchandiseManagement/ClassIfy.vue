@@ -88,15 +88,17 @@ export default {
                 parentId: null, //父级id，如果不填则为0，  如果为0，表示一级类目
                 sort: 1 //排序
             }).then(res => {
-                console.log(this.input);
                 console.log(res);
             })
         },
         handleEdit(a, b) {
             console.log(a, b);
             this.$router.push({
-                path: '/cuisineattribute'
+                path: '/cuisineattribute', query: {
+                    foodId: b.foodId
+                }
             })
+            // console.log(data);
         },
         confirm(foodId) {
             deleteFood({

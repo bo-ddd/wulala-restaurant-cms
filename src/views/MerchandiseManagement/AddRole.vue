@@ -199,11 +199,11 @@ export default {
 }
 
 .box-content {
-    background-color: rebeccapurple;
+    background-color: #cce0e7;
 }
 
 .bodys {
-    background-color: rebeccapurple;
+    background-color: #cce0e7;
     overflow: hidden;
 }
 </style>

@@ -165,42 +165,42 @@ export const attributeCreateApi = function (payload = {}) {
  * @description 获取商品属性列表
  */
 
-export const attributeListApi = function (payload ={}) {
-  return instance.post('/product/attribute/list',payload)
+export const attributeListApi = function (payload = {}) {
+  return instance.post('/product/attribute/list', payload)
 }
 
 /**
  * @description 删除商品属性规格
  */
 
-export const attributeDeleteApi = function (payload ={}) {
-  return instance.post('product/attribute/delete',payload)
+export const attributeDeleteApi = function (payload = {}) {
+  return instance.post('product/attribute/delete', payload)
 }
 
 /**
  * @description 修改商品属性规格
  */
 
-export const attributeUpdateApi = function (payload ={}){
-  return instance.post('product/attribute/update',payload)
+export const attributeUpdateApi = function (payload = {}) {
+  return instance.post('product/attribute/update', payload)
 }
 /**
  * @description 给角色添加权限接口
  */
-export const roleAddPermission = function(payload = {}){
-  return instance.post('/role/addPermission',payload)
+export const roleAddPermission = function (payload = {}) {
+  return instance.post('/role/addPermission', payload)
 }
 /**
  * @description 删除角色
  */
- export const roleDelete = function(payload = {}){
-  return instance.post('/role/delete',payload)
+export const roleDelete = function (payload = {}) {
+  return instance.post('/role/delete', payload)
 }
 /**
  * @description 删除角色对应的权限
  */
- export const roleDeletePermission = function(payload = {}){
-  return instance.post('/role/deletePermission',payload)
+export const roleDeletePermission = function (payload = {}) {
+  return instance.post('/role/deletePermission', payload)
 }
 /**
  * @description 查询角色拥有的权限
@@ -211,7 +211,19 @@ export const roleAddPermission = function(payload = {}){
 /**
  * @description 给商品添加属性值和value
  */
- export const productAttributeValueApi = function(payload = {}){
-  return instance.post('/product/attribute/value/add',payload)
+export const productAttributeValueApi = function (payload = {}) {
+  return instance.post('/product/attribute/value/add', payload)
 }
 
+/**
+ * @description 修改菜肴信息
+ */
+export const updateFood = function (payload = {}) {
+  return instance.post('food/update', payload)
+}
+/**
+ * @description 获取菜肴详情
+ */
+ export const foodDetail = function (payload = {}) {
+  return instance.post('food/detail', payload)
+}
