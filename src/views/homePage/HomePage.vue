@@ -200,10 +200,7 @@ export default {
   padding: 0 20px 20px 20px;
 }
 
-.c01170 {
-  max-width: 820px;
-  min-width: 250px;
-}
+
 
 .box-userInfo {
   margin-bottom: 12px;
