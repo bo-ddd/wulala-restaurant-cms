@@ -203,8 +203,15 @@ export const roleAddPermission = function(payload = {}){
   return instance.post('/role/deletePermission',payload)
 }
 /**
+ * @description 查询角色拥有的权限
+ */
+ export const rolePermissionList = function(payload = {}){
+  return instance.post('/role/permission/list',payload)
+}
+/**
  * @description 给商品添加属性值和value
  */
  export const productAttributeValueApi = function(payload = {}){
   return instance.post('/product/attribute/value/add',payload)
 }
+

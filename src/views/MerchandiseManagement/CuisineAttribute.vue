@@ -1,3 +1,4 @@
+
 <script>
 import { foodAdd, getCategoryList, attributeListApi, productAttributeValueApi ,foodList } from '@/api/api'
 export default {
@@ -208,3 +209,4 @@ export default {
     width: 223px;
 }
 </style>
+>>>>>>> a9a035a13b2fbd4f614d9da9e534cb036713a981
