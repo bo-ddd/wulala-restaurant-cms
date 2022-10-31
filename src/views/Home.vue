@@ -116,7 +116,7 @@ export default {
     async render() {
       let res = await userInfoApi({
       })
-      console.log(res);
+      // console.log(res);
       this.avatarName = res.data.data.avatarName
       this.avatar = res.data.data.avatarImg
     },
