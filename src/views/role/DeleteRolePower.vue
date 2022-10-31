@@ -38,9 +38,10 @@
 </template>
 
 <script>
-import { permissionListApi, roleListApi , rolePermissionList , roleDeletePermission} from '@/api/api';
+// import { permissionListApi, roleListApi , rolePermissionList , roleDeletePermission} from '@/api/api';
+import {  roleListApi , rolePermissionList , roleDeletePermission} from '@/api/api';
 import { showLoading,hideLoading } from "@/api/loading";
-import { ref } from 'vue';
+// import { ref } from 'vue';
 export default {
     data() {
         return {
@@ -49,26 +50,27 @@ export default {
             isIndeterminate: true,
             options: [],
             array: [],
-            ifs:ref(''),
+            ifs:'',
             permissionId:[],
-            defaultPower : ref([]),
+            defaultPower : [],
+            // idsss:[],
         }
     },
     created() {
         showLoading();
         setTimeout(function () {
             hideLoading();
-        },1000),
+        },1000);
         this.permissionList();
     },
     methods: {
         permissionList : function(){
-            permissionListApi({}).then(res => {
-            let dataList = this.formatePermissionList(res.data.data);
-            this.array = dataList;
-            }).catch(err => {
-                console.log(err);
-            }),
+            // permissionListApi({}).then(res => {
+            // let dataList = this.formatePermissionList(res.data.data);
+            // this.array = dataList;
+            // }).catch(err => {
+            //     console.log(err);
+            // }),
             roleListApi({}).then(res=>{
                 this.options = res.data.data;
             }).catch(err => {
@@ -78,9 +80,9 @@ export default {
         getId(data) {
             this.permissionId.push(data.id);
         },
-        foundRole: function () {
-            this.defaultPower.push();
-            console.log(this.input2);
+        foundRole: function () { 
+            // 用户ID
+            // console.log(this.input2);
             if (this.input2 == '') {
                 this.$message({
                     message: '请选择角色',
@@ -91,15 +93,17 @@ export default {
                 rolePermissionList({
                     roleId:this.input2,
                 }).then(res => {
-                    this.defaultPower = [];
+                    this.defaultPower=[];
+                    console.log(res);
+                    this.array = res.data.data
                     if (res.data.data == '') {
                         this.ifs = '';
                     }else{
                         res.data.data.forEach(el => {
-                            this.defaultPower.push(el.permissionId);
-                            // console.log(el.permissionId);
+                            this.defaultPower.push(el.id);
                         });
                     }
+                    console.log(this.defaultPower);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -117,7 +121,7 @@ export default {
             });
             return res.filter(item => item.pid == 0);
         },
-        remove(node, data) {
+        remove(node, data ) {
             this.$confirm('此操作该用户将删除该权限, 是否继续?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -134,19 +138,19 @@ export default {
                     type: 'success',
                     message: '删除成功!'
                 });
+                this.foundRole
             }).catch(() => {
                 this.$message({
                     type: 'info',
                     message: '已取消删除'
                 });          
             });
-            // const parent = node.parent;
-            // const children = parent.data.children || parent.data;
-            // const index = children.findIndex(d => d.id === data.id);
-            // children.splice(index, 1);
-            // console.log(data);
+            const parent = node.parent;
+            const children = parent.data.children || parent.data;
+            const index = children.findIndex(d => d.id === data.id);
+            children.splice(index, 1);
+            console.log(data);
             console.log(node);
-            
         },
     }
 }
