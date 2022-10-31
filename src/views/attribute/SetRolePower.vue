@@ -132,11 +132,6 @@ export default {
 </script>
 
 <style scoped>
-
-.title {
-    color: white;
-}
-
 .add-role {
     display: flex;
     align-items: center;
