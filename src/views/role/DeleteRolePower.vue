@@ -18,7 +18,8 @@
                     <div class="erroy">请先选择角色名称</div>
                 </div>
                 <div class="power-list" v-else>
-                    <el-tree :data="array" :show-checkbox="true" node-key="id"
+                    <el-tree :data="array" :show-checkbox="true"
+                    node-key="id"
                     :default-checked-keys="defaultPower" 
                     :default-expanded-keys="defaultPower"
                     :default-expand-all="false" @check="getId" :expand-on-click-node="false">
