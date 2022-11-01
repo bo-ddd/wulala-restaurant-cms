@@ -80,6 +80,16 @@ p {
 .box{
     background-color: #eeeeee;
     height: calc(100vh - 60px);
-
     overflow: hidden;
+   
 }
+
+.mt-12{
+    margin-top: 13px;
+}
+.flex-sp_a{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
