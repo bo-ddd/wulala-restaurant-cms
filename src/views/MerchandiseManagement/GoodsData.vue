@@ -1,7 +1,8 @@
 <template>
     <div class="box">
-        <h3 class="title ">菜品管理</h3>
+        <!-- <h3 class="title ">菜品管理</h3> -->
         <div class="box-content">
+            
             <div class="box-inquire">
                 <div class="box-inquire_inp">
                     <div>
@@ -13,19 +14,18 @@
                         </el-select>
                     </div>
                     <div>
-                        <span>菜品类型:</span>
+                        <span>菜系:</span>
                         <el-select v-model="valueType" size="mini" placeholder="请选择">
-                            <el-option v-for="item in footType" :key="item.value" :label="item.label"
-                                :value="item.value">
+                            <el-option v-for="(el,i) in categorylist" :key="i" :label="el.name" :value="el.id">
                             </el-option>
                         </el-select>
                     </div>
                     <div class="inp">
                         <el-input size="mini" placeholder="请输入内容" v-model="input3" class="input-with-select">
                             <el-select v-model="select" slot="prepend" placeholder="请选择">
-                                <el-option label="餐厅名" value="1"></el-option>
-                                <el-option label="订单号" value="2"></el-option>
-                                <el-option label="用户电话" value="3"></el-option>
+                                <el-option label="菜品名称" value="1"></el-option>
+                                <el-option label="菜品描述" value="2"></el-option>
+                                <!-- <el-option label="用户电话" value="3"></el-option> -->
                             </el-select>
                         </el-input>
                     </div>
@@ -37,12 +37,13 @@
                     </el-row>
                 </div>
             </div>
+            <!-- btn -->
             <div class="box-btn">
                 <el-row>
                     <el-button @click="toFoodPage" size="mini" >新增菜品</el-button>
                     <el-button size="mini">批量上架</el-button>
                     <el-button size="mini">批量下架</el-button>
-                    <el-button size="mini">批量删除</el-button>
+                    <el-button size="mini" @click="productDeleteValue">批量删除</el-button>
                 </el-row>
                 <el-dialog title="菜品详情" :visible.sync="dialogFormVisible">
                     <el-form ref="form" :model="form" label-width="80px">
@@ -77,12 +78,12 @@
 
 
             <el-table height="600" :data="tableData"   style="width: 100%;">
-                <el-table-column label="菜肴图片" width="180">
+                <el-table-column align="center" label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
                     </template>
                 </el-table-column>
-                <el-table-column label="菜肴名称" width="180">
+                <el-table-column align="center" label="菜肴名称" width="180">
                     <template slot-scope="scope">
                         <el-popover trigger="hover" placement="top">
                             <p>菜名: {{ scope.row.foodName }}</p>
@@ -93,13 +94,13 @@
                         </el-popover>
                     </template>
                 </el-table-column>
-                <el-table-column label="菜肴价格">
+                <el-table-column align="center" label="菜肴价格">
                     <template slot-scope="scope">
                         <span size="medium">{{ scope.row.price + '元' }}</span>
                     </template>
                 </el-table-column>
 
-                <el-table-column label="菜肴描述">
+                <el-table-column  label="菜肴描述">
                     <template slot-scope="scope">
                         <span size="medium">{{ scope.row.description }}</span>
                     </template>
@@ -128,7 +129,7 @@
     </div>
 </template>
 <script>
-import { foodList, deleteFood ,foodAdd ,getCategoryList} from '@/api/api'
+import { foodList, deleteFood ,foodAdd ,getCategoryList ,productDeleteValueApi} from '@/api/api'
 export default {
     data() {
         return {
@@ -164,13 +165,7 @@ export default {
                 value: '3',
                 label: '已下架'
             }],
-            footType: [{
-                value: '1',
-                label: '菜品'
-            }, {
-                value: '2',
-                label: '粥/汤'
-            }],
+           
             tableData: []
         }
     },
@@ -220,7 +215,11 @@ export default {
         },
         handleEdit(index, row) {
             if (sessionStorage.getItem('token')) {
-                console.log('1');
+                this.$router.push({
+                path: '/cuisineattribute', query: {
+                    foodId: row.foodId
+                }
+            })
             } else {
                 alert('请登录')
             }
@@ -256,7 +255,14 @@ export default {
             }
 
         },
-
+        productDeleteValue() {
+            productDeleteValueApi({
+                productId: 57,
+                attributeId: 21
+            }).then(res => {
+                console.log(res);
+            })
+        },
        
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
@@ -297,7 +303,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 
-
+.el-pagination{
+    padding: 30px 5px;
+}
 
 ::v-deep .el-select {
     width: 100px;

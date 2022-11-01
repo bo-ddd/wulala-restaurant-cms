@@ -214,6 +214,12 @@ export const rolePermissionList = function (payload = {}) {
 export const productAttributeValueApi = function (payload = {}) {
   return instance.post('/product/attribute/value/add', payload)
 }
+/**
+ * @description 删除商品属性值和value
+ */
+ export const productDeleteValueApi = function (payload = {}) {
+  return instance.post('/product/attribute/value/delete', payload)
+}
 
 /**
  * @description 修改菜肴信息
@@ -227,6 +233,12 @@ export const updateFood = function (payload = {}) {
  */
 export const updateUser = function (payload = {}) {
   return instance.post('user/update', payload)
+}
+/**
+ * @description 修改菜肴信息
+ */
+ export const updateAttributeValue = function (payload = {}) {
+  return instance.post('product/attribute/value/update', payload)
 }
 /**
  * @description 获取菜肴详情

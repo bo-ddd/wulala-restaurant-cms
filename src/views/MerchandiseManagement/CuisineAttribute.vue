@@ -1,12 +1,11 @@
 
 <script>
 
-import { getCategoryList, attributeListApi,productAttributeValueApi ,updateFood ,foodDetail} from '@/api/api'
+import { getCategoryList, attributeListApi, updateFood, foodDetail,updateAttributeValue} from '@/api/api'
 export default {
     data() {
         return {
-            from: {
-            },
+            from: {},
             categorylist: [],
             imageUrl: '',
             foodName: '', //菜肴名称
@@ -17,26 +16,51 @@ export default {
             attributeList: [],//类目列表
             attributeKey: [],
             attrId: '',
-            foodId: '',
-            foodData: [],
-           
+            step: {
+                oldValue: '',
+                newFoodName: '',
+                newPrice: '',
+                newDescription: ''
+            },
+            active: 0,
+            dialogVisible: false
         }
     },
     watch: {
+
         categoryId(oldValue, newValue) {
-            attributeListApi({}).then(res => {
-                this.attributeList = res.data.data
+            this.step.oldValue = oldValue
+            console.log(this.step);
+            attributeListApi({
+
+            }).then(res => {
                 this.attributeKey = []
+                this.attributeList = res.data.data
+                // console.log(res.data.data);
                 this.attributeList.forEach(el => {
                     if (el.categoryId == oldValue) {
                         this.attributeKey.push(el)
                     }
                 })
-                console.log('----');
                 console.log(this.attributeKey);
-                // console.log(oldValue);
+                console.log(oldValue);
                 console.log(newValue);
             })
+        },
+        foodName(newFoodName, b) {
+            this.step.newFoodName = newFoodName
+            console.log(this.step);
+            console.log(b);
+        },
+        price(newPrice, b) {
+            this.step.newPrice = newPrice
+            console.log(this.step);
+            console.log(b);
+        },
+        description(newDescription, b) {
+            this.step.newDescription = newDescription
+            console.log(this.step);
+            console.log(b);
         },
 
     },
@@ -51,22 +75,20 @@ export default {
         });
         this.foodId = this.$route.query.foodId
         this.getFoodList()
-        
+        this.active =  this.getFoodList()
+        console.log(this.active);
+
 
     },
-    mounted() {
-
-    },
-
     methods: {
-        upFood(){
+        upFood() {
             let token = sessionStorage.getItem('token')
             if (!token) {
                 alert('请先登录')
             } else {
                 console.log(this.from);
                 updateFood({
-                    foodId:this.foodId,
+                    foodId: this.foodId,
                     foodName: this.foodName, //菜肴名称
                     description: this.description, //菜肴描述
                     bannerUrl: this.bannerUrl,
@@ -76,9 +98,10 @@ export default {
                     // this.attrId = res.data.data.id
                     console.log('===========');
                     console.log(res);
-                    this.attributeKey.forEach((el) =>{
+                    this.attributeKey.forEach((el) => {
                         console.log(this.attrId);
-                        productAttributeValueApi({
+                        console.log(el);
+                        updateAttributeValue({
                             productId: Number(this.foodId),
                             attributeId:el.attrId,
                             value: this.from[el.attrId]
@@ -86,8 +109,16 @@ export default {
                             console.log(res);
                         })
                     })
+                    if (this.active == 2) {
+                        this.active = 3
+                        this.dialogVisible = true
+                    }
                 })
             }
+        },
+        goBacks(){
+            this.dialogVisible = false
+            this.$router.back(-1)
         },
         goBack() {
             this.$router.back(-1)
@@ -95,7 +126,11 @@ export default {
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.bannerUrl = res.data.url
+            if (this.active == 1 && this.bannerUrl != '') {
+                this.active = 2
+            }
             console.log(this.bannerUrl);
+            console.log(this.active);
         },
         beforeAvatarUpload(file) {
             const isPNG = file.type === 'image/png';
@@ -111,9 +146,10 @@ export default {
         },
         getFoodList() {
             console.log("aa");
+            let   nb = 2
             console.log(this.foodId);
             foodDetail({
-                foodId:this.foodId
+                foodId: this.foodId
             }).then(res => {
                 this.foodData = res.data.data
                 console.log('----------');
@@ -123,6 +159,11 @@ export default {
                 this.price = this.foodData.price
                 this.categoryId = this.foodData.categoryId
                 this.description = this.foodData.description
+                console.log(this.imageUrl,this.active);
+                if (this.active == 1 && this.imageUrl != '') {
+                    console.log(1);
+                    nb = 2
+            }
                 this.foodData.attrs.forEach(el => {
                     console.log('======');
                     console.log(this.from, el);
@@ -131,6 +172,7 @@ export default {
                 })
 
             })
+            return  nb
         }
 
     },
@@ -141,9 +183,18 @@ export default {
 </script>
 <template>
     <div class="box">
-        <el-page-header @back="goBack" content="修改菜肴">
+        <el-page-header @back="goBack" >
         </el-page-header>
         <div class="box-content">
+            <h3 class="text">菜肴详情</h3>
+            <el-steps :active=this.active finish-status="success" simple style="margin-top: 20px">
+                <el-step title="填写基本内容"></el-step>
+                <el-step title="上传菜肴图片"></el-step>
+                <el-step title="完成"></el-step>
+            </el-steps>
+            <div class="div">
+
+         
             <el-form label-width="80px">
                 <el-form-item label="菜肴名称">
                     <el-input class="aa" v-model="foodName"></el-input>
@@ -173,15 +224,33 @@ export default {
                     <div><img src="" alt=""></div>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="upFood()">添加</el-button>
+                    <el-button  @click="upFood()">修改</el-button>
+                    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" >
+                            <span>菜品已添加完成</span>
+                            <span slot="footer" class="dialog-footer">
+                                <el-button @click="dialogVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="goBacks">确 定</el-button>
+                            </span>
+                        </el-dialog>
                     <el-button>取消</el-button>
                 </el-form-item>
             </el-form>
+        </div>
         </div>
     </div>
 
 </template>
 <style scoped>
+.div {
+    width: 100%;
+    height: 600px;
+    overflow-y: scroll;
+}
+::-webkit-scrollbar { width: 0 !important }
+.el-form {
+    margin-left: 400px;
+    margin-top: 30px;
+}
 ::v-deep .el-upload {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -216,5 +285,8 @@ export default {
 
 .aa {
     width: 223px;
+}
+.el-page-header{
+    margin: 15px 0 -20px 35px;
 }
 </style>
