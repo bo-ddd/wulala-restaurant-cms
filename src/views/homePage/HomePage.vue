@@ -23,7 +23,7 @@
               </svg>
             </span>
           </button>
-          <button class="sign-out c01241 c01253">
+          <button class="sign-out c01241 c01253" @click="loginout">
             <span>
               退出登录
             </span>
@@ -101,7 +101,7 @@ export default {
       radio: '0',
       list: list,
       selectAll: false,
-      param: [],
+      param: ['洗澡'],
       id: 0
     }
   },
@@ -125,9 +125,16 @@ export default {
   },
   methods: {
     getBirthday(a) {
-      var d = new Date(a);
-      let c = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-      return c
+      var getDate = new Date(a);
+      let date = getDate.getFullYear() + '年' + this.appendZero((getDate.getMonth() + 1)) + '月' + this.appendZero(getDate.getDate()) + '日';
+      return date
+    },
+    appendZero(obj) {
+      if (obj < 10) {
+        return '0' + obj
+      } else {
+        return obj
+      }
     },
     allChange() {
       if (this.selectAll) {
@@ -187,6 +194,12 @@ export default {
     cancel() {
       this.centerDialogVisible = false
       this.flag = false
+    },
+    loginout() {
+      sessionStorage.setItem('token', '');
+      this.$router.push({
+        name: 'loginview'
+      })
     }
   },
   mounted() {
@@ -405,7 +418,6 @@ export default {
   background: #FFF;
   border: 1px solid #DCDFE6;
   color: #606266;
-  -webkit-appearance: none;
   text-align: center;
   box-sizing: border-box;
   outline: 0;
