@@ -2,6 +2,7 @@
 <script>
 
 import { getCategoryList, attributeListApi, updateFood, foodDetail,updateAttributeValue} from '@/api/api'
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -78,7 +79,10 @@ export default {
         this.active =  this.getFoodList()
         console.log(this.active);
 
-
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
     },
     methods: {
         upFood() {

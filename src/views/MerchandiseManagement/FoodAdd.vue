@@ -1,5 +1,6 @@
 <script>
 import { foodAdd, getCategoryList, attributeListApi, productAttributeValueApi } from '@/api/api'
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -89,7 +90,10 @@ export default {
             this.categorylist = res.data.data
             console.log(res.data.data);
         });
-
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
     },
 
     methods: {

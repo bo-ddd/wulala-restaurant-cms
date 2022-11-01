@@ -49,6 +49,7 @@
 </template>
 <script>
 import { getCategoryAddApi, getCategoryList, foodList, deleteFood } from '@/api/api'
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
 
     data() {
@@ -111,6 +112,10 @@ export default {
         }
     },
     created() {
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
         getCategoryList({
 
         }).then(res => {

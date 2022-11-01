@@ -22,6 +22,7 @@ import * as echarts from "echarts/core"
 import { TitleComponent, GridComponent } from "echarts/components"
 import { BarChart } from "echarts/charts"
 import { CanvasRenderer } from "echarts/renderers"
+import { showLoading,hideLoading } from "@/api/loading";
 echarts.use([TitleComponent, GridComponent, BarChart, CanvasRenderer])
 export default {
   data() {
@@ -45,8 +46,10 @@ export default {
     }
   },
   created() {
-
-
+    showLoading();
+    setTimeout(function () {
+      hideLoading()
+    },1000)
   },
   mounted() {
     this.initCharts()
