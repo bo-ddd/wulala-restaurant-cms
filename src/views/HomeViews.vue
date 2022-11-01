@@ -7,13 +7,8 @@
         <div>
           <div id="main" class="main_container"></div>
           <el-carousel :interval="4000" type="card" height="160px">
-            <el-carousel-item v-for="item in 6" :key="item">
-              <!-- <h3 class="medium">{{ item }}</h3> -->
-              <img class="carousel" src="@/assets/images/foodaddftq.png" alt="">
-              <img class="carousel" src="@/assets/images/foodaddkyp.png" alt="">
-              <img class="carousel" src="@/assets/images/fooddzx.png" alt="">
-              <img class="carousel" src="@/assets/images/foodaddyt.png" alt="">
-              
+            <el-carousel-item v-for="item in image" :key="item.id">
+              <img class="carousel" :src="item.icon" alt="">
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -32,6 +27,21 @@ export default {
   data() {
     return {
       value: new Date(),
+      image:[
+       {
+         id:1,
+         icon:'http://localhost:8080/img/foodaddftq.7f24d278.png'
+       },{
+         id:2,
+         icon:'http://localhost:8080/img/foodaddkyp.cddf1afb.png'
+       },{
+         id:3,
+         icon:'http://localhost:8080/img/fooddzx.b3f8fa71.png'
+       },{
+         id:4,
+         icon:'http://localhost:8080/img/foodaddyt.54b11a01.png'
+       }
+      ]
     }
   },
   created() {
