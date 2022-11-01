@@ -88,6 +88,7 @@
 
 <script>
 import { userInfoApi, updateUser } from '@/api/api'
+import { showLoading, hideLoading } from "@/api/loading";
 const list = ['洗澡', '游泳', '健身', '打篮球', '跑步']
 export default {
   data() {
@@ -122,6 +123,10 @@ export default {
       }
 
     });
+    showLoading();
+    setTimeout(function () {
+      hideLoading();
+    }, 1000);
   },
   methods: {
     getBirthday(a) {
