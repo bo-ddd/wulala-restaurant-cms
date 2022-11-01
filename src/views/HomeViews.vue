@@ -6,7 +6,7 @@
         <el-calendar class="calendar" v-model="value"></el-calendar>
         <div>
           <div id="main" class="main_container"></div>
-          <el-carousel :interval="4000" type="card" height="160px">
+          <el-carousel :interval="2500" type="card" height="160px">
             <el-carousel-item v-for="item in image" :key="item.id">
               <img class="carousel" :src="item.icon" alt="">
             </el-carousel-item>
