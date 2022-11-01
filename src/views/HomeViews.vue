@@ -2,10 +2,9 @@
   <div class="box">
     <h3 class="title">首页</h3>
     <div class="box-content">
-      <el-calendar v-model="value">
-      </el-calendar>
-      <div id="main" class="main_container">
-
+      <div class="flex-sp">
+        <el-calendar v-model="value"></el-calendar>
+        <div id="main" class="main_container"></div>
       </div>
     </div>
   </div>
@@ -20,7 +19,7 @@ echarts.use([TitleComponent, GridComponent, BarChart, CanvasRenderer])
 export default {
   data() {
     return {
-      // value: new Date(),
+      value: new Date(),
     }
   },
   created() {
@@ -61,6 +60,7 @@ export default {
 ::v-deep .el-calendar {
   /* background: #ec4a0c; */
   width: 30%;
+  display: inline-block;
 }
 
 ::v-deep .el-calendar-table .el-calendar-day {
