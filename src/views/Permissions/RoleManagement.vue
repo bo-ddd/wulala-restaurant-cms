@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <div class="aa"></div>
         <h3 class="title">角色管理</h3>
         <div class="box-content">
             <div class="content">
@@ -130,9 +129,6 @@ export default {
 .subject {
     padding: 10px;
 }
-.aa{
-    padding-top: 30px;
-}
 .subjext-title span {
     color: #ccc;
     font-size: 12px;
@@ -163,11 +159,6 @@ export default {
     width: 18px;
     font-size: 12px;
     color: #fff;
-}
-.bodys{
-    height: calc(100vh - 60px);
-    overflow-y: scroll;
-    background: rebeccapurple;
 }
 ::v-deep .el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf{
     border-bottom: 1px solid #EBEEF5;

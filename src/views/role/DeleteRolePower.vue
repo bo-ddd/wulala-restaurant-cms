@@ -182,12 +182,7 @@ export default {
 }
 
 .content {
-    background-color: #fff;
-    overflow-y: scroll;
     height: calc(100vh - 14.8rem);
-    margin: 15px 30px;
-    background-color: white;
-    padding: 15px;
 }
 
 .power-list {
