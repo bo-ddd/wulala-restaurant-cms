@@ -91,8 +91,8 @@ export default {
                 roleName: this.input1,
                 permissionIds: this.permissionId, //给角色添加默认权限
             }).then(res => {
-                console.log('-------foundRole------');
-                console.log(res);
+                // console.log('-------foundRole------');
+                // console.log(res);
                 if (res.data.status == 10300) {
                     this.$message({
                         message: res.data.msg,
