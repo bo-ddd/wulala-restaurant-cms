@@ -19,7 +19,7 @@
                 </div>
                 <div class="power-list" v-else>
                     <el-tree :data="array" :show-checkbox="true"
-                    node-key="id"
+                    node-key="permissionId"
                     :default-checked-keys="defaultPower" 
                     :default-expanded-keys="defaultPower"
                     :default-expand-all="false" @check="getId" :expand-on-click-node="false">
@@ -95,17 +95,17 @@ export default {
                     roleId:this.input2,
                 }).then(res => {
                     this.defaultPower=[];
-                    console.log(res);
+                    // console.log(res);
                     this.array = res.data.data
                     if (res.data.data == '') {
                         this.ifs = '';
                         this.content = '该角色还没有权限'
                     }else{
                         res.data.data.forEach(el => {
-                            this.defaultPower.push(el.id);
+                            this.defaultPower.push(el.permissionId);
                         });
                     }
-                    console.log(this.defaultPower);
+                    // console.log(this.defaultPower);
                 }).catch(err => {
                     console.log(err);
                 })
@@ -130,16 +130,25 @@ export default {
             type: 'warning'
             }).then(() => {
                 roleDeletePermission({
-                    id:data.id
+                    roleId:this.input2,
+                    permissionId:data.permissionId
                 }).then(res => {
-                    if (res.status == 200) {
-                        console.log(res);
+                    if (res.data.msg == "成功") {
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                        const parent = node.parent;
+                        const children = parent.data.children || parent.data;
+                        const index = children.findIndex(d => d.permissionId === data.permissionId);
+                        children.splice(index, 1);
+                    }else{
+                        this.$message({
+                            type: 'success',
+                            message: res.data.msg
+                        });
                     }
                 })
-                this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                });
                 this.foundRole
             }).catch(() => {
                 this.$message({
@@ -147,12 +156,8 @@ export default {
                     message: '已取消删除'
                 });          
             });
-            const parent = node.parent;
-            const children = parent.data.children || parent.data;
-            const index = children.findIndex(d => d.id === data.id);
-            children.splice(index, 1);
-            console.log(data);
-            console.log(node);
+            // console.log(data);
+            // console.log(node);
         },
     }
 }
