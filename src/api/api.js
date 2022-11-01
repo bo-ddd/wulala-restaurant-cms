@@ -205,14 +205,20 @@ export const roleDeletePermission = function (payload = {}) {
 /**
  * @description 查询角色拥有的权限
  */
- export const rolePermissionList = function(payload = {}){
-  return instance.post('/role/permission/list',payload)
+export const rolePermissionList = function (payload = {}) {
+  return instance.post('/role/permission/list', payload)
 }
 /**
  * @description 给商品添加属性值和value
  */
 export const productAttributeValueApi = function (payload = {}) {
   return instance.post('/product/attribute/value/add', payload)
+}
+/**
+ * @description 删除商品属性值和value
+ */
+ export const productDeleteValueApi = function (payload = {}) {
+  return instance.post('/product/attribute/value/delete', payload)
 }
 
 /**
@@ -221,9 +227,22 @@ export const productAttributeValueApi = function (payload = {}) {
 export const updateFood = function (payload = {}) {
   return instance.post('food/update', payload)
 }
+
+/**
+ * @description 修改用户信息
+ */
+export const updateUser = function (payload = {}) {
+  return instance.post('user/update', payload)
+}
+/**
+ * @description 修改菜肴信息
+ */
+ export const updateAttributeValue = function (payload = {}) {
+  return instance.post('product/attribute/value/update', payload)
+}
 /**
  * @description 获取菜肴详情
  */
- export const foodDetail = function (payload = {}) {
+export const foodDetail = function (payload = {}) {
   return instance.post('food/detail', payload)
 }

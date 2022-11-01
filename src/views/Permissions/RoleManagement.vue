@@ -3,10 +3,11 @@
         <h3 class="title">角色管理</h3>
         <div class="box-content">
             <div class="content">
-                <el-button class="btn" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
-                <el-button type="primary" @click="toSetRolePower">设置角色权限</el-button>
-                <el-button class="btn" type="primary" plain @click="toDeleteRolePower()">删除角色权限</el-button>
+                <el-button class="btn" size="mini" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
+                <el-button type="primary" size="mini" @click="toSetRolePower">设置角色权限</el-button>
+                <el-button class="btn" size="mini" type="primary" plain @click="toDeleteRolePower()">删除角色权限</el-button>
                 <el-table
+                height="500"
                     :data="obtainRoleList.filter(data => !search || data.roleName.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
                     <el-table-column
@@ -121,11 +122,6 @@ export default {
 </script>
 
 <style scoped>
-.content {
-    background-color: #fff;
-    overflow-y: scroll;
-    height: calc(100vh - 9.8rem);
-}
 ::v-deep .el-tabs--left .el-tabs__item.is-left {
     text-align: left;
 }
@@ -133,7 +129,6 @@ export default {
 .subject {
     padding: 10px;
 }
-
 .subjext-title span {
     color: #ccc;
     font-size: 12px;
@@ -163,14 +158,6 @@ export default {
 .delete img {
     width: 18px;
     font-size: 12px;
-    color: #fff;
-}
-.bodys{
-    height: calc(100vh - 60px);
-    overflow-y: scroll;
-    background: rebeccapurple;
-}
-.title{
     color: #fff;
 }
 ::v-deep .el-table td.el-table__cell, .el-table th.el-table__cell.is-leaf{

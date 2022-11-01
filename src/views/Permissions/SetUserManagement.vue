@@ -1,5 +1,6 @@
 <script>
 import { roleListApi , getPermission ,addRoleApi } from "@/api/api"
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -20,6 +21,10 @@ export default {
             this.roleList = res.data.data
             console.log(this.roleList);
         })
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
     },
     methods: {
 

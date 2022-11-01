@@ -1,5 +1,5 @@
 <template>
-    <div class="bodys">
+    <div class="box">
         <h4 class="mg-rl_20 title">添加角色</h4>
         <div class="box-content">
             <div class="content">
@@ -91,8 +91,8 @@ export default {
                 roleName: this.input1,
                 permissionIds: this.permissionId, //给角色添加默认权限
             }).then(res => {
-                console.log('-------foundRole------');
-                console.log(res);
+                // console.log('-------foundRole------');
+                // console.log(res);
                 if (res.data.status == 10300) {
                     this.$message({
                         message: res.data.msg,
@@ -147,9 +147,6 @@ export default {
 </script>
 
 <style scoped>
-.title {
-    color: white;
-}
 
 .add-role {
     display: flex;

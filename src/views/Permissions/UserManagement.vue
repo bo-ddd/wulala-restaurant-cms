@@ -1,5 +1,6 @@
 <script>
 import { userList } from '@/api/api';
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -61,6 +62,12 @@ export default {
             this.pagesize = res.data.data.pageSize
             console.log(this.total);
         })
+    },
+    created(){
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
     }
 }
 </script>

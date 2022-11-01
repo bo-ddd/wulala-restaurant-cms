@@ -1,5 +1,5 @@
 <template>
-    <div class="bodys">
+    <div class="box">
         <h4 class="mg-rl_20 title">设置角色权限</h4>
         <div class="box-contont">
             <div class="content">
@@ -132,11 +132,6 @@ export default {
 </script>
 
 <style scoped>
-
-.title {
-    color: white;
-}
-
 .add-role {
     display: flex;
     align-items: center;
@@ -182,13 +177,6 @@ export default {
 }
 ::v-deep .el-tree-node__content{
     height: 40px;
-}
-.box-contont{
-    background-color: #cce0e7;
-}
-.bodys{
-    background-color: #cce0e7;
-    overflow: hidden;
 }
 .erroy{
     color: #ccc;

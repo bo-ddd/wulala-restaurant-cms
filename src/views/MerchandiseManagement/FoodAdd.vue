@@ -1,5 +1,6 @@
 <script>
-import { foodAdd, getCategoryList, attributeListApi,  productAttributeValueApi} from '@/api/api'
+import { foodAdd, getCategoryList, attributeListApi, productAttributeValueApi } from '@/api/api'
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -13,13 +14,29 @@ export default {
             categoryId: '',
             attributeList: [],//类目列表
             attributeKey: [],
-            attrId: ''
+            attrId: '',
+            step: {
+                oldValue: '',
+                newFoodName: '',
+                newPrice: '',
+                newDescription: ''
+            },
+            active: 0,
+            dialogVisible: false
         }
     },
     watch: {
+
         categoryId(oldValue, newValue) {
+            this.step.oldValue = oldValue
+            console.log(this.step);
+            if (this.step.oldValue != '' && this.step.newFoodName != '' &&
+                this.step.newPrice != '' && this.step.newDescription != ''
+            ) {
+                this.active = 1
+            }
             attributeListApi({
-                categoryId: 1
+
             }).then(res => {
                 this.attributeKey = []
                 this.attributeList = res.data.data
@@ -33,7 +50,38 @@ export default {
                 console.log(oldValue);
                 console.log(newValue);
             })
-        }
+        },
+        foodName(newFoodName, b) {
+            this.step.newFoodName = newFoodName
+            console.log(this.step);
+            if (this.step.oldValue != '' && this.step.newFoodName != '' &&
+                this.step.newPrice != '' && this.step.newDescription != ''
+            ) {
+                this.active = 1
+            }
+            console.log(b);
+        },
+        price(newPrice, b) {
+            this.step.newPrice = newPrice
+            console.log(this.step);
+            if (this.step.oldValue != '' && this.step.newFoodName != '' &&
+                this.step.newPrice != '' && this.step.newDescription != ''
+            ) {
+                this.active = 1
+            }
+            console.log(b);
+        },
+        description(newDescription, b) {
+            this.step.newDescription = newDescription
+            console.log(this.step);
+            if (this.step.oldValue != '' && this.step.newFoodName != '' &&
+                this.step.newPrice != '' && this.step.newDescription != ''
+            ) {
+                this.active = 1
+            }
+            console.log(b);
+        },
+
     },
     created() {
         getCategoryList({
@@ -42,7 +90,10 @@ export default {
             this.categorylist = res.data.data
             console.log(res.data.data);
         });
-
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
     },
 
     methods: {
@@ -62,9 +113,9 @@ export default {
                     this.attrId = res.data.data.id
                     console.log('=============');
                     console.log(res);
-                    this.attributeKey.forEach((el,i) =>{
+                    this.attributeKey.forEach((el, i) => {
                         console.log(this.attrId);
-    
+
                         productAttributeValueApi({
                             productId: this.attrId,
                             attributeId: el.attrId,
@@ -73,18 +124,30 @@ export default {
                             console.log(res);
                         })
                     })
+                    if (this.active == 2) {
+                        this.active = 3
+                        this.dialogVisible = true
+                    }
                 })
             }
 
         },
-
+        goBacks(){
+            this.dialogVisible = false
+            this.$router.push({ path: '/goodsdata' })
+        },
         goBack() {
             this.$router.back(-1)
         },
         handleAvatarSuccess(res, file) {
+
             this.imageUrl = URL.createObjectURL(file.raw);
             this.bannerUrl = res.data.url
+            if (this.active == 1 && this.bannerUrl != '') {
+                this.active = 2
+            }
             console.log(this.bannerUrl);
+            console.log(this.active);
         },
         beforeAvatarUpload(file) {
             const isPNG = file.type === 'image/png';
@@ -98,6 +161,7 @@ export default {
             }
             return isPNG && isLt1M;
         },
+     
 
     },
 
@@ -105,47 +169,72 @@ export default {
 </script>
 <template>
     <div class="box">
-        <el-page-header @back="goBack" content="菜品详情">
+        <el-page-header @back="goBack">
         </el-page-header>
-        <!-- <h3 class="title">菜品详情</h3> -->
         <div class="box-content">
-            <el-form label-width="80px">
-                <el-form-item label="菜品名称">
-                    <el-input class="aa" v-model="foodName"></el-input>
-                </el-form-item>
-                <el-form-item label="价格">
-                    <el-input class="aa" v-model="price"></el-input>
-                </el-form-item>
-                <el-form-item label="菜品类型">
-                    <el-select class="aa" v-model="categoryId" placeholder="请选择菜品类型">
-                        <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
-                        </el-option>
-                    </el-select>
-                    <el-form-item v-for="(el, i) in attributeKey" :label="el.attrName" :key="i">
-                        <el-input class="aa" v-model="from[i]"></el-input>
+            <h3 class="text">菜肴详情</h3>
+            <el-steps :active=this.active finish-status="success" simple style="margin-top: 20px">
+                <el-step title="填写基本内容"></el-step>
+                <el-step title="上传菜肴图片"></el-step>
+                <el-step title="完成"></el-step>
+            </el-steps>
+            <div class="div">
+                <el-form label-width="80px">
+                    <el-form-item label="菜品名称">
+                        <el-input class="aa" v-model="foodName"></el-input>
                     </el-form-item>
-                </el-form-item>
+                    <el-form-item label="价格">
+                        <el-input class="aa" v-model="price"></el-input>
+                    </el-form-item>
+                    <el-form-item label="菜品类型">
+                        <el-select class="aa" v-model="categoryId" placeholder="请选择菜品类型">
+                            <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
+                            </el-option>
+                        </el-select>
+                        <el-form-item v-for="(el, i) in attributeKey" :label="el.attrName" :key="i">
+                            <el-input class="aa" v-model="from[i]"></el-input>
+                        </el-form-item>
+                    </el-form-item>
 
-                <el-form-item label="菜品描述">
-                    <el-input type="textarea" class="aa" v-model="description"></el-input>
-                </el-form-item>
-                <el-form-item label="菜品主图">
-                    <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
-                        :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                    </el-upload>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="primary" @click="upload()">添加</el-button>
-                    <el-button>取消</el-button>
-                </el-form-item>
-            </el-form>
+                    <el-form-item label="菜品描述">
+                        <el-input type="textarea" class="aa" v-model="description"></el-input>
+                    </el-form-item>
+                    <el-form-item label="菜品主图">
+                        <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
+                            :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary" @click="upload()">添加</el-button>
+                        <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" >
+                            <span>菜品已添加完成</span>
+                            <span slot="footer" class="dialog-footer">
+                                <el-button @click="dialogVisible = false">取 消</el-button>
+                                <el-button type="primary" @click="goBacks">确 定</el-button>
+                            </span>
+                        </el-dialog>
+                        <el-button>取消</el-button>
+                    </el-form-item>
+                </el-form>
+            </div>
         </div>
     </div>
 
 </template>
 <style scoped>
+.div {
+    width: 100%;
+    height: 600px;
+    overflow-y: scroll;
+}
+::-webkit-scrollbar { width: 0 !important }
+.el-form {
+    margin-left: 400px;
+    margin-top: 30px;
+}
+
 ::v-deep .el-upload {
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -180,5 +269,11 @@ export default {
 
 .aa {
     width: 223px;
+}
+/* ::v-deep .el-pagination{
+    padding: 30px 5px;
+} */
+.el-page-header{
+    margin: 15px 0 -20px 35px;
 }
 </style>
