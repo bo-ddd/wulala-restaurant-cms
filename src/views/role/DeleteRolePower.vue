@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <h3 class="title">删除角色权限</h3>
         <div class="box-content">
             <div class="content">
                 <div class="add-role">

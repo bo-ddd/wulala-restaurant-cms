@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <h4 class="mg-rl_20 title">添加角色</h4>
         <div class="box-content">
             <div class="content">
                 <div class="add-role">
