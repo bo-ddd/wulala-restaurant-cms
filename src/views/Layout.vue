@@ -91,20 +91,22 @@
         router: '',
         flag: true,
         route:'',
-      }
-    },
-    watch:{
-      $route:{
-        handler(val,oldval){
-          console.log(val);//新路由信息
-          console.log(oldval);//老路由信息
-          if (val.name == 'home') {
-            this.route = '首页'
+        obj:
+          {
+            home:'首页',
+            classify:'菜品分类',
+            goodsdata:'菜品数据',
+            rolemg:'角色管理',
+            usermg:'用户管理',
+            addattribute:'新增属性规格',
+            addattributelist:'属性规格列表',
+            addrole:'添加角色',
+            setrolepower:'设置角色权限',
+            deleterolepower:'删除角色权限',
+            setusermg:'添加角色',
+            foodadd:'菜肴详情',
+            cuisineAttribute:'修改菜品'
           }
-          this.route = val.name
-        },
-        // 深度观察监听
-        deep: true
       }
     },
     name: 'HomeView',
@@ -145,7 +147,30 @@
   
     created() {
       this.render();
-    }
+      if (this.$route.name == 'home') {
+        this.route = '首页'
+      }
+      for (const key in this.obj) {
+        if (this.$route.name == key) {
+          this.route = this.obj[key]
+        }
+      }
+    },
+    watch:{
+      $route:{
+        handler(val,oldval){
+          console.log(val);//新路由信息
+          console.log(oldval);//老路由信息
+          for (const key in this.obj) {
+            if (val.name == key) {
+              this.route = this.obj[key]
+            }
+          }
+        },
+        // 深度观察监听
+        deep: true
+      }
+    },
   }
   </script>
   
@@ -256,6 +281,9 @@
     margin-left: 5px;
     font-size: 14px;
     font-weight: 600;
+  }
+  .box-name{
+    color:#ec4a0c;
   }
   </style>
   
