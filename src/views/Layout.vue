@@ -149,6 +149,7 @@
     },
   
     created() {
+
       this.render();
       if (this.$route.name == 'home') {
         this.route = '首页'
