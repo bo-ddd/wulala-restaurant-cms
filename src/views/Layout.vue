@@ -5,7 +5,7 @@
           <el-col :span="12">
             <el-menu :default-active="routers" background-color="#342c2a" text-color="#fff" active-text-color="#ed4b0b" router
               class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-             <div class="box-logo"> <img class="logo" src="../assets/images/icon-wll_logo.png" alt="" /></div>
+             <div class="box-logo"> <img class="logo" src="../assets/images/icon-bj_2.png" alt="" /></div>
               <el-menu-item index="home">
                 <i class="el-icon-s-home"></i>
                 <span slot="title">首页</span>
@@ -50,8 +50,8 @@
       <el-container>
         <el-header>
           <div class=" box-top">
-  
             <div class="box-user ">
+              <div class="box-name">{{route}}</div>
               <div class="box-userinfo">
                 <div class="nav">菜品</div>
                 <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
@@ -89,14 +89,31 @@
         avatarName: "昵称",
         avatar: '',
         router: '',
-        flag: true
+        flag: true,
+        route:'',
+        obj:
+          {
+            home:'首页',
+            classify:'菜品分类',
+            goodsdata:'菜品数据',
+            rolemg:'角色管理',
+            usermg:'用户管理',
+            addattribute:'新增属性规格',
+            addattributelist:'属性规格列表',
+            addrole:'添加角色',
+            setrolepower:'设置角色权限',
+            deleterolepower:'删除角色权限',
+            setusermg:'添加角色',
+            foodadd:'菜肴详情',
+            cuisineAttribute:'修改菜品'
+          }
       }
     },
     name: 'HomeView',
     computed: {
       routers() {
         return this.$route.name
-      }
+      },
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -129,9 +146,32 @@
     },
   
     created() {
-      // this.userId = this.$route
-      //   console.log(this.$route);
-    }
+
+      this.render();
+      if (this.$route.name == 'home') {
+        this.route = '首页'
+      }
+      for (const key in this.obj) {
+        if (this.$route.name == key) {
+          this.route = this.obj[key]
+        }
+      }
+    },
+    watch:{
+      $route:{
+        handler(val){
+          // console.log(val);//新路由信息
+          // console.log(oldval);//老路由信息
+          for (const key in this.obj) {
+            if (val.name == key) {
+              this.route = this.obj[key]
+            }
+          }
+        },
+        // 深度观察监听
+        deep: true
+      }
+    },
   }
   </script>
   
@@ -166,10 +206,12 @@
     background-color: #ec4a0c;
   }
   .logo {
-    width: 80px;
-    height: 80px;
+    /* width: 80px; */
+    /* height: 80px; */
+    width: 50%;
     filter: invert(100%);
-    margin: 25px 65px;
+    /* margin: 25px 65px; */
+    margin: 25px 55px;
   }
   
   ::v-deep .el-aside {
@@ -231,11 +273,18 @@
     justify-content: flex-end;
     margin-right: 50px;
   }
-  
+  .box-user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .username {
     margin-left: 5px;
     font-size: 14px;
     font-weight: 600;
+  }
+  .box-name{
+    color:#ec4a0c;
   }
   </style>
   

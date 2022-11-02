@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <h3 class="title">角色管理</h3>
         <div class="box-content">
             <div class="content">
                 <el-button class="btn" size="mini" type="primary" plain @click="toAddRole()">+添加新角色</el-button>

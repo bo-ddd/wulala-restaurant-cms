@@ -6,9 +6,10 @@
         <el-calendar class="calendar" v-model="value"></el-calendar>
         <div>
           <div id="main" class="main_container"></div>
-          <el-carousel :interval="4000" type="card" height="160px">
+          <el-carousel :interval="2500" type="card" height="160px">
             <el-carousel-item v-for="item in image" :key="item.id">
-              <img class="carousel" :src="item.icon" alt="">
+              <img class="carousel" :src="item.img" alt="">
+              <!-- <img src="@/assets/images/foodaddftq.png" alt=""> -->
             </el-carousel-item>
           </el-carousel>
         </div>
@@ -31,16 +32,20 @@ export default {
       image:[
        {
          id:1,
-         icon:'http://localhost:8080/img/foodaddftq.7f24d278.png'
+        //  icon:'http://localhost:8080/img/foodaddftq.7f24d278.png',
+         img:require('@/assets/images/foodaddftq.png')
        },{
          id:2,
-         icon:'http://localhost:8080/img/foodaddkyp.cddf1afb.png'
+        //  icon:'http://localhost:8080/img/foodaddkyp.cddf1afb.png',
+         img:require('/src/assets/images/foodaddkyp.png')
        },{
          id:3,
-         icon:'http://localhost:8080/img/fooddzx.b3f8fa71.png'
+        //  icon:'http://localhost:8080/img/fooddzx.b3f8fa71.png',
+         img:require("/src/assets/images/fooddzx.png")
        },{
          id:4,
-         icon:'http://localhost:8080/img/foodaddyt.54b11a01.png'
+        //  icon:'http://localhost:8080/img/foodaddyt.54b11a01.png',
+         img:require('/src/assets/images/foodaddyt.png')
        }
       ]
     }
