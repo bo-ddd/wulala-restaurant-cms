@@ -50,8 +50,8 @@
       <el-container>
         <el-header>
           <div class=" box-top">
-  
             <div class="box-user ">
+              <div class="box-name">{{route}}</div>
               <div class="box-userinfo">
                 <div class="nav">菜品</div>
                 <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
@@ -89,14 +89,29 @@
         avatarName: "昵称",
         avatar: '',
         router: '',
-        flag: true
+        flag: true,
+        route:'',
+      }
+    },
+    watch:{
+      $route:{
+        handler(val,oldval){
+          console.log(val);//新路由信息
+          console.log(oldval);//老路由信息
+          if (val.name == 'home') {
+            this.route = '首页'
+          }
+          this.route = val.name
+        },
+        // 深度观察监听
+        deep: true
       }
     },
     name: 'HomeView',
     computed: {
       routers() {
         return this.$route.name
-      }
+      },
     },
     methods: {
       handleOpen(key, keyPath) {
@@ -232,7 +247,11 @@
     justify-content: flex-end;
     margin-right: 50px;
   }
-  
+  .box-user{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .username {
     margin-left: 5px;
     font-size: 14px;
