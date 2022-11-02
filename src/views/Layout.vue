@@ -129,7 +129,8 @@
     },
   
     created() {
-      this.render();
+      // this.userId = this.$route
+      //   console.log(this.$route);
     }
   }
   </script>

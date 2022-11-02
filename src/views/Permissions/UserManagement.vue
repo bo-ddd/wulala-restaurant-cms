@@ -88,7 +88,7 @@ export default {
                 <el-table-column align="center" label="用户头像" width="180">
                     <template slot-scope="scope">
                         <img v-if="scope.row.avatarImg" class="banner-food_png" :src="scope.row.avatarImg" alt="">
-                    <div class="avatarImg" v-else></div>
+                        <el-avatar v-else icon="el-icon-user-solid"></el-avatar>
                     </template>
                 </el-table-column>
 
