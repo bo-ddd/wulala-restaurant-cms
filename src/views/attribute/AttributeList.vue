@@ -5,25 +5,29 @@
       <div class="select">
         <div class="demo-input-suffix">
           查找属性：
-          <el-input
-            placeholder="请输入内容"
-            prefix-icon="el-icon-search"
-            v-model="input1"
-          >
-          </el-input>
-          <!-- <el-button class="button" type="primary" @click="findName"
-            >查找属性</el-button
-          > -->
+          <el-select v-model="input1" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
         </div>
 
         <div class="demo-input-suffixs">
           查找分类：
-          <el-input
-            placeholder="请输入内容"
-            prefix-icon="el-icon-search"
-            v-model="input2"
-          >
-          </el-input>
+          <el-select v-model="input2" placeholder="请选择">
+            <el-option
+              v-for="item in options1"
+              :key="item"
+              :label="item"
+              :value="item"
+            >
+            </el-option>
+          </el-select>
+
           <el-button class="button" type="primary" @click="findCategory"
             >查找分类</el-button
           >
@@ -119,11 +123,13 @@ import {
 export default {
   data() {
     return {
-      input1: "",
-      input2: "",
-      search: "",
+      flag: true,
+      options: [],
+      options1: [],
+      input1: null,
+      input2: null,
       tableData: [],
-      tempData: [],
+      tableDatas: [],
       currentPage4: 1,
       total: 0,
       pageSize: 5,
@@ -142,6 +148,7 @@ export default {
   created() {
     this.applytable();
   },
+
   methods: {
     handleEdit(index, row) {
       this.form = row;
@@ -187,7 +194,21 @@ export default {
       // this.total = res.data.data.total;
       // this.pageSize = res.data.data.pageSize;
       // this.pageNum = res.data.data.pageNum;
-      this.tableData = res.data.data;
+      this.tableDatas = res.data.data;
+      console.log("------------------");
+      this.tableData = this.tableDatas
+console.log(this.tableDatas);
+      this.options = this.tableDatas.map((item) => {
+        return item.attrName;
+      });
+      this.options = [...new Set(this.options)];
+      // console.log(this.options);
+
+      this.options1 = this.tableDatas.map((item) => {
+        return item.categoryName;
+      });
+      this.options1 = [...new Set(this.options1)];
+      // console.log(this.options1);
     },
     async attributeDelete(row) {
       let res = await attributeDeleteApi({
@@ -220,55 +241,84 @@ export default {
         });
       }
     },
-    async findName() {
-      let res = await attributeListApi();
-      let findName = res.data.data;
-      if (this.input1 === "") {
-        this.tableData = findName;
-      } else {
-        let arr = findName.filter((item) => {
-          return item.attrName.indexOf(this.input1) != -1;
+    findCategory() {
+      console.log(this.tableDatas);
+        this.tableData = this.tableDatas
+     
+      if (this.flag) {
+        
+      
+        console.log(this.tableData);
+        // console.log(this.input1);
+        // console.log(this.input2);
+        let arr = [];
+        let is = false;
+        if (this.input1 && this.input2) {
+          is = true;
+        }
+        this.tableData.forEach((item) => {
+          if (is) {
+            if (
+              item.attrName.indexOf(this.input1) != -1 &&
+              item.categoryName.indexOf(this.input2) != -1
+            ) {
+              arr.push(item);
+            }
+          } else {
+            if (
+              item.attrName.indexOf(this.input1) != -1 ||
+              item.categoryName.indexOf(this.input2) != -1
+            ) {
+              arr.push(item);
+            }
+          }
         });
+
+        // console.log(arr);
         this.tableData = arr;
-      }
-      this.input1 = "";
-    },
-    async findCategory() {
-      let res = await attributeListApi();
-      let findName = res.data.data;
-      // if (this.input1 && this.input2 == "") {
-      //   this.tableData = findName;
-      //   console.log('cnm');
-      // } else {
-      //   let arr = findName.filter((item) => {
-      //     return item.categoryName.indexOf(this.input2) != -1;
-      //   }) && findName.filter((item) => {
-      //     return item.attrName.indexOf(this.input1) != -1;
-      //   });
-      //   console.log('nmlgb');
-      //   this.tableData = arr;
-      // }
-      // this.input1 = "";
-      // this.input2 = "";
-      console.log(findName);
-      if (this.input1 === "" && this.input2 === "") {
-        this.tableData = findName;
-      } else if (this.input1 === "" && this.input2 !== "") {
-        let arr = findName.filter((item) =>{
-          return item.categoryName.indexOf(this.input2) != -1;
-        })
-        this.tableData = arr;
-      } else if(this.input1 !=="" && this.input2 === ""){
-        let arr = findName.filter((item) =>{
-          return item.attrName.indexOf(this.input1) != -1;
-        })
-        this.tableData = arr;
+        this.flag = false;
+     
       } else {
-        let arr = findName.filter((item) =>{
-          return item.attrName.indexOf(this.input1) != -1 && item.categoryName.indexOf(this.input2)!=-1;
-        })
-        this.tableData = arr; 
+        
+    
+        console.log('false');
+        
+        // console.log(this.input1);
+        console.log(this.tableData);
+
+        // console.log(this.input2);
+        let arr = [];
+        let is = false;
+        if (this.input1 && this.input2) {
+          is = true;
+        }
+        this.tableData.forEach((item) => {
+          if (is) {
+            if (
+              item.attrName.indexOf(this.input1) != -1 &&
+              item.categoryName.indexOf(this.input2) != -1
+            ) {
+              arr.push(item);
+            }
+          } else {
+            if (
+              item.attrName.indexOf(this.input1) != -1 ||
+              item.categoryName.indexOf(this.input2) != -1
+            ) {
+              arr.push(item);
+            }
+          }
+        });
+
+        // console.log(arr);
+        this.tableData = arr;
+        this.flag = true;
+      
       }
+
+    },
+    handleSelect(item) {
+      console.log(item);
     },
   },
 };
