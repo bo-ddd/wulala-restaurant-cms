@@ -5,7 +5,7 @@
           <el-col :span="12">
             <el-menu :default-active="routers" background-color="#342c2a" text-color="#fff" active-text-color="#ed4b0b" router
               class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
-             <div class="box-logo"> <img class="logo" src="../assets/images/icon-wll_logo.png" alt="" /></div>
+             <div class="box-logo"> <img class="logo" src="../assets/images/icon-bj_2.png" alt="" /></div>
               <el-menu-item index="home">
                 <i class="el-icon-s-home"></i>
                 <span slot="title">首页</span>
@@ -165,10 +165,12 @@
     background-color: #ec4a0c;
   }
   .logo {
-    width: 80px;
-    height: 80px;
+    /* width: 80px; */
+    /* height: 80px; */
+    width: 50%;
     filter: invert(100%);
-    margin: 25px 65px;
+    /* margin: 25px 65px; */
+    margin: 25px 55px;
   }
   
   ::v-deep .el-aside {
