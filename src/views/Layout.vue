@@ -51,7 +51,7 @@
         <el-header>
           <div class=" box-top">
             <div class="box-user ">
-              <div class="box-name">{{route}}</div>
+              <div class="box-name" @click="toUpOneLevel">{{route}}</div>
               <div class="box-userinfo">
                 <div class="nav">菜品</div>
                 <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
@@ -116,6 +116,9 @@
       },
     },
     methods: {
+      toUpOneLevel:function(){
+        window.history.back();
+      },
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
@@ -285,6 +288,7 @@
   }
   .box-name{
     color:#ec4a0c;
+    cursor: pointer;
   }
   </style>
   
