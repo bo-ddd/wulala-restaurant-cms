@@ -2,7 +2,7 @@
   <main class="flex-center">
     <div class="logo">
       <div class="title flex-center">
-        <img src="@/assets/images/icon-wll_logo.png" alt="" />
+        <img src="@/assets/images/icon-bj_2.png" alt="" />
         <span>呜啦啦餐饮后台管理系统</span>
       </div>
       <div class="content">
@@ -90,12 +90,17 @@ export default {
 main {
   width: 100%;
   height: 100vh;
-  background: #6b3fbe;
+  background: url('http://121.5.53.216/jpg/bg.f1d2fdc8.jpg') no-repeat;
+  background-position: 50%;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100vh;
 }
 .logo {
   width: 1000px;
   height: 500px;
   background: #fff;
+  opacity: .85;
   border-radius: 10px;
 }
 .title {
@@ -107,7 +112,10 @@ main {
   font-weight: 600;
 }
 .title img {
-  width: 60px;
+  width:100px;
+}
+.title span{
+  color: black;
 }
 .content {
   display: flex;
