@@ -73,15 +73,12 @@ export default {
 </script>
 <template>
       <div class="box">
-        <h4 class="title">用户管理</h4>
         <div class="box-content">
-
-
             <el-table height="600"  :data="tableData" style="width: 100%">
                 <el-table-column align="center" label="用户id" width="100">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">{{ scope.row.userId }}</el-tag>
+                            <span size="medium">{{ scope.row.userId }}</span>
                         </div>
                     </template>
                 </el-table-column>
@@ -94,23 +91,16 @@ export default {
 
                 <el-table-column align="center" label="昵称">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.avatarName }}</el-tag>
+                        <span size="medium">{{ scope.row.avatarName }}</span>
                     </template>
                 </el-table-column>
 
                 <el-table-column align="center" label="手机号">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.phoneNumber }}</el-tag>
+                        <span size="medium">{{ scope.row.phoneNumber }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" label="角色">
-                    <template >
-                        <el-tag size="medium">特一级厨师</el-tag>
-                        <!-- <el-button size="mini" >添加角色</el-button>
-                        <el-button size="mini" type="danger" >删除角色</el-button>
-                        <el-button size="mini" >查看角色</el-button> -->
-                    </template>
-                </el-table-column>
+               
 
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope">
@@ -170,5 +160,13 @@ export default {
     border-radius: 20px;
     background-color: #ccc;
     display: inline-block;
+}
+.block {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.el-pagination{
+    padding: 30px 5px;
 }
 </style>
