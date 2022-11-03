@@ -41,12 +41,19 @@ export default {
             }).then(res =>{
                 console.log(res);   
             })
-        }
+        },
+        goBack() {
+            this.$router.back(-1)
+        },
     }
 }
 </script>
 <template>
+  <div class="box">
+    <el-page-header @back="goBack">
+        </el-page-header>
     <div class="box-content">
+        
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="添加角色">
                 <el-select v-model="form.roleId" placeholder="请选择想添加的角色">
@@ -59,7 +66,10 @@ export default {
             </el-form-item>
         </el-form>
     </div>
+  </div>
 </template>
 <style scoped>
-
+.el-page-header{
+    margin: 15px 0 -20px 35px;
+}
 </style>
