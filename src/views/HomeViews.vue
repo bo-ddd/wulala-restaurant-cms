@@ -1,6 +1,5 @@
 <template>
   <div class="box">
-    <h3 class="title">首页</h3>
     <div class="box-content">
       <div class="flex-sp_a">
         <el-calendar class="calendar" v-model="value"></el-calendar>
