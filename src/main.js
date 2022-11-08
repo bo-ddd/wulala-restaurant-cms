@@ -8,10 +8,20 @@ import 'default-passive-events'
 import 'element-ui/lib/theme-chalk/index.css';
 import VueCropper from 'vue-cropper'
 import * as echarts from "echarts"
+/***
+ * 周
+ */
+ import BaiduMap from 'vue-baidu-map'
+
+
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.use(VueCropper)
+/**
+ * 周
+ */
+ Vue.use(BaiduMap, { ak: 'qbu0OKR1DajtIZQgs7l7ogpBIaSmX7Gv' })
 
 
 
