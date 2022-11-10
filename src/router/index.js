@@ -98,4 +98,6 @@ const router = new VueRouter({
   routes
 })
 
+// router.addRoute('layout',{})
+
 export default router

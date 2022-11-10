@@ -65,8 +65,9 @@ export default {
     // window.addEventListener("handler", this.handler, { passive: false });
   },
   methods: {
-    handler({ BMap, map }) {
-			console.log(BMap, map)
+    handler() {
+      // { BMap, map }
+			// console.log(BMap, map)
 			this.center.lng = 121.487899486
 			this.center.lat = 31.24916171
 			this.zoom = 15

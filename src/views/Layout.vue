@@ -162,9 +162,11 @@
     },
     watch:{
       $route:{
-        handler(val){
-          // console.log(val);//新路由信息
-          // console.log(oldval);//老路由信息
+        handler(val,oldval){
+          console.log('----------新路由-----');
+          console.log(val);//新路由信息
+          console.log('----------老路由-----');
+          console.log(oldval);//老路由信息
           for (const key in this.obj) {
             if (val.name == key) {
               this.route = this.obj[key]
