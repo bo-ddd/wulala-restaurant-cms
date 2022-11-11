@@ -82,6 +82,10 @@ const routes = [
         name:'homePage',
         component:()=>import("../views/homePage/HomePage.vue")
       },{
+        path:'/setPass',
+        name:'setPass',
+        component:()=>import("../views/homePage/SetPass.vue")
+      },{
         path:'/deleterolepower',
         name:'deleterolepower',
         component:()=>import("../views/role/DeleteRolePower.vue")

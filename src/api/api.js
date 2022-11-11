@@ -246,3 +246,9 @@ export const updateUser = function (payload = {}) {
 export const foodDetail = function (payload = {}) {
   return instance.post('food/detail', payload)
 }
+/**
+ * @description 修改密码接口
+ */
+ export const updatePassApi = function (payload = {}) {
+  return instance.post('/user/password/update', payload)
+}
