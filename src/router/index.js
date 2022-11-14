@@ -32,8 +32,6 @@ const routes = [
       }
     ]
   }
-
-
 ]
 
 let dynamicRoutes = [

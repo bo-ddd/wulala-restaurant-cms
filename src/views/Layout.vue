@@ -33,6 +33,7 @@
                 <el-menu-item-group>
                   <el-menu-item index="attributelist">属性规格列表</el-menu-item>
                 </el-menu-item-group>
+<<<<<<< HEAD
               </el-submenu> -->
           </el-menu>
         </el-col>
@@ -215,7 +216,6 @@ export default {
     })
     console.log(this.defMenu)
     this.defMenu=this.defMenu.filter(item=>item.children.length)
-
     this.render();
     if (this.$route.name == 'home') {
       this.route = '首页'
