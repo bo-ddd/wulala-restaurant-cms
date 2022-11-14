@@ -33,7 +33,6 @@
                 <el-menu-item-group>
                   <el-menu-item index="attributelist">属性规格列表</el-menu-item>
                 </el-menu-item-group>
-<<<<<<< HEAD
               </el-submenu> -->
           </el-menu>
         </el-col>
@@ -225,9 +224,10 @@ export default {
     bb.forEach(el => {
       let cc = this.defMenu.find(item => item.id == Number(String(el.childrenId)[0]))
       cc.children.push(el)
-      console.log(cc);
+      // console.log(cc);
     })
-    console.log(this.defMenu)
+
+    // console.log(this.defMenu)
     this.defMenu = this.defMenu.filter(item => item.children.length)
     this.render();
     if (this.$route.name == 'home') {
