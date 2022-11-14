@@ -38,6 +38,14 @@ const routes = [
         },
         component: ()=>import("@/views/homePage/SetPass.vue"),
       },
+      {
+        path:'/homePage',
+        name:'homePage',
+        meta:{
+          label:'个人信息'
+        },
+        component:()=>import("../views/homePage/HomePage.vue")
+      }
     ]
   }
 ]
@@ -146,14 +154,6 @@ let dynamicRoutes = [
       label:'新增属性规格'
     },
     component:() =>import("@/views/attribute/AddAttribute.vue")
-  },
-  {
-    path:'/homePage',
-    name:'homePage',
-    meta:{
-      label:'个人信息'
-    },
-    component:()=>import("../views/homePage/HomePage.vue")
   },{
     path:'/departmentmanguage',
     name:'departmentmanguage',
