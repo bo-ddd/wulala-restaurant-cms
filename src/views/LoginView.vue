@@ -3,7 +3,7 @@
     <div class="logo">
       <div class="titles flex-center">
         <!-- <img src="@/assets/images/icon-bj_2.png" alt="" /> -->
-        <span>login</span>
+        <span>登录</span>
       </div>
       <div class="content">
         <div class="content-left shadow">
