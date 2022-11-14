@@ -55,7 +55,7 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item> <span @click="toHomePage">个人主页</span> </el-dropdown-item>
-                  <el-dropdown-item>账户设置</el-dropdown-item>
+                  <el-dropdown-item><span @click="toSetPass"> 账户设置</span></el-dropdown-item>
                   <el-dropdown-item>
                     <span @click="loginout">退出</span>
                   </el-dropdown-item>
@@ -139,6 +139,13 @@ export default {
           name: 'homePage'
         })
       }
+    },
+    toSetPass() {
+      if (this.flag) {
+        this.$router.push({
+          name: 'setPass'
+        })
+      }
     }
 
   },
@@ -171,10 +178,10 @@ export default {
         label: '用户管理'
       },
       {
-        path:'/departmentmanguage',
-        name:'departmentmanguage',
+        path: '/departmentmanguage',
+        name: 'departmentmanguage',
         childrenId: 203,
-        label:'部门管理',
+        label: '部门管理',
       },
       {
         path: '/addattribute',
@@ -212,7 +219,7 @@ export default {
         bb.push(aa)
       }
     });
-    bb=[...new Set(bb)]
+    bb = [...new Set(bb)]
     console.log('bb');
     console.log(bb);
     bb.forEach(el => {
@@ -221,7 +228,7 @@ export default {
       console.log(cc);
     })
     console.log(this.defMenu)
-    this.defMenu=this.defMenu.filter(item=>item.children.length)
+    this.defMenu = this.defMenu.filter(item => item.children.length)
     this.render();
     if (this.$route.name == 'home') {
       this.route = '首页'

@@ -29,7 +29,15 @@ const routes = [
           label:'首页'
         },
         component:() =>import("@/views/HomeViews.vue")
-      }
+      },
+      {
+        path: '/setPass',
+        name: 'setPass',
+        meta:{
+          label:'账户设置'
+        },
+        component: ()=>import("@/views/homePage/SetPass.vue"),
+      },
     ]
   }
 ]
