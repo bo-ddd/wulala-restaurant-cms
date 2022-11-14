@@ -25,7 +25,7 @@
                     <span class="left"></span>
                 </div>
                 <div class="flex-center">
-                  <button class="mt-20" @click="onUpdate">确定修改</button>
+                  <button class="update-btn mt-20" @click="onUpdate">确定修改</button>
                   <div></div>
                 </div>
             </div>
@@ -123,7 +123,7 @@ input:focus~.left {
     transform: scaleY(1);
 }
 
-button {
+.update-btn {
     z-index: 1;
     position: relative;
     font-size: inherit;
@@ -136,7 +136,7 @@ button {
     transition: color 0.4s ease-in-out;
 }
 
-button::before {
+.update-btn::before {
     content: '';
     z-index: -1;
     position: absolute;
@@ -151,12 +151,12 @@ button::before {
     transition: transform 0.45s ease-in-out;
 }
 
-button:hover {
+.update-btn:hover {
     cursor: pointer;
     color: #161616;
 }
 
-button:hover::before {
+.update-btn:hover::before {
     transform: translate3d(-50%, -50%, 0) scale3d(15, 15, 15);
 }
 
