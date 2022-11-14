@@ -14,10 +14,8 @@ export default {
     created() {
         this.userId = this.$route.query.userId
         console.log(this.$route.query.userId);
-
-        roleListApi({
-
-        }).then(res => {
+ //获取角色列表
+        roleListApi({}).then(res => {
             this.roleList = res.data.data
             console.log(this.roleList);
         })
@@ -29,6 +27,7 @@ export default {
     methods: {
 
         upload: function () {
+            //给用户添加角色接口
             addRoleApi({
                 userId: this.userId,
                 roleId: this.form.roleId
@@ -36,6 +35,7 @@ export default {
             console.log(this.form);
         },
         getUserPermission: function () {
+            // 查询用户权限
             getPermission({
                 userId: this.userId,
             }).then(res =>{

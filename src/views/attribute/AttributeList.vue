@@ -33,7 +33,7 @@
           >
         </div>
       </div>
-      <el-table :data="tableData" style="width: 100%" height="550">
+      <el-table :data="tableData" style="width: 100%" height="500">
         <el-table-column label="id" width="250">
           <template slot-scope="scope">
             <span style="margin-left: 10px">{{ scope.row.id }}</span>
@@ -325,6 +325,9 @@ console.log(this.tableDatas);
 </script>
 
 <style scoped>
+.box-content{
+  height: 75vh;
+}
 .el-pagination {
   display: flex;
   justify-content: center;

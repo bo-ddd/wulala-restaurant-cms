@@ -187,6 +187,7 @@ export default {
 
 .content {
     height: calc(100vh - 14.8rem);
+    overflow-y: scroll;
 }
 
 .power-list {
