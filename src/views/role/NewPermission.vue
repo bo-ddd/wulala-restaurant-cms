@@ -4,23 +4,16 @@
             <div class="content">
                 <div class="add-role">
                     <div action="" class="role-name">
-                        <div class="role-title"><span>*</span>角色名称</div>
+                        <div class="role-title"><span>*</span>权限名称</div>
                         <el-input v-model="input1" placeholder="请输入新增角色名称"></el-input>
                     </div>
-                    <div action="" class="role-name">
-                        <div class="role-title"><span>*</span>所属部门</div>
-                        <el-select v-model="input2" placeholder="请选择所属部门">
-                            <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </div>
-                    <el-button class="btn" type="primary" plain @click="foundRole">创建角色</el-button>
+                    <el-button class="btn" type="primary" plain @click="foundRole">新增权限</el-button>
                 </div>
                 <!-- 全选 -->
                 <div class="power-list">
                     <!-- <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button> -->
-                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false"
+                    <el-tree :data="array" node-key="id" 
+                        :default-expand-all="false"
                         @check-change="getCheck"
                         :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ node, data }">
@@ -41,31 +34,13 @@
 
 <script>
 // roleAddPermission
-import { roleCreate, permissionListApi } from '@/api/api';
+import {  deletePermissionApi,permissionAddApi, permissionListApi } from '@/api/api';
 import { showLoading, hideLoading } from "@/api/loading";
-// import { ref } from 'vue';
 export default {
     data() {
         return {
             input1: '',
-            input2: '',
             isIndeterminate: true,
-            options: [{
-                value: '选项1',
-                label: '黄金糕'
-            }, {
-                value: '选项2',
-                label: '双皮奶'
-            }, {
-                value: '选项3',
-                label: '蚵仔煎'
-            }, {
-                value: '选项4',
-                label: '龙须面'
-            }, {
-                value: '选项5',
-                label: '北京烤鸭'
-            }],
             array: [],
             permissionId: [],
         }
@@ -78,7 +53,6 @@ export default {
         permissionListApi({}).then(res => {
             let dataList = this.formatePermissionList(res.data.data);
             this.array = dataList;
-
         })
         .catch(err => {
             console.log(err);
@@ -86,35 +60,36 @@ export default {
     },
     methods: {
         foundRole: function () {
-            roleCreate({
-                roleName: this.input1,
-                permissionIds: this.permissionId, //给角色添加默认权限
-            }).then(res => {
-                if (res.data.status == 10300) {
-                    this.$message({
+            if (this.input1 == '') {
+                this.$message({
+                    message: '请输入要创建的权限名称',
+                    type: 'warning'
+                });
+            }else{
+                permissionAddApi({
+                    permissionName: this.input1,
+                }).then(res=>{
+                    console.log(res.data.status);
+                    if (res.data.status == 1) {
+                        this.$message({
+                        message: '权限添加成功',
+                        type: 'success'
+                        });
+                        permissionListApi({}).then(res => {
+                            let dataList = this.formatePermissionList(res.data.data);
+                            this.array = dataList;
+                        })
+                        this.$router.push({name:'rolemg'})
+                    }else{
+                        this.$message({
                         message: res.data.msg,
-                        type: 'warning'
-                    });
-                }
-                else if(this.permissionId == ''){
-                    this.$message({
-                        message: '角色创建成功,请添加权限',
                         type: 'success'
-                    });
-                    this.$router.push({ path: '/rolemg' })
-                }
-                else if(res.data.status == 1){
-                    this.$message({
-                        message: '角色创建成功',
-                        type: 'success'
-                    });
-                    this.$router.push({ path: '/rolemg' })
-                } 
-                
-            })
-            .catch(err => {
-                console.log(err);
-            })
+                        });
+                    }
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
         },
         getCheck(data,thisNode,){
             if (thisNode) {
@@ -142,10 +117,27 @@ export default {
             return res.filter(item => item.pid == 0);
         },
         remove(node, data) {
-            const parent = node.parent;
-            const children = parent.data.children || parent.data;
-            const index = children.findIndex(d => d.id === data.id);
-            children.splice(index, 1);
+            deletePermissionApi({
+                id:data.id,
+            }).then(res => {
+                if (res.data.status == 8901) {
+                    this.$message({
+                    message: res.data.msg,
+                    type: 'warning'
+                    });
+                }else{
+                    this.$message({
+                    message: res.data.msg,
+                    type: 'success'
+                    });
+                    const parent = node.parent;
+                    const children = parent.data.children || parent.data;
+                    const index = children.findIndex(d => d.id === data.id);
+                    children.splice(index, 1);
+                }
+            }).catch(err => {
+                console.log(err);
+            })
         },
     }
 }
