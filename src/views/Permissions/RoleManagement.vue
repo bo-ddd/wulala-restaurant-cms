@@ -5,6 +5,7 @@
                 <el-button class="btn" size="mini" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                 <el-button type="primary" size="mini" @click="toSetRolePower">设置角色权限</el-button>
                 <el-button class="btn" size="mini" type="primary" plain @click="toDeleteRolePower()">删除角色权限</el-button>
+                <el-button type="primary" size="mini" @click="toNewPermission">添加权限</el-button>
                 <el-table
                 height="500"
                     :data="obtainRoleList.filter(data => !search || data.roleName.toLowerCase().includes(search.toLowerCase()))"
@@ -88,6 +89,9 @@ export default {
         toAddRole: function () {
             this.$router.push({ path: '/addrole' })
         },
+        toNewPermission:function(){
+            this.$router.push({name:'newpermission'})
+        },  
         toSetRolePower : function(){
             this.$router.push({path:'setrolepower'})
         },
