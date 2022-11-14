@@ -1,18 +1,20 @@
 <template>
   <div class="box">
-    <h3 class="title">首页</h3>
     <div class="box-content">
-      <div class="flex-sp_a">
-        <el-calendar class="calendar" v-model="value"></el-calendar>
-        <div>
-          <div id="main" class="main_container"></div>
-          <el-carousel :interval="2500" type="card" height="160px">
-            <el-carousel-item v-for="item in image" :key="item.id">
-              <img class="carousel" :src="item.img" alt="">
-              <!-- <img src="@/assets/images/foodaddftq.png" alt=""> -->
-            </el-carousel-item>
-          </el-carousel>
+      <div class="content">
+        <div class="flex-sp_a">
+          <el-calendar class="calendar" v-model="value"></el-calendar>
+          <div>
+            <div id="main" class="main_container"></div>
+            <el-carousel :interval="2500" type="card" height="160px">
+              <el-carousel-item v-for="item in image" :key="item.id">
+                <img class="carousel" :src="item.img" alt="">
+                <!-- <img src="@/assets/images/foodaddftq.png" alt=""> -->
+              </el-carousel-item>
+            </el-carousel>
+          </div>
         </div>
+        <baidu-map class="map" :center="center" :zoom="zoom" @ready="handler" />
       </div>
     </div>
   </div>
@@ -47,7 +49,9 @@ export default {
         //  icon:'http://localhost:8080/img/foodaddyt.54b11a01.png',
          img:require('/src/assets/images/foodaddyt.png')
        }
-      ]
+      ],
+      center: { lng: 0, lat: 0 },
+			zoom: 0
     }
   },
   created() {
@@ -57,9 +61,16 @@ export default {
     },1000)
   },
   mounted() {
-    this.initCharts()
+    this.initCharts();
+    // window.addEventListener("handler", this.handler, { passive: false });
   },
   methods: {
+    handler() {
+			// console.log(BMap, map)
+			this.center.lng = 121.487899486
+			this.center.lat = 31.24916171
+			this.zoom = 15
+		},
     initCharts() {
       // 初始化echarts实例
       var myChart = echarts.init(document.getElementById("main"))
@@ -96,10 +107,7 @@ export default {
 }
 
 ::v-deep .el-calendar-table .el-calendar-day {
-  height: 50px;
-}
-.box-content{
-  background-color: #eee;
+  height: 3rem;
 }
 .main_container {
   width: 600px;
@@ -145,4 +153,13 @@ export default {
   .carousel{
     width: 100%;
   }
+
+  .map{
+	width: 100%;
+	height: 50rem;
+}
+.content{
+  overflow-y: scroll;
+  height: calc(100vh - 9rem);
+}
 </style>

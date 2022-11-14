@@ -1,13 +1,13 @@
 <template>
   <main class="flex-center">
     <div class="logo">
-      <div class="title flex-center">
-        <img src="@/assets/images/icon-bj_2.png" alt="" />
-        <span>呜啦啦餐饮后台管理系统</span>
+      <div class="titles flex-center">
+        <!-- <img src="@/assets/images/icon-bj_2.png" alt="" /> -->
+        <span>登录</span>
       </div>
       <div class="content">
         <div class="content-left shadow">
-          <img src="@/assets/images/logo.png" alt="" />
+          <img src="@/assets/images/icon-bj_2.png" alt="" />
         </div>
         <div class="content-right">
           <el-input
@@ -38,7 +38,7 @@ export default {
       password: "",
     };
   },
-  created() {},
+  created() { },
   methods: {
     getValidateResult() {
       var res = { result: true };
@@ -55,7 +55,7 @@ export default {
     async submit() {
       var isValidate = this.getValidateResult();
       if (!isValidate) return;
-      
+
       let res = await loginApi({
         username: this.username,
         password: this.password,
@@ -67,6 +67,7 @@ export default {
           message: "登录成功",
         });
         sessionStorage.setItem("token", res.data.data.token);
+        sessionStorage.setItem('password',this.password);
         this.$router.push({
           name: "home",
         });
@@ -96,14 +97,16 @@ main {
   width: 100%;
   height: 100vh;
 }
+
 .logo {
-  width: 1000px;
-  height: 500px;
+  width: 828px;
+  height: 422px;
   background: #fff;
   opacity: .85;
   border-radius: 10px;
 }
-.title {
+
+.titles {
   display: flex;
   margin: 30px 0;
   font-size: 26px;
@@ -111,33 +114,44 @@ main {
   font-family: "Times New Roman", Times, serif;
   font-weight: 600;
 }
-.title img {
-  width:100px;
+
+.titles img {
+  width: 100px;
 }
-.title span{
+
+.titles span {
   color: black;
+  font-size: 2.8rem;
 }
+
 .content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
+
 .content-left img {
-  width: 320px;
+  width: 250px;
+  height: 168px;
+  padding: 2rem;
 }
+
 .el-input {
   margin: 10px 0;
 }
+
 .content-right {
   width: 280px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
+
 .el-button {
   margin: 10px 0;
   background-color: #6b3fbe;
   border-color: #6b3fbe;
 }
+
 .label {
   padding: 10px 0;
   color: #6b3fbe;

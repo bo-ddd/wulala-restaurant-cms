@@ -246,3 +246,22 @@ export const updateUser = function (payload = {}) {
 export const foodDetail = function (payload = {}) {
   return instance.post('food/detail', payload)
 }
+/**
+ * @description 获取用户对应的权限列表
+ */
+export const getUserPermissionListApi = function(payload={}){
+  return instance.post('/user/permission/list',payload)
+}
+
+/**
+ * @description 删除权限
+ */
+ export const deletePermissionApi = function(payload={}){
+  return instance.post('/permission/delete',payload)
+ }
+/**
+ * @description 修改密码接口
+ */
+ export const updatePassApi = function (payload = {}) {
+  return instance.post('/user/password/update', payload)
+}
