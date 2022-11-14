@@ -146,6 +146,13 @@ let dynamicRoutes = [
       label:'个人信息'
     },
     component:()=>import("../views/homePage/HomePage.vue")
+  },{
+    path:'/departmentmanguage',
+    name:'departmentmanguage',
+    meta:{
+      label:'部门管理'
+    },
+    component:()=>import("../views/role/DepartmentManguage.vue")
   }
 ]
 const router = new VueRouter({

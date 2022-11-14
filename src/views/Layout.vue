@@ -171,6 +171,12 @@ export default {
         label: '用户管理'
       },
       {
+        path:'/departmentmanguage',
+        name:'departmentmanguage',
+        childrenId: 203,
+        label:'部门管理',
+      },
+      {
         path: '/addattribute',
         name: 'addattribute',
         label: '新增属性规格',
