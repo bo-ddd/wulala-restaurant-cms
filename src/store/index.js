@@ -32,14 +32,14 @@ export default new Vuex.Store({
         }
     },
     async getUserPermissionList({state,commit,dispatch}){
-          if(!Object.keys(state.userInfo).length){
-            await dispatch('getUserInfo');
-            const res = await getUserPermissionListApi({userId: state.userInfo.userId});
-            commit('setUserPermissionList',res.data.data);
-          }else{
-            const res = await getUserPermissionListApi({userId: state.userInfo.userId});
-            commit('setUserPermissionList',res.data.data)
-          }
+      if(!Object.keys(state.userInfo).length){
+        await dispatch('getUserInfo');
+        const res = await getUserPermissionListApi({userId: state.userInfo.userId});
+        commit('setUserPermissionList',res.data.data);
+      }else{
+        const res = await getUserPermissionListApi({userId: state.userInfo.userId});
+        commit('setUserPermissionList',res.data.data)
+      }
     }
   },
   modules: {
