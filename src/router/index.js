@@ -161,6 +161,14 @@ let dynamicRoutes = [
       label:'部门管理'
     },
     component:()=>import("../views/role/DepartmentManguage.vue")
+  },
+  {
+    path:'/seeuser',
+    name:'seeuser',
+    meta:{
+      label:'查看用户'
+    },
+    component:()=>import("../views/role/SeeUser.vue")
   }
 ]
 const router = new VueRouter({

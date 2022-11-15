@@ -184,6 +184,12 @@ export default {
         childrenId: 203,
         label: '部门管理',
       },
+      // {
+      //   path:'/seeuser',
+      //   name:'seeuser',
+      //   label:'查看用户',
+      //   childrenId: 204,
+      // },
       {
         path: '/addattribute',
         name: 'addattribute',

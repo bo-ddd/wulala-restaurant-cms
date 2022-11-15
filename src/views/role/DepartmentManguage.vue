@@ -13,14 +13,14 @@
     style="width: 100%">
     <el-table-column
       label="id"
-      width="500">
+      width="400">
       <template slot-scope="scope">
         <span style="margin-left: 10px">{{ scope.row.id }}</span>
       </template>
     </el-table-column>
     <el-table-column
       label="姓名"
-      width="500">
+      width="400">
       <template slot-scope="scope">
         <el-popover>
           <div slot="reference" class="name-wrapper">
@@ -31,6 +31,9 @@
     </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
+        <el-button
+          size="mini"
+          @click="seeUser(scope.$index, scope.row)">查看用户</el-button>
         <el-button
           size="mini"
           @click="handleEdit(scope.$index, scope.row),dialogFormVisible = true">编辑</el-button>
@@ -102,6 +105,10 @@ export default {
       let res = await deptListApi()
       this.tableData = res.data.data;
     },
+    seeUser(index,row){
+      console.log(index,row);
+      this.$router.push({name:'seeuser'})
+    },  
     handleEdit(index, row) {
         this.form.id = row.id;
         this.form.name = row.name
