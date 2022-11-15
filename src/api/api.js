@@ -293,3 +293,10 @@ export const deptUpdateApi = function (payload = {}){
 export const deptDeleteApi = function (payload = {}){
   return instance.post('/dept/delete',payload)
 }
+
+/**
+ * @description 修改权限名称
+ */
+ export const permissionUpdateApi = function (payload = {}){
+  return instance.post('/permission/update',payload)
+}
