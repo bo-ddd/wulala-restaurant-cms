@@ -97,7 +97,9 @@ export default {
         deleterolepower: '删除角色权限',
         setusermg: '添加角色',
         foodadd: '菜肴详情',
-        cuisineAttribute: '修改菜品'
+        cuisineAttribute: '修改菜品',
+        departmentmanguage:'部门管理',
+        newpermission:'权限管理'
       },
       defMenu: [],
       menu: [],
@@ -219,8 +221,8 @@ export default {
       }
     });
     bb = [...new Set(bb)]
-    console.log('bb');
-    console.log(bb);
+    // console.log('bb');
+    // console.log(bb);
     bb.forEach(el => {
       let cc = this.defMenu.find(item => item.id == Number(String(el.childrenId)[0]))
       cc.children.push(el)
@@ -241,11 +243,11 @@ export default {
   },
   watch: {
     $route: {
-      handler(val, oldval) {
-        console.log('----------新路由-----');
-        console.log(val);//新路由信息
-        console.log('----------老路由-----');
-        console.log(oldval);//老路由信息
+      handler(val, ) {
+        // console.log('----------新路由-----');
+        // console.log(val);//新路由信息
+        // console.log('----------老路由-----');
+        // console.log(oldval);//老路由信息
         for (const key in this.obj) {
           if (val.name == key) {
             this.route = this.obj[key]

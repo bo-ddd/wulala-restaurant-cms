@@ -19,6 +19,9 @@
                         <span class="custom-tree-node" slot-scope="{ node, data }">
                             <span>{{ data.permissionName }}</span>
                             <span>
+                                <el-button type="text" size="mini" @click="() => modify(node, data)">
+                                    修改权限名称
+                                </el-button>
                                 <el-button type="text" size="mini" @click="() => remove(node, data)">
                                     Delete
                                 </el-button>
@@ -139,6 +142,9 @@ export default {
                 console.log(err);
             })
         },
+        modify(node,data){
+            console.log(node,data);
+        }
     }
 }
 </script>
