@@ -265,3 +265,9 @@ export const getUserPermissionListApi = function(payload={}){
  export const updatePassApi = function (payload = {}) {
   return instance.post('/user/password/update', payload)
 }
+/**
+ * @description 删除用户角色
+ */
+ export const userDeleteRole = function (payload = {}) {
+  return instance.post('/user/deleteRole', payload)
+}

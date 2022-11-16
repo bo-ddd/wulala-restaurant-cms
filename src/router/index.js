@@ -156,7 +156,7 @@ const router = new VueRouter({
 
 //导航守卫
 router.beforeEach(async (to,from,next)=>{
-  console.log(from);
+  // console.log(from);
   let userPermissionList =vuex.state.userPermissionList;
   let token = sessionStorage.getItem('token');
   if (to.name == 'loginview') {

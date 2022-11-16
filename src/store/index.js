@@ -31,6 +31,8 @@ export default new Vuex.Store({
           commit('setUserInfo',res.data.data);
         }
     },
+
+    
     async getUserPermissionList({state,commit,dispatch}){
           if(!Object.keys(state.userInfo).length){
             await dispatch('getUserInfo');

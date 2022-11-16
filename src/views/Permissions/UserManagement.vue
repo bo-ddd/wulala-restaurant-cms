@@ -17,6 +17,7 @@ export default {
                 userId : data.userId
             } })
             console.log(data);
+          
         },
         handleSizeChange(val) {
             // console.log(`每页 ${val} 条`);
