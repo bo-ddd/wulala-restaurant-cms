@@ -267,6 +267,13 @@ export const getUserPermissionListApi = function(payload={}){
 }
 
 /**
+ * @description 删除用户角色
+ */
+ export const userDeleteRole = function (payload = {}) {
+  return instance.post('/user/deleteRole', payload)
+
+}
+/**
  * @description 查询部门列表
  */
 export const deptListApi = function (payload ={}){
