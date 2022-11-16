@@ -5,9 +5,9 @@
                 <el-button class="btn" size="mini" type="primary" plain @click="toAddRole()">+添加新角色</el-button>
                 <el-button type="primary" size="mini" @click="toSetRolePower">设置角色权限</el-button>
                 <el-button class="btn" size="mini" type="primary" plain @click="toDeleteRolePower()">删除角色权限</el-button>
-                <el-button type="primary" size="mini" @click="toNewPermission">添加权限</el-button>
+                <el-button type="primary" size="mini" @click="toNewPermission">添加权限与修改权限名称</el-button>
                 <el-table
-                height="500"
+                height="560"
                     :data="obtainRoleList.filter(data => !search || data.roleName.toLowerCase().includes(search.toLowerCase()))"
                     style="width: 100%">
                     <el-table-column

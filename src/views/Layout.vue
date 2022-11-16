@@ -43,7 +43,7 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item> <span @click="toHomePage">个人主页</span> </el-dropdown-item>
-                  <el-dropdown-item>账户设置</el-dropdown-item>
+                  <el-dropdown-item><span @click="toSetPass"> 账户设置</span></el-dropdown-item>
                   <el-dropdown-item>
                     <span @click="loginout">退出</span>
                   </el-dropdown-item>
@@ -86,7 +86,9 @@ export default {
         deleterolepower: '删除角色权限',
         setusermg: '添加角色',
         foodadd: '菜肴详情',
-        cuisineAttribute: '修改菜品'
+        cuisineAttribute: '修改菜品',
+        departmentmanguage:'部门管理',
+        newpermission:'权限管理'
       },
       defMenu: [],
       menu: [],
@@ -127,6 +129,13 @@ export default {
           name: 'homePage'
         })
       }
+    },
+    toSetPass() {
+      if (this.flag) {
+        this.$router.push({
+          name: 'setPass'
+        })
+      }
     }
 
   },
@@ -158,6 +167,18 @@ export default {
         childrenId: 202,
         label: '用户管理'
       },
+      {
+        path: '/departmentmanguage',
+        name: 'departmentmanguage',
+        childrenId: 203,
+        label: '部门管理',
+      },
+      // {
+      //   path:'/seeuser',
+      //   name:'seeuser',
+      //   label:'查看用户',
+      //   childrenId: 204,
+      // },
       {
         path: '/addattribute',
         name: 'addattribute',
@@ -194,7 +215,8 @@ export default {
         bb.push(aa)
       }
     });
-    bb=[...new Set(bb)]
+
+    bb = [...new Set(bb)]
     // console.log('bb');
     // console.log(bb);
     bb.forEach(el => {
@@ -204,6 +226,7 @@ export default {
     })
     // console.log(this.defMenu)
     this.defMenu=this.defMenu.filter(item=>item.children.length)
+
     this.render();
     if (this.$route.name == 'home') {
       this.route = '首页'
@@ -218,6 +241,7 @@ export default {
     $route: {
       handler(val, oldval) {
         oldval
+
         for (const key in this.obj) {
           if (val.name == key) {
             this.route = this.obj[key]

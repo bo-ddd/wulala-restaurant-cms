@@ -29,6 +29,22 @@ const routes = [
           label:'首页'
         },
         component:() =>import("@/views/HomeViews.vue")
+      },
+      {
+        path: '/setPass',
+        name: 'setPass',
+        meta:{
+          label:'账户设置'
+        },
+        component: ()=>import("@/views/homePage/SetPass.vue"),
+      },
+      {
+        path:'/homePage',
+        name:'homePage',
+        meta:{
+          label:'个人信息'
+        },
+        component:()=>import("../views/homePage/HomePage.vue")
       }
     ]
   }
@@ -138,14 +154,21 @@ let dynamicRoutes = [
       label:'新增属性规格'
     },
     component:() =>import("@/views/attribute/AddAttribute.vue")
+  },{
+    path:'/departmentmanguage',
+    name:'departmentmanguage',
+    meta:{
+      label:'部门管理'
+    },
+    component:()=>import("../views/role/DepartmentManguage.vue")
   },
   {
-    path:'/homePage',
-    name:'homePage',
+    path:'/seeuser',
+    name:'seeuser',
     meta:{
-      label:'个人信息'
+      label:'查看用户'
     },
-    component:()=>import("../views/homePage/HomePage.vue")
+    component:()=>import("../views/role/SeeUser.vue")
   }
 ]
 const router = new VueRouter({
