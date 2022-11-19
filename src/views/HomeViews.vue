@@ -20,7 +20,7 @@ echarts.use([TitleComponent, GridComponent, BarChart, CanvasRenderer])
 export default {
   data() {
     return {
-      // value: new Date(),
+      value: new Date(),
     }
   },
   created() {
