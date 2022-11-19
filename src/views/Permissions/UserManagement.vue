@@ -1,5 +1,6 @@
 <script>
 import { userList } from '@/api/api';
+import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
@@ -16,6 +17,7 @@ export default {
                 userId : data.userId
             } })
             console.log(data);
+          
         },
         handleSizeChange(val) {
             // console.log(`每页 ${val} 条`);
@@ -61,49 +63,45 @@ export default {
             this.pagesize = res.data.data.pageSize
             console.log(this.total);
         })
+    },
+    created(){
+        showLoading();
+        setTimeout(function () {
+            hideLoading();
+        }, 1000);
     }
 }
 </script>
 <template>
       <div class="box">
-        <h4 class="title">用户管理</h4>
         <div class="box-content">
-
-
             <el-table height="600"  :data="tableData" style="width: 100%">
                 <el-table-column align="center" label="用户id" width="100">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
-                            <el-tag size="medium">{{ scope.row.userId }}</el-tag>
+                            <span size="medium">{{ scope.row.userId }}</span>
                         </div>
                     </template>
                 </el-table-column>
                 <el-table-column align="center" label="用户头像" width="180">
                     <template slot-scope="scope">
                         <img v-if="scope.row.avatarImg" class="banner-food_png" :src="scope.row.avatarImg" alt="">
-                    <div class="avatarImg" v-else></div>
+                        <el-avatar v-else icon="el-icon-user-solid"></el-avatar>
                     </template>
                 </el-table-column>
 
                 <el-table-column align="center" label="昵称">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.avatarName }}</el-tag>
+                        <span size="medium">{{ scope.row.avatarName }}</span>
                     </template>
                 </el-table-column>
 
                 <el-table-column align="center" label="手机号">
                     <template slot-scope="scope">
-                        <el-tag size="medium">{{ scope.row.phoneNumber }}</el-tag>
+                        <span size="medium">{{ scope.row.phoneNumber }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column align="center" label="角色">
-                    <template >
-                        <el-tag size="medium">特一级厨师</el-tag>
-                        <!-- <el-button size="mini" >添加角色</el-button>
-                        <el-button size="mini" type="danger" >删除角色</el-button>
-                        <el-button size="mini" >查看角色</el-button> -->
-                    </template>
-                </el-table-column>
+               
 
                 <el-table-column align="center" label="操作">
                     <template slot-scope="scope">
@@ -163,5 +161,13 @@ export default {
     border-radius: 20px;
     background-color: #ccc;
     display: inline-block;
+}
+.block {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.el-pagination{
+    padding: 30px 5px;
 }
 </style>

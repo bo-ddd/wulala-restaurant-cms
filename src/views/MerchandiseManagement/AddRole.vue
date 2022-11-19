@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <h4 class="mg-rl_20 title">添加角色</h4>
         <div class="box-content">
             <div class="content">
                 <div class="add-role">
@@ -17,13 +16,12 @@
                         </el-select>
                     </div>
                     <el-button class="btn" type="primary" plain @click="foundRole">创建角色</el-button>
-                    <!-- <el-button class="btn" type="primary" plain>{{permissionId}}</el-button> -->
                 </div>
                 <!-- 全选 -->
                 <div class="power-list">
-                    <!-- 默认展开   :default-checked-keys="[]" 默认选中-->
                     <!-- <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button> -->
-                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false" @check="getId"
+                    <el-tree :data="array" show-checkbox node-key="id" :default-expand-all="false"
+                        @check-change="getCheck"
                         :expand-on-click-node="false">
                         <span class="custom-tree-node" slot-scope="{ node, data }">
                             <span>{{ data.permissionName }}</span>
@@ -45,6 +43,7 @@
 // roleAddPermission
 import { roleCreate, permissionListApi } from '@/api/api';
 import { showLoading, hideLoading } from "@/api/loading";
+// import { ref } from 'vue';
 export default {
     data() {
         return {
@@ -91,8 +90,6 @@ export default {
                 roleName: this.input1,
                 permissionIds: this.permissionId, //给角色添加默认权限
             }).then(res => {
-                console.log('-------foundRole------');
-                console.log(res);
                 if (res.data.status == 10300) {
                     this.$message({
                         message: res.data.msg,
@@ -119,9 +116,17 @@ export default {
                 console.log(err);
             })
         },
-        getId(data) {
-            this.permissionId.push(data.id);
-            console.log(this.permissionId);
+        getCheck(data,thisNode,){
+            if (thisNode) {
+                this.permissionId.push(data.id);
+            }else{
+                this.permissionId.forEach((e)=>{
+                    if (data.id == e) {
+                        this.permissionId.splice(this.permissionId.indexOf(e),1)
+                    }
+                })
+            }
+             return [... new Set(this.permissionId)];
         },
         formatePermissionList(data) {
             // 深拷贝
@@ -173,13 +178,13 @@ export default {
 .content {
     background-color: #fff;
     border-radius: 20px;
-    overflow-y: scroll;
-    height: calc(100vh - 9.8rem);
 }
 
 .power-list {
     width: 95%;
     margin: 10px auto;
+    height: calc(100vh - 15rem);
+    overflow-y: scroll;
 }
 
 .custom-tree-node {

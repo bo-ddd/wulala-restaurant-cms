@@ -1,13 +1,13 @@
 <template>
   <main class="flex-center">
     <div class="logo">
-      <div class="title flex-center">
-        <img src="@/assets/images/icon-wll_logo.png" alt="" />
-        <span>呜啦啦餐饮后台管理系统</span>
+      <div class="titles flex-center">
+        <!-- <img src="@/assets/images/icon-bj_2.png" alt="" /> -->
+        <span>注册</span>
       </div>
       <div class="content">
         <div class="content-left shadow">
-          <img src="@/assets/images/logo.png" alt="" />
+          <img src="@/assets/images/icon-bj_2.png" alt="" />
         </div>
         <div class="content-right">
           <el-input
@@ -100,15 +100,20 @@ export default {
 main {
   width: 100%;
   height: 100vh;
-  background: #6b3fbe;
+  background: url('http://121.5.53.216/jpg/bg.f1d2fdc8.jpg') no-repeat;
+  background-position: 50%;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100vh;
 }
 .logo {
-  width: 1000px;
-  height: 500px;
+  width: 828px;
+    height: 422px;
   background: #fff;
   border-radius: 10px;
+  opacity: .85;
 }
-.title {
+.titles {
   display: flex;
   margin: 30px 0;
   font-size: 26px;
@@ -116,15 +121,25 @@ main {
   font-family: "Times New Roman", Times, serif;
   font-weight: 600;
 }
-.title img {
-  width: 60px;
+.titles img {
+  width: 100px;
+}
+.titles span {
+  color: black;
+  font-size: 2.8rem;
 }
 .content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.content-left{
+  height: 100%;
 }
 .content-left img {
-  width: 320px;
+  width: 250px;
+  height: 168px;
+  padding: 2rem;
 }
 .el-input {
   margin: 10px 0;

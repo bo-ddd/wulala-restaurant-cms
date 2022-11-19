@@ -1,6 +1,5 @@
 <template>
     <div class="box">
-        <h4 class="mg-rl_20 title">设置角色权限</h4>
         <div class="box-contont">
             <div class="content">
                 <div class="add-role">

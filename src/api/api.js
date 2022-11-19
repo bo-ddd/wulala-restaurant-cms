@@ -214,6 +214,12 @@ export const rolePermissionList = function (payload = {}) {
 export const productAttributeValueApi = function (payload = {}) {
   return instance.post('/product/attribute/value/add', payload)
 }
+/**
+ * @description 删除商品属性值和value
+ */
+ export const productDeleteValueApi = function (payload = {}) {
+  return instance.post('/product/attribute/value/delete', payload)
+}
 
 /**
  * @description 修改菜肴信息
@@ -229,8 +235,75 @@ export const updateUser = function (payload = {}) {
   return instance.post('user/update', payload)
 }
 /**
+ * @description 修改菜肴信息
+ */
+ export const updateAttributeValue = function (payload = {}) {
+  return instance.post('product/attribute/value/update', payload)
+}
+/**
  * @description 获取菜肴详情
  */
 export const foodDetail = function (payload = {}) {
   return instance.post('food/detail', payload)
+}
+/**
+ * @description 获取用户对应的权限列表
+ */
+export const getUserPermissionListApi = function(payload={}){
+  return instance.post('/user/permission/list',payload)
+}
+
+/**
+ * @description 删除权限
+ */
+ export const deletePermissionApi = function(payload={}){
+  return instance.post('/permission/delete',payload)
+ }
+/**
+ * @description 修改密码接口
+ */
+ export const updatePassApi = function (payload = {}) {
+  return instance.post('/user/password/update', payload)
+}
+
+/**
+ * @description 删除用户角色
+ */
+ export const userDeleteRole = function (payload = {}) {
+  return instance.post('/user/deleteRole', payload)
+
+}
+/**
+ * @description 查询部门列表
+ */
+export const deptListApi = function (payload ={}){
+  return instance.post('/dept/list', payload)
+}
+
+/**
+ * @description 增加部门
+ */
+export const deptCreateApi = function (payload ={}){
+  return instance.post('/dept/create', payload)
+}
+
+/**
+ * @description 修改部门名称
+ */
+export const deptUpdateApi = function (payload = {}){
+  return instance.post('/dept/update', payload)
+}
+
+/**
+ * @description 删除部门
+ */
+export const deptDeleteApi = function (payload = {}){
+  return instance.post('/dept/delete',payload)
+}
+
+/**
+ * @description 修改权限名称
+ */
+ export const permissionUpdateApi = function (payload = {}){
+  return instance.post('/permission/update',payload)
 }
