@@ -252,7 +252,13 @@ export const foodDetail = function (payload = {}) {
 export const getUserPermissionListApi = function(payload={}){
   return instance.post('/user/permission/list',payload)
 }
+/**
+ * @description 删除类目
+ */
+ export const categoryDelete = function (payload = {}) {
+  return instance.post('/category/delete', payload)
 
+}
 /**
  * @description 删除权限
  */

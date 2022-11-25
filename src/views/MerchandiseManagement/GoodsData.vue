@@ -2,7 +2,7 @@
     <div class="box">
         <!-- <h3 class="title ">菜品管理</h3> -->
         <div class="box-content">
-            
+
             <div class="box-inquire">
                 <div class="box-inquire_inp">
                     <div>
@@ -16,7 +16,7 @@
                     <div>
                         <span>菜系:</span>
                         <el-select v-model="valueType" size="mini" placeholder="请选择">
-                            <el-option v-for="(el,i) in categorylist" :key="i" :label="el.name" :value="el.id">
+                            <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
                             </el-option>
                         </el-select>
                     </div>
@@ -33,51 +33,52 @@
                 <div class="box-inquire_btn">
                     <el-row>
                         <el-button size="mini">查询</el-button>
-                        <el-button size="mini" >重置</el-button>
+                        <el-button size="mini">重置</el-button>
                     </el-row>
                 </div>
             </div>
             <!-- btn -->
             <div class="box-btn">
                 <el-row>
-                    <el-button @click="toFoodPage" size="mini" >新增菜品</el-button>
+                    <el-button @click="toFoodPage" size="mini">新增菜品</el-button>
                     <el-button size="mini">批量上架</el-button>
                     <el-button size="mini">批量下架</el-button>
                     <el-button size="mini" @click="productDeleteValue">批量删除</el-button>
                 </el-row>
                 <el-dialog title="菜品详情" :visible.sync="dialogFormVisible">
                     <el-form ref="form" :model="form" label-width="80px">
-                    <el-form-item label="菜品名称">
-                        <el-input v-model="form.foodName"></el-input>
-                    </el-form-item>
-                    <el-form-item label="价格">
-                        <el-input v-model="form.price"></el-input>
-                    </el-form-item>
-                    <el-form-item label="菜品类型">
-                        <el-select v-model="form.categoryId" placeholder="菜系">
-                            <el-option  v-for="(el,i) in categorylist" :key="i" :label="el.name" :value="el.id"></el-option>
-                        </el-select>
-                    </el-form-item>
-                    <el-form-item label="菜品描述">
-                        <el-input type="textarea" v-model="form.description"></el-input>
-                    </el-form-item>
-                    <el-form-item label="菜品主图">
-                        <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
-                            :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="upload()">添加</el-button>
-                        <el-button>取消</el-button>
-                    </el-form-item>
-                </el-form>
+                        <el-form-item label="菜品名称">
+                            <el-input v-model="form.foodName"></el-input>
+                        </el-form-item>
+                        <el-form-item label="价格">
+                            <el-input v-model="form.price"></el-input>
+                        </el-form-item>
+                        <el-form-item label="菜品类型">
+                            <el-select v-model="form.categoryId" placeholder="菜系">
+                                <el-option v-for="(el, i) in categorylist" :key="i" :label="el.name" :value="el.id">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="菜品描述">
+                            <el-input type="textarea" v-model="form.description"></el-input>
+                        </el-form-item>
+                        <el-form-item label="菜品主图">
+                            <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
+                                :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="upload()">添加</el-button>
+                            <el-button>取消</el-button>
+                        </el-form-item>
+                    </el-form>
                 </el-dialog>
             </div>
 
 
-            <el-table height="600" :data="tableData"   style="width: 100%;">
+            <el-table height="600" :data="tableData" style="width: 100%;">
                 <el-table-column align="center" label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
@@ -100,7 +101,7 @@
                     </template>
                 </el-table-column>
 
-                <el-table-column  label="菜肴描述">
+                <el-table-column label="菜肴描述">
                     <template slot-scope="scope">
                         <span size="medium">{{ scope.row.description }}</span>
                     </template>
@@ -110,7 +111,7 @@
                 <el-table-column align="center" label="菜肴操作">
                     <template slot-scope="scope">
                         <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">修改</el-button>
-                        <el-button size="mini"  @click="handleDelete(scope.$index, scope.row)">删除
+                        <el-button size="mini" @click="handleDelete(scope.$index, scope.row)">删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -129,12 +130,12 @@
     </div>
 </template>
 <script>
-import { foodList, deleteFood ,foodAdd ,getCategoryList ,productDeleteValueApi} from '@/api/api'
+import { foodList, deleteFood, foodAdd, getCategoryList, productDeleteValueApi } from '@/api/api'
 import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
         return {
-            categorylist:[],
+            categorylist: [],
             imageUrl: '',
             form: {
                 categoryName: '', //菜肴类型 1：菜 2：粥
@@ -143,7 +144,7 @@ export default {
                 bannerUrl: '',
                 price: '',
             },
-       
+
             dialogFormVisible: false,
             currentchange: 1,
             sizechange: 10,
@@ -166,15 +167,15 @@ export default {
                 value: '3',
                 label: '已下架'
             }],
-           
+
             tableData: []
         }
     },
-    created(){
-        getCategoryList({}).then(res =>{
-    this.categorylist = res.data.data
-   console.log(res.data.data);
-});
+    created() {
+        getCategoryList({}).then(res => {
+            this.categorylist = res.data.data
+            console.log(res.data.data);
+        });
         showLoading();
         setTimeout(function () {
             hideLoading();
@@ -184,6 +185,7 @@ export default {
         toFoodPage() {
             this.$router.push({ path: '/foodadd' })
         },
+       
         handleSizeChange(val) {
             console.log(`每页 ${val} 条`);
             this.sizechange = val
@@ -221,35 +223,45 @@ export default {
         handleEdit(index, row) {
             if (sessionStorage.getItem('token')) {
                 this.$router.push({
-                path: '/cuisineattribute', query: {
-                    foodId: row.foodId
-                }
-            })
+                    path: '/cuisineattribute', query: {
+                        foodId: row.foodId
+                    }
+                })
             } else {
                 alert('请登录')
             }
             console.log(index, row);
         },
         handleDelete(index, row) {
-            deleteFood({
-                foodId: row.foodId
-            }).then(res => {
-                console.log('删除菜品', res.data);
-                foodList({
-                    
+            this.$confirm('确定删除吗?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                deleteFood({
+                    foodId: row.foodId
                 }).then(res => {
-                    //  this.tableData.push(res.data.data.list)
-                    this.tableData = res.data.data.list
-                    console.log(this.tableData);
+                    console.log(res);
+                    if (res.data.msg == "成功") {
+                        this.$message({
+                            type: 'success',
+                            message: res.data.msg
+                        });
+                        foodList({}).then(res => {
+                            //  this.tableData.push(res.data.data.list)
+                            this.tableData = res.data.data.list
+                            console.log(this.tableData);
+                        })
+                    }
                 })
             })
-            console.log(row.price);
+         
         },
         upload: function () {
             let token = sessionStorage.getItem('token')
-            if(!token){
-               alert('请先登录')
-            }else{
+            if (!token) {
+                alert('请先登录')
+            } else {
                 let addfood = this.form
                 console.log(addfood);
                 foodAdd(
@@ -268,7 +280,7 @@ export default {
                 console.log(res);
             })
         },
-       
+
         handleAvatarSuccess(res, file) {
             this.imageUrl = URL.createObjectURL(file.raw);
             this.form.bannerUrl = res.data.url
@@ -287,13 +299,13 @@ export default {
             return isPNG && isLt1M;
         },
 
-        
+
     },
     mounted() {
         foodList({
             pageNum: this.currentchange,
             pageSize: this.sizechange,
-            
+
         }).then(res => {
             //  this.tableData.push(res.data.data.list)
             this.tableData = res.data.data.list
@@ -307,8 +319,7 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-
-.el-pagination{
+.el-pagination {
     padding: 30px 5px;
 }
 
@@ -381,7 +392,8 @@ export default {
     height: 178px;
     display: block;
 }
-.cell{
+
+.cell {
     color: red;
 }
 </style>
