@@ -1,6 +1,5 @@
 <template>
   <div class="box">
-    <h3 class="title">部门管理</h3>
     <div class="box-content">
       <div class="select">
         <span>新增部门：</span>
@@ -94,6 +93,7 @@ export default {
           message: "添加成功",
           type: "success",
         });
+        this.apply();
       } else {
         this.$message({
           message: res.data.msg,
@@ -107,7 +107,12 @@ export default {
     },
     seeUser(index,row){
       console.log(index,row);
-      this.$router.push({name:'seeuser'})
+      this.$router.push({
+        name:'seeuser',
+        query:{
+          deptId:row.id
+        }
+      })
     },  
     handleEdit(index, row) {
         this.form.id = row.id;

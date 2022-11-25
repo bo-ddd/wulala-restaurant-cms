@@ -313,3 +313,10 @@ export const deptDeleteApi = function (payload = {}){
  export const permissionUpdateApi = function (payload = {}){
   return instance.post('/permission/update',payload)
 }
+
+/**
+ * @description 查询组中的所有用户
+ */
+export const deptMembersApi = function (payload = {}){
+  return instance.post('/user/dept/members',payload, getPostConfig)
+}

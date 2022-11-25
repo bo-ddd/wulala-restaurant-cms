@@ -88,7 +88,8 @@ export default {
         foodadd: '菜肴详情',
         cuisineAttribute: '修改菜品',
         departmentmanguage:'部门管理',
-        newpermission:'权限管理'
+        newpermission:'权限管理',
+        seeuser:'查看用户'
       },
       defMenu: [],
       menu: [],
