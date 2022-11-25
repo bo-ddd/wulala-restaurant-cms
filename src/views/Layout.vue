@@ -22,18 +22,7 @@
                 </el-menu-item>
               </el-menu-item-group>
             </el-submenu>
-            <!-- <el-submenu index="4">
-                <template slot="title">
-                  <i class="el-icon-location"></i>
-                  <span>属性规格</span>
-                </template>
-                <el-menu-item-group>
-                  <el-menu-item index="addattribute">新增属性规格</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group>
-                  <el-menu-item index="attributelist">属性规格列表</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu> -->
+
           </el-menu>
         </el-col>
       </el-row>
@@ -44,7 +33,7 @@
           <div class="box-user ">
             <div class="box-name" @click="toUpOneLevel">{{ route }}</div>
             <div class="box-userinfo">
-              <div class="nav">菜品</div>
+              
               <img class="icon-xiaoxi" src="@/assets/images/消息中心.png" alt="">
               <img class="icon-avater" :src=this.avatar alt="">
               <span class="username">{{ this.avatarName }}</span>
@@ -99,7 +88,8 @@ export default {
         foodadd: '菜肴详情',
         cuisineAttribute: '修改菜品',
         departmentmanguage:'部门管理',
-        newpermission:'权限管理'
+        newpermission:'权限管理',
+        seeuser:'查看用户'
       },
       defMenu: [],
       menu: [],
@@ -226,6 +216,7 @@ export default {
         bb.push(aa)
       }
     });
+
     bb = [...new Set(bb)]
     // console.log('bb');
     // console.log(bb);
@@ -234,9 +225,9 @@ export default {
       cc.children.push(el)
       // console.log(cc);
     })
-
     // console.log(this.defMenu)
-    this.defMenu = this.defMenu.filter(item => item.children.length)
+    this.defMenu=this.defMenu.filter(item=>item.children.length)
+
     this.render();
     if (this.$route.name == 'home') {
       this.route = '首页'
@@ -249,11 +240,9 @@ export default {
   },
   watch: {
     $route: {
-      handler(val, ) {
-        // console.log('----------新路由-----');
-        // console.log(val);//新路由信息
-        // console.log('----------老路由-----');
-        // console.log(oldval);//老路由信息
+      handler(val, oldval) {
+        oldval
+
         for (const key in this.obj) {
           if (val.name == key) {
             this.route = this.obj[key]

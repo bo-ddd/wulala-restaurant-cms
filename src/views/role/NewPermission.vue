@@ -205,22 +205,6 @@ export default {
         addPermission(node,data){
             this.data1 = data
             this.dialogFormVisible1 = true;
-            // permissionAddApi({
-            //     permissionName:this.form1.name1,
-            //     pid:data.id
-            // }).then(res => {
-            //     if (res.data.status == 1) {
-            //         this.$message({
-            //             message: '添加成功',
-            //             type: 'success'
-            //         });
-            //     }else{
-            //         this.$message({
-            //         message: res.data.msg,
-            //         type: 'warning'
-            //         });
-            //     }
-            // })
         },
         // 修改权限名称按钮
         modify(node,data){
