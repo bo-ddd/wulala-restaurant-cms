@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <h3 class="title">属性列表</h3>
+    <!-- <h3 class="title">属性列表</h3> -->
     <div class="box-content">
       <div class="select">
         <div class="demo-input-suffix">
@@ -191,6 +191,7 @@ export default {
         // pageNum: this.pageNum,
         // pageSize: this.pageSize,
       });
+      console.log(res);
       // this.total = res.data.data.total;
       // this.pageSize = res.data.data.pageSize;
       // this.pageNum = res.data.data.pageNum;
