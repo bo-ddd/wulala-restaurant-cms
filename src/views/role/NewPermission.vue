@@ -8,10 +8,34 @@
                         <el-input v-model="input1" placeholder="请输入新增角色名称"></el-input>
                     </div>
                     <el-button class="btn" type="primary" plain @click="foundRole">新增权限</el-button>
+                <!-- 添加权限弹层 -->
+                <el-dialog title="添加权限名称" :visible.sync="dialogFormVisible1">
+                    <el-form :model="form1">
+                        <el-form-item label="添加的权限名称" :label-width="formLabelWidth1">
+                        <el-input v-model="form1.name1" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible1 = false">取 消</el-button>
+                        <el-button type="primary" @click="permissionSeal">确 定</el-button>
+                    </div>
+                </el-dialog>
+                <!-- 修改权限名称弹层 -->
+                <el-dialog title="修改权限名称" :visible.sync="dialogFormVisible">
+                    <el-form :model="form">
+                        <el-form-item label="新名称" :label-width="formLabelWidth">
+                        <el-input v-model="form.name" autocomplete="off"></el-input>
+                        </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="determine">确 定</el-button>
+                    </div>
+                </el-dialog>
+                
                 </div>
                 <!-- 全选 -->
                 <div class="power-list">
-                    <!-- <el-button class="btn yes" type="primary" plain @click="addToPower">添加权限</el-button> -->
                     <el-tree :data="array" node-key="id" 
                         :default-expand-all="false"
                         @check-change="getCheck"
@@ -19,6 +43,12 @@
                         <span class="custom-tree-node" slot-scope="{ node, data }">
                             <span>{{ data.permissionName }}</span>
                             <span>
+                                <el-button type="text" size="mini" @click="() => addPermission(node, data)">
+                                    添加权限
+                                </el-button>
+                                <el-button type="text" size="mini" @click="() => modify(node, data)">
+                                    修改权限名称
+                                </el-button>
                                 <el-button type="text" size="mini" @click="() => remove(node, data)">
                                     Delete
                                 </el-button>
@@ -34,7 +64,7 @@
 
 <script>
 // roleAddPermission
-import {  deletePermissionApi,permissionAddApi, permissionListApi } from '@/api/api';
+import {  deletePermissionApi,permissionAddApi, permissionListApi ,permissionUpdateApi} from '@/api/api';
 import { showLoading, hideLoading } from "@/api/loading";
 export default {
     data() {
@@ -43,6 +73,38 @@ export default {
             isIndeterminate: true,
             array: [],
             permissionId: [],
+
+            
+            dialogTableVisible: false,
+            dialogFormVisible: false,
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            },
+            formLabelWidth: '120px',
+            node:{},
+            data:{},
+
+            dialogTableVisible1: false,
+            dialogFormVisible1: false,
+            form1: {
+                name1: '',
+                region1: '',
+                date11: '',
+                date21: '',
+                delivery1: false,
+                type1: [],
+                resource1: '',
+                desc1: ''
+            },
+            formLabelWidth1: '120px',
+            data1:{},
         }
     },
     created() {
@@ -139,6 +201,88 @@ export default {
                 console.log(err);
             })
         },
+        // 往pid(父级)下面添加权限
+        addPermission(node,data){
+            this.data1 = data
+            this.dialogFormVisible1 = true;
+        },
+        // 修改权限名称按钮
+        modify(node,data){
+            this.node = node;
+            this.data = data;
+            this.dialogFormVisible = true
+        },
+        // 添加权限确定按钮
+        permissionSeal(){
+            if (this.form1.name1 == '') {
+                this.$message({
+                    message: '请填写你要添加的名称',
+                    type: 'warning'
+                });
+           }else{
+                permissionAddApi({
+                    permissionName:this.form1.name1,
+                    pid:this.data1.id
+                }).then(res => {
+                    if (res.data.status == 1) {
+                        this.$message({
+                            message: '添加成功',
+                            type: 'success'
+                        });
+                        permissionListApi({}).then(res => {
+                            let dataList = this.formatePermissionList(res.data.data);
+                            this.array = dataList;
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        this.dialogFormVisible1 = false;
+                    }else{
+                        this.$message({
+                        message: res.data.msg,
+                        type: 'warning'
+                        });
+                    }
+                }).catch(err=>{
+                    console.log(err);
+                })
+           }
+        },
+        // 弹层的确定按钮
+        determine(){
+           if (this.form.name == '') {
+                this.$message({
+                    message: '请填写你要修改后的名称',
+                    type: 'warning'
+                });
+           }else{
+                permissionUpdateApi({
+                    id: this.data.id,
+                    permissionName: this.form.name, //权限名称
+                    pid: this.data.pid 
+                }).then(res => {
+                    if (res.data.status == 1) {
+                        this.$message({
+                            message: '修改成功',
+                            type: 'success'
+                        });
+                        permissionListApi({}).then(res => {
+                            let dataList = this.formatePermissionList(res.data.data);
+                            this.array = dataList;
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                        this.dialogFormVisible = false
+                    }else{
+                        this.$message({
+                            message: res.data.msg,
+                            type: 'warning'
+                        });
+                    }
+                })
+           }
+        }
     }
 }
 </script>

@@ -38,6 +38,14 @@ const routes = [
         },
         component: ()=>import("@/views/homePage/SetPass.vue"),
       },
+      {
+        path:'/homePage',
+        name:'homePage',
+        meta:{
+          label:'个人信息'
+        },
+        component:()=>import("../views/homePage/HomePage.vue")
+      }
     ]
   }
 ]
@@ -146,14 +154,6 @@ let dynamicRoutes = [
       label:'新增属性规格'
     },
     component:() =>import("@/views/attribute/AddAttribute.vue")
-  },
-  {
-    path:'/homePage',
-    name:'homePage',
-    meta:{
-      label:'个人信息'
-    },
-    component:()=>import("../views/homePage/HomePage.vue")
   },{
     path:'/departmentmanguage',
     name:'departmentmanguage',
@@ -161,6 +161,14 @@ let dynamicRoutes = [
       label:'部门管理'
     },
     component:()=>import("../views/role/DepartmentManguage.vue")
+  },
+  {
+    path:'/seeuser',
+    name:'seeuser',
+    meta:{
+      label:'查看用户'
+    },
+    component:()=>import("../views/role/SeeUser.vue")
   }
 ]
 const router = new VueRouter({
@@ -171,7 +179,7 @@ const router = new VueRouter({
 
 //导航守卫
 router.beforeEach(async (to,from,next)=>{
-  console.log(from);
+  // console.log(from);
   let userPermissionList =vuex.state.userPermissionList;
   let token = sessionStorage.getItem('token');
   if (to.name == 'loginview') {

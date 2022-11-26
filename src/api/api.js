@@ -252,7 +252,13 @@ export const foodDetail = function (payload = {}) {
 export const getUserPermissionListApi = function(payload={}){
   return instance.post('/user/permission/list',payload)
 }
+/**
+ * @description 删除类目
+ */
+ export const categoryDelete = function (payload = {}) {
+  return instance.post('/category/delete', payload)
 
+}
 /**
  * @description 删除权限
  */
@@ -264,4 +270,53 @@ export const getUserPermissionListApi = function(payload={}){
  */
  export const updatePassApi = function (payload = {}) {
   return instance.post('/user/password/update', payload)
+}
+
+/**
+ * @description 删除用户角色
+ */
+ export const userDeleteRole = function (payload = {}) {
+  return instance.post('/user/deleteRole', payload)
+
+}
+/**
+ * @description 查询部门列表
+ */
+export const deptListApi = function (payload ={}){
+  return instance.post('/dept/list', payload)
+}
+
+/**
+ * @description 增加部门
+ */
+export const deptCreateApi = function (payload ={}){
+  return instance.post('/dept/create', payload)
+}
+
+/**
+ * @description 修改部门名称
+ */
+export const deptUpdateApi = function (payload = {}){
+  return instance.post('/dept/update', payload)
+}
+
+/**
+ * @description 删除部门
+ */
+export const deptDeleteApi = function (payload = {}){
+  return instance.post('/dept/delete',payload)
+}
+
+/**
+ * @description 修改权限名称
+ */
+ export const permissionUpdateApi = function (payload = {}){
+  return instance.post('/permission/update',payload)
+}
+
+/**
+ * @description 查询组中的所有用户
+ */
+export const deptMembersApi = function (payload = {}){
+  return instance.post('/user/dept/members',payload, getPostConfig)
 }

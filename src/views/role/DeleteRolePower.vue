@@ -193,6 +193,8 @@ export default {
 .power-list {
     width: 95%;
     margin: 10px auto;
+    height: calc(100vh - 20rem);
+    overflow-y: scroll;
 }
 .custom-tree-node {
     flex: 1;

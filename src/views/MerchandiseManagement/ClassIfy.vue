@@ -1,11 +1,42 @@
 <template>
     <div class="box">
-      
+
         <div class="box-content">
             <div>
-                <span class="category">添加类目 &nbsp;</span>
-                <el-input class="input" v-model="input" size="mini" placeholder="请输入内容"></el-input>
-                <el-button class="btn" type="success" size="mini" @click="add">添加</el-button>
+                <el-button class="btn" type="success" size="mini" @click="dialogFormVisible = true">添加类目</el-button>
+                <el-dialog title="添加类目" :visible.sync="dialogFormVisible">
+                    <el-form :model="form">
+                        <el-form-item label="类目名称" :label-width="formLabelWidth">
+                            <el-input v-model="form.name" autocomplete="off"></el-input>
+                        </el-form-item>
+                        <el-form-item label="类型" :label-width="formLabelWidth">
+                            <el-select v-model="form.type" placeholder="请选择类目类型">
+                                <el-option label="h5" value="1"></el-option>
+                                <el-option label="pc" value="2"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="菜品主图" :label-width="formLabelWidth">
+                        <el-upload class="avatar-uploader" action="api/upload/food" :show-file-list="false"
+                            :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                        </el-upload>
+                    </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                        <el-button @click="dialogFormVisible = false">取 消</el-button>
+                        <el-button type="primary" @click="add">确 定</el-button>
+                    </div>
+                </el-dialog>
+                <el-select size="mini" v-model="deleteFrom" placeholder="请选择">
+    <el-option 
+      v-for="(item,i) in categoryList"
+      :key="i"
+      :label="item.name"
+      :value="item.id">
+    </el-option>
+  </el-select>
+  <el-button class="btn" type="success" size="mini" @click="aa">删除类目</el-button>
             </div>
 
             <div>
@@ -48,24 +79,72 @@
     </div>
 </template>
 <script>
-import { getCategoryAddApi, getCategoryList, foodList, deleteFood } from '@/api/api'
+import { getCategoryAddApi, getCategoryList, foodList,deleteFood, categoryDelete} from '@/api/api'
 import { showLoading, hideLoading } from "@/api/loading";
 export default {
 
     data() {
         return {
+            bannerUrl:'',
+            imageUrl: '',
             activeName: '',
-            input: '',
+            deleteFrom:'',
             categoryList: [], //类目列表
             foodList: [], //菜肴列表
             defaultDisplay: '',//默认展示
             attributeList: [],//获取商品属性列表
             tabName: '',
+            dialogFormVisible: false,
+            form: {
+          name: '',
+          type: '',
+          delivery: false,
+        },
+        formLabelWidth: '120px'
         };
     },
 
 
     methods: {
+        handleAvatarSuccess(res, file) {
+        this.bannerUrl = URL.createObjectURL(file.raw);
+        this.imageUrl = res.data.url
+
+      },
+      beforeAvatarUpload(file) {
+            const isPNG = file.type === 'image/png';
+            const isLt1M = file.size / 1024 / 1024 < 2;
+
+            if (!isPNG) {
+                this.$message.error('上传头像图片只能是 PNG 格式!');
+            }
+            if (!isLt1M) {
+                this.$message.error('上传头像图片大小不能超过 1MB!');
+            }
+            return isPNG && isLt1M;
+        },
+        dep(a){
+            this.$confirm('确定删除吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            if(a == "成功"){
+                this.$message({
+            type: 'success',
+            message: a
+          });
+            }else{
+                this.$message.error(a);
+            }
+         
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
+        },
         handle(tab) {
             this.tabName = tab.name
             console.log(tab.name);
@@ -83,13 +162,29 @@ export default {
             })
         },
         add() {
+            this.dialogFormVisible = false
+            console.log(this.bannerUrl);
+            
             getCategoryAddApi({
-                name: this.input, //类目名称
+                name: this.form.name, //类目名称
                 productUnit: "盘", //单位
                 parentId: null, //父级id，如果不填则为0，  如果为0，表示一级类目
-                sort: 1 //排序
+                sort: 1, //排序
+                imgUrl:this.imageUrl,
+                type:this.form.type
             }).then(res => {
+                this.dialogFormVisible = false
                 console.log(res);
+                this.getCategoryListFun()
+            })
+        },
+        aa(){
+            categoryDelete({
+                id:this.deleteFrom
+            }).then(res =>{
+                console.log(res);
+                this.dep(res.data.msg)
+                this.getCategoryListFun()
             })
         },
         handleEdit(a, b) {
@@ -102,14 +197,36 @@ export default {
             // console.log(data);
         },
         confirm(foodId) {
+            console.log(foodId);
             deleteFood({
                 foodId: foodId.foodId
-            })
-            this.$message({
+            }).then(res =>{
+                if (res.data.msg == "成功") {
+                    this.$message({
                 message: '删除成功',
                 type: 'success'
             });
-        }
+            foodList({
+                        categoryId: foodId.categoryId //商品列表 categoryId
+                    }).then(res => {
+                        this.foodList = res.data.data.list
+                    })
+                }
+            })
+          
+        },
+      getCategoryListFun(){
+        console.log(1);
+        getCategoryList({
+
+}).then(res => {
+    this.activeName = res.data.data[0].name
+    this.categoryList = res.data.data;
+    this.tabName = this.categoryList[0].name
+    console.log(this.categoryList);
+    this.getFoodList()
+});
+      }
     },
     created() {
         showLoading();
@@ -122,6 +239,7 @@ export default {
             this.activeName = res.data.data[0].name
             this.categoryList = res.data.data;
             this.tabName = this.categoryList[0].name
+            console.log(this.categoryList);
             this.getFoodList()
         });
     }
@@ -148,10 +266,40 @@ export default {
 
 .btn {
     margin-left: 10px;
+    margin-right: 50px;
 }
 
 .banner-food_png {
     width: 50px;
     height: 50px;
 }
+/* 上传 */
+::v-deep .el-upload {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

@@ -67,7 +67,6 @@ export default {
           message: "登录成功",
         });
         sessionStorage.setItem("token", res.data.data.token);
-        sessionStorage.setItem('password',this.password);
         this.$router.push({
           name: "home",
         });
