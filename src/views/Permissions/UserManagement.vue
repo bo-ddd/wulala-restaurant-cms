@@ -75,7 +75,7 @@ export default {
 <template>
       <div class="box">
         <div class="box-content">
-            <el-table height="91%"  :data="tableData" style="width: 100%">
+            <el-table height="600"  :data="tableData" style="width: 100%">
                 <el-table-column align="center" label="用户id" width="100">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
@@ -111,13 +111,13 @@ export default {
                     </template>
                 </el-table-column>
             </el-table>
-            <div class="block">
-                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                    :page-sizes="[5, 20, 30, 40]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
-                    :total=total>
-                </el-pagination>
-    
-            </div>
+        </div>
+        <div class="block">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                :page-sizes="[5, 20, 30, 40]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
+                :total=total>
+            </el-pagination>
+
         </div>
     </div>
 </template>

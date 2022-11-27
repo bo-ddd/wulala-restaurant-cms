@@ -40,10 +40,10 @@
             </div>
 
             <div>
-                <el-tabs height="100%" @tab-click="handle" v-model="activeName">
+                <el-tabs @tab-click="handle" v-model="activeName">
                     <el-tab-pane v-for="(el, i) in categoryList" :key="i" :label="el.name" :name="el.name">
 
-                        <el-table :data="foodList" style="width: 100%">
+                        <el-table height="600" :data="foodList" style="width: 100%">
                             <el-table-column label="菜肴图片">
                                 <template slot-scope="scope">
                                     <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
