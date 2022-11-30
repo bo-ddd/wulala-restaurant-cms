@@ -5,7 +5,7 @@
       <div class="select">
         <div class="demo-input-suffix">
           查找属性：
-          <el-select v-model="input1" placeholder="请选择">
+          <el-select v-model="input1" placeholder="请选择" clearable>
             <el-option
               v-for="item in options"
               :key="item"
@@ -18,7 +18,7 @@
 
         <div class="demo-input-suffixs">
           查找分类：
-          <el-select v-model="input2" placeholder="请选择">
+          <el-select v-model="input2" placeholder="请选择" clearable>
             <el-option
               v-for="item in options1"
               :key="item"
@@ -191,14 +191,14 @@ export default {
         // pageNum: this.pageNum,
         // pageSize: this.pageSize,
       });
-      console.log(res);
+      // console.log(res);
       // this.total = res.data.data.total;
       // this.pageSize = res.data.data.pageSize;
       // this.pageNum = res.data.data.pageNum;
       this.tableDatas = res.data.data;
-      console.log("------------------");
+      // console.log("------------------");
       this.tableData = this.tableDatas
-console.log(this.tableDatas);
+// console.log(this.tableDatas);
       this.options = this.tableDatas.map((item) => {
         return item.attrName;
       });
@@ -244,18 +244,19 @@ console.log(this.tableDatas);
     },
     findCategory() {
       console.log(this.tableDatas);
-        this.tableData = this.tableDatas
-     
+        this.tableData = this.tableDatas;
+        console.log(this.flag);
       if (this.flag) {
-        
-      
         console.log(this.tableData);
         // console.log(this.input1);
         // console.log(this.input2);
         let arr = [];
         let is = false;
+        this.tableData = this.tableDatas;
+
         if (this.input1 && this.input2) {
           is = true;
+          console.log('truesssssssssssss');
         }
         this.tableData.forEach((item) => {
           if (is) {
@@ -274,19 +275,13 @@ console.log(this.tableDatas);
             }
           }
         });
-
         // console.log(arr);
         this.tableData = arr;
         this.flag = false;
-     
       } else {
-        
-    
         console.log('false');
-        
         // console.log(this.input1);
         console.log(this.tableData);
-
         // console.log(this.input2);
         let arr = [];
         let is = false;
@@ -310,13 +305,10 @@ console.log(this.tableDatas);
             }
           }
         });
-
         // console.log(arr);
         this.tableData = arr;
         this.flag = true;
-      
       }
-
     },
     handleSelect(item) {
       console.log(item);
