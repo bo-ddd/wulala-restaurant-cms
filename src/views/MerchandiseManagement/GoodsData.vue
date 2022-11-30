@@ -78,7 +78,7 @@
             </div>
 
 
-            <el-table height="600" :data="tableData" style="width: 100%;">
+            <el-table height="83%" :data="tableData" style="width: 100%;">
                 <el-table-column align="center" label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
@@ -119,13 +119,13 @@
             </el-table>
 
 
-        </div>
-        <div class="block">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
-                :page-sizes="[5, 15, 20, 25]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
-                :total=total>
-            </el-pagination>
-
+            <div class="block">
+                <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+                    :page-sizes="[5, 15, 20, 25]" :page-size=pagesize layout="total, sizes, prev, pager, next, jumper"
+                    :total=total>
+                </el-pagination>
+    
+            </div>
         </div>
     </div>
 </template>

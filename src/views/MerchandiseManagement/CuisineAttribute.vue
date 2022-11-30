@@ -37,7 +37,7 @@ export default {
             }).then(res => {
                 this.attributeKey = []
                 this.attributeList = res.data.data
-                // console.log(res.data.data);
+                console.log(res.data.data);
                 this.attributeList.forEach(el => {
                     if (el.categoryId == oldValue) {
                         this.attributeKey.push(el)
