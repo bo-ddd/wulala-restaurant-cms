@@ -40,7 +40,7 @@
             </div>
 
             <div>
-                <el-tabs height="100%" @tab-click="handle" v-model="activeName">
+                <el-tabs height="70vh" @tab-click="handle" v-model="activeName">
                     <el-tab-pane v-for="(el, i) in categoryList" :key="i" :label="el.name" :name="el.name">
 
                         <el-table :data="foodList" style="width: 100%">
