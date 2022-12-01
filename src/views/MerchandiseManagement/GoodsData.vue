@@ -78,7 +78,7 @@
             </div>
 
 
-            <el-table height="65vh" :data="tableData" style="width: 100%;">
+            <el-table height="55vh" :data="tableData" style="width: 100%;">
                 <el-table-column align="center" label="菜肴图片" width="180">
                     <template slot-scope="scope">
                         <img class="banner-food_png" :src="scope.row.bannerUrl" alt="">
