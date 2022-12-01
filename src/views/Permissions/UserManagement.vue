@@ -75,7 +75,7 @@ export default {
 <template>
       <div class="box">
         <div class="box-content">
-            <el-table height="72.5vh"  :data="tableData" style="width: 100%">
+            <el-table height="65vh"  :data="tableData" style="width: 100%">
                 <el-table-column align="center" label="用户id" width="100">
                     <template slot-scope="scope">
                         <div slot="reference" class="name-wrapper">
