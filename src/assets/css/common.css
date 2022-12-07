@@ -83,7 +83,7 @@ p {
     background-color: #eeeeee;
     height: calc(100vh - 60px);
     overflow: hidden;
-   
+    min-width: 1007px;
 }
 
 .mt-12{
