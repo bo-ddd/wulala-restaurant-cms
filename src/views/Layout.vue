@@ -10,8 +10,6 @@
               <i class="el-icon-s-home"></i>
               <span slot="title">首页</span>
             </el-menu-item>
-
-
             <el-submenu v-for="(item, i) in defMenu" :key="i" :index="item.name">
               <template slot="title">
                 <i class="el-icon-location"></i>
